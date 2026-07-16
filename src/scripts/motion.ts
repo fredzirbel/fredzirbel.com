@@ -18,11 +18,8 @@ const nav = document.getElementById('site-nav');
 const navDelayed = nav?.dataset.delayed === 'true';
 
 function updateNav(): void {
-  if (!nav) return;
-  nav.classList.toggle('nav-scrolled', window.scrollY > 24);
-  if (navDelayed && !reducedMotion) {
-    nav.classList.toggle('nav-hidden', window.scrollY < window.innerHeight * 0.5);
-  }
+  if (!nav || !navDelayed || reducedMotion) return;
+  nav.classList.toggle('nav-hidden', window.scrollY < window.innerHeight * 0.5);
 }
 
 window.addEventListener('scroll', updateNav, { passive: true });

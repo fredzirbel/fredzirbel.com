@@ -5,6 +5,7 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Aurora from '../components/Aurora.astro';
 
 interface Props {
   title: string;
@@ -48,6 +49,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     >
       Skip to content
     </a>
+    <Aurora />
     <Nav delayed={navDelayed} />
     <main id="main">
       <slot />

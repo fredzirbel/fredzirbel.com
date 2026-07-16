@@ -1,56 +1,74 @@
 ---
 import Section from './Section.astro';
+import BrandIcon from './BrandIcon.astro';
 
 /**
  * Credly links from the GitHub profile README. SecurityX and CISM render
- * without links until Fred provides badge URLs.
+ * without links until Fred provides badge URLs. Watermark icons: official
+ * CompTIA/ISC2 marks from simple-icons; neutral shield for ISACA.
  */
 const certs = [
-  { name: 'CompTIA SecurityX (CASP+)', href: null },
-  { name: 'ISACA CISM', href: null },
+  { name: 'CompTIA SecurityX (CASP+)', org: 'comptia', href: null },
+  { name: 'ISACA CISM', org: 'shieldCheck', href: null },
   {
     name: 'CompTIA CySA+',
+    org: 'comptia',
     href: 'https://www.credly.com/badges/169e383d-80ba-4a0a-b12b-b1cf447bac8e',
   },
   {
     name: 'CompTIA PenTest+',
+    org: 'comptia',
     href: 'https://www.credly.com/badges/8ed7f32d-6a82-4aab-9079-8fec5bcef846/public_url',
   },
   {
     name: 'CompTIA Security+',
+    org: 'comptia',
     href: 'https://www.credly.com/badges/9283e8db-5d15-40a4-af14-5b44b5fcc42c',
   },
   {
     name: 'CompTIA A+',
+    org: 'comptia',
     href: 'https://www.credly.com/badges/c183d3cb-6f71-4313-abfd-2bae18629f53',
   },
   {
     name: 'ISC2 CC',
+    org: 'isc2',
     href: 'https://www.credly.com/badges/bca3d97b-0a51-4905-9804-8aa872f78404/public_url',
   },
 ];
 ---
 
 <Section id="certifications" number="04" eyebrow="Certifications" heading="Credentials">
-  <ul class="flex flex-wrap gap-3" data-reveal-stagger>
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
     {
-      certs.map((cert) =>
-        cert.href ? (
+      certs.map((cert) => {
+        const inner = (
+          <>
+            <BrandIcon
+              name={cert.org}
+              class="pointer-events-none absolute -bottom-4 -right-4 size-24 text-foreground opacity-[0.05] transition-opacity duration-(--duration-base) group-hover:opacity-[0.09]"
+            />
+            <span class="relative font-mono text-xs">{cert.name}</span>
+          </>
+        );
+        return (
           <li>
-            <a
-              href={cert.href}
-              rel="noopener"
-              class="inline-block rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-xs transition-colors duration-(--duration-fast) hover:border-accent/50 hover:text-accent"
-            >
-              {cert.name}
-            </a>
+            {cert.href ? (
+              <a
+                href={cert.href}
+                rel="noopener"
+                class="group relative block overflow-hidden rounded-lg border border-line bg-surface/70 px-5 py-6 transition-colors duration-(--duration-fast) hover:border-accent/50 hover:text-accent-bright"
+              >
+                {inner}
+              </a>
+            ) : (
+              <div class="group relative block overflow-hidden rounded-lg border border-line bg-surface/70 px-5 py-6 text-muted-fg">
+                {inner}
+              </div>
+            )}
           </li>
-        ) : (
-          <li class="inline-block rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-xs text-muted-fg">
-            {cert.name}
-          </li>
-        ),
-      )
+        );
+      })
     }
   </ul>
 </Section>

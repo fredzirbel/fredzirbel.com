@@ -6,8 +6,11 @@
 import {
   BufferAttribute,
   BufferGeometry,
+  IcosahedronGeometry,
   LineBasicMaterial,
   LineSegments,
+  Mesh,
+  MeshBasicMaterial,
   PerspectiveCamera,
   Points,
   PointsMaterial,
@@ -76,9 +79,25 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
   );
   scene.add(lines);
 
-  // Cursor position in world space (z = 0 plane)
+  // Slowly tumbling wireframe icosahedron anchored to the right of the hero
+  const ico = new Mesh(
+    new IcosahedronGeometry(7, 1),
+    new MeshBasicMaterial({ color: LINK_COLOR, wireframe: true, transparent: true, opacity: 0.16 }),
+  );
+  ico.position.set(15, 1, -6);
+  scene.add(ico);
+  const icoInner = new Mesh(
+    new IcosahedronGeometry(3.4, 0),
+    new MeshBasicMaterial({ color: NODE_COLOR, wireframe: true, transparent: true, opacity: 0.22 }),
+  );
+  icoInner.position.copy(ico.position);
+  scene.add(icoInner);
+
+  // Cursor position in world space (z = 0 plane) + NDC for camera parallax
   let mouseX = Infinity;
   let mouseY = Infinity;
+  let parallaxX = 0;
+  let parallaxY = 0;
   container.ownerDocument.addEventListener('pointermove', (event) => {
     const rect = container.getBoundingClientRect();
     if (event.clientY < rect.top || event.clientY > rect.bottom) {
@@ -87,6 +106,8 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
     }
     const ndcX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const ndcY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+    parallaxX = ndcX;
+    parallaxY = ndcY;
     const halfH = Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
     const halfW = halfH * camera.aspect;
     mouseX = ndcX * halfW;
@@ -145,6 +166,17 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
     }
     lineGeometry.setDrawRange(0, vertex / 3);
     lineGeometry.attributes.position.needsUpdate = true;
+
+    // Tumble the icosahedra in opposite directions
+    ico.rotation.x += 0.0012;
+    ico.rotation.y += 0.0016;
+    icoInner.rotation.x -= 0.002;
+    icoInner.rotation.y -= 0.0014;
+
+    // Gentle camera parallax toward the cursor
+    camera.position.x += (parallaxX * 1.4 - camera.position.x) * 0.03;
+    camera.position.y += (parallaxY * 0.9 - camera.position.y) * 0.03;
+    camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
   }

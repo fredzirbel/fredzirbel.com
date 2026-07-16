@@ -1,52 +1,54 @@
 ---
 /**
- * Infinite scrolling strip of the platforms and tools Fred works with
- * (from the GitHub profile README). The list is rendered twice so the
- * 50% translate loop is seamless; static row under reduced motion.
+ * Infinite scrolling strip of the platforms and tools Fred works with.
+ * The list is rendered twice so the 50% translate loop is seamless;
+ * static row under reduced motion.
  */
+import BrandIcon from './BrandIcon.astro';
+
 const tools = [
-  'Microsoft Sentinel',
-  'Splunk',
-  'Defender XDR',
-  'CrowdStrike Falcon',
-  'Cortex XDR',
-  'Cortex XSIAM',
-  'SentinelOne',
-  'Falcon Next-Gen SIEM',
-  'Sumo Logic',
-  'KQL',
-  'Python',
-  'Azure',
-  'Entra ID',
-  'Wireshark',
-  'Nmap',
+  { label: 'Microsoft Sentinel', icon: 'microsoft' },
+  { label: 'Splunk', icon: 'splunk' },
+  { label: 'Defender XDR', icon: 'microsoft' },
+  { label: 'CrowdStrike Falcon', icon: 'bird' },
+  { label: 'Cortex XDR', icon: 'paloalto' },
+  { label: 'Cortex XSIAM', icon: 'paloalto' },
+  { label: 'SentinelOne', icon: 'shield' },
+  { label: 'Falcon Next-Gen SIEM', icon: 'bird' },
+  { label: 'Sumo Logic', icon: 'sumologic' },
+  { label: 'KQL', icon: 'microsoft' },
+  { label: 'Python', icon: 'python' },
+  { label: 'Azure', icon: 'microsoft' },
+  { label: 'Entra ID', icon: 'microsoft' },
+  { label: 'Wireshark', icon: 'wireshark' },
+  { label: 'Nmap', icon: 'radar' },
 ];
 ---
 
 <div
-  class="relative overflow-hidden border-y border-line bg-surface/50 py-5"
+  class="relative overflow-hidden border-y border-line bg-surface/50 py-6"
   aria-label="Platforms and tools"
 >
   <div
-    class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-background to-transparent"
+    class="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-linear-to-r from-background to-transparent"
     aria-hidden="true"
   >
   </div>
   <div
-    class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-background to-transparent"
+    class="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-linear-to-l from-background to-transparent"
     aria-hidden="true"
   >
   </div>
-  <ul class="flex w-max animate-marquee gap-12 pr-12">
+  <ul class="flex w-max animate-marquee gap-20 pr-20">
     {
       [0, 1].map((copy) =>
         tools.map((tool) => (
           <li
             aria-hidden={copy === 1 ? 'true' : undefined}
-            class="flex items-center gap-3 whitespace-nowrap font-mono text-xs uppercase tracking-widest text-muted-fg"
+            class="flex items-center gap-3.5 whitespace-nowrap font-mono text-xs uppercase tracking-widest text-muted-fg"
           >
-            <span class="size-1 rounded-full bg-accent" aria-hidden="true" />
-            {tool}
+            <BrandIcon name={tool.icon} class="size-4.5 shrink-0 opacity-70" />
+            {tool.label}
           </li>
         )),
       )
