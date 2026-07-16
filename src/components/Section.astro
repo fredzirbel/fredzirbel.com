@@ -1,0 +1,21 @@
+---
+/** Shared section shell: eyebrow label + oversized heading + slot content */
+interface Props {
+  id: string;
+  eyebrow: string;
+  heading: string;
+}
+const { id, eyebrow, heading } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-20 border-t border-line">
+  <div class="mx-auto max-w-5xl px-6 py-24 sm:py-32" data-reveal>
+    <p class="font-mono text-xs uppercase tracking-widest text-accent mb-4">
+      {eyebrow}
+    </p>
+    <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight mb-12">
+      {heading}
+    </h2>
+    <slot />
+  </div>
+</section>

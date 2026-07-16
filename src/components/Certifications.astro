@@ -1,0 +1,56 @@
+---
+import Section from './Section.astro';
+
+/**
+ * Credly links from the GitHub profile README. SecurityX and CISM render
+ * without links until Fred provides badge URLs.
+ */
+const certs = [
+  { name: 'CompTIA SecurityX (CASP+)', href: null },
+  { name: 'ISACA CISM', href: null },
+  {
+    name: 'CompTIA CySA+',
+    href: 'https://www.credly.com/badges/169e383d-80ba-4a0a-b12b-b1cf447bac8e',
+  },
+  {
+    name: 'CompTIA PenTest+',
+    href: 'https://www.credly.com/badges/8ed7f32d-6a82-4aab-9079-8fec5bcef846/public_url',
+  },
+  {
+    name: 'CompTIA Security+',
+    href: 'https://www.credly.com/badges/9283e8db-5d15-40a4-af14-5b44b5fcc42c',
+  },
+  {
+    name: 'CompTIA A+',
+    href: 'https://www.credly.com/badges/c183d3cb-6f71-4313-abfd-2bae18629f53',
+  },
+  {
+    name: 'ISC2 CC',
+    href: 'https://www.credly.com/badges/bca3d97b-0a51-4905-9804-8aa872f78404/public_url',
+  },
+];
+---
+
+<Section id="certifications" eyebrow="Certifications" heading="Credentials">
+  <ul class="flex flex-wrap gap-3" data-reveal-stagger>
+    {
+      certs.map((cert) =>
+        cert.href ? (
+          <li>
+            <a
+              href={cert.href}
+              rel="noopener"
+              class="inline-block rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-xs transition-colors duration-(--duration-fast) hover:border-accent/50 hover:text-accent"
+            >
+              {cert.name}
+            </a>
+          </li>
+        ) : (
+          <li class="inline-block rounded-md border border-line bg-surface px-4 py-2.5 font-mono text-xs text-muted-fg">
+            {cert.name}
+          </li>
+        ),
+      )
+    }
+  </ul>
+</Section>

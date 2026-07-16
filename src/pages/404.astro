@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 - Fred Zirbel" description="Page not found.">
+  <div class="mx-auto flex min-h-dvh max-w-5xl flex-col items-start justify-center px-6">
+    <p class="font-mono text-xs uppercase tracking-widest text-accent mb-4">404</p>
+    <h1 class="font-heading text-4xl sm:text-6xl font-bold tracking-tight mb-6">
+      Nothing detected here
+    </h1>
+    <p class="text-muted-fg mb-10 max-w-md">
+      This page doesn't exist. False positive, or the link has moved.
+    </p>
+    <a
+      href="/"
+      class="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors duration-(--duration-fast) hover:bg-accent"
+    >
+      Back home
+    </a>
+  </div>
+</Layout>

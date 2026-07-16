@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="border-t border-line">
+  <div class="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+    <p class="font-mono text-xs uppercase tracking-widest text-accent mb-4">Contact</p>
+    <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight mb-6">
+      Get in touch
+    </h2>
+    <p class="text-muted-fg max-w-xl mb-10">
+      Open to talking about detection engineering, SOC operations, or anything
+      security. The fastest way to reach me is email or LinkedIn.
+    </p>
+    <ul class="flex flex-wrap items-center gap-x-8 gap-y-4">
+      <li>
+        <a
+          href="mailto:fredzirbel@pm.me"
+          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+        >
+          <Icon name="mail" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          fredzirbel@pm.me
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/fredzirbel"
+          rel="noopener"
+          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+        >
+          <Icon name="github" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          GitHub
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://linkedin.com/in/fredzirbel"
+          rel="noopener"
+          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+        >
+          <Icon name="linkedin" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          LinkedIn
+        </a>
+      </li>
+    </ul>
+    <p class="mt-16 font-mono text-xs text-muted-fg">
+      © {year} Fred Zirbel. Built with Astro, deployed on Cloudflare Pages.
+    </p>
+  </div>
+</footer>

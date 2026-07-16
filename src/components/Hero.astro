@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="relative flex min-h-dvh flex-col justify-center overflow-hidden">
+  <!-- Particle canvas mounts here; gradient is the static fallback -->
+  <div
+    id="hero-canvas"
+    aria-hidden="true"
+    class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgb(34_211_238/0.07),transparent)]"
+  >
+  </div>
+
+  <div class="mx-auto w-full max-w-5xl px-6">
+    <p
+      data-hero-item
+      class="font-mono text-xs sm:text-sm uppercase tracking-widest text-accent mb-6"
+    >
+      Senior Security Analyst
+    </p>
+    <h1
+      data-hero-item
+      class="font-heading font-black tracking-[-0.04em] leading-[0.95] text-[clamp(3rem,10vw,8rem)]"
+    >
+      Fred Zirbel
+    </h1>
+    <p data-hero-item class="mt-8 max-w-xl text-base sm:text-lg text-muted-fg">
+      Detection engineering, threat investigation, and SOC automation.
+      I defend 2,500+ environments by day and build security tooling to
+      understand how it all works.
+    </p>
+    <div data-hero-item class="mt-10 flex flex-wrap items-center gap-4">
+      <a
+        href="#projects"
+        class="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors duration-(--duration-fast) hover:bg-accent"
+      >
+        View projects
+      </a>
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 rounded-md border border-line px-6 py-3 text-sm font-medium transition-colors duration-(--duration-fast) hover:border-accent hover:text-accent"
+      >
+        Read the blog
+      </a>
+    </div>
+  </div>
+
+  <a
+    href="#about"
+    aria-label="Scroll to about section"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-fg transition-colors duration-(--duration-fast) hover:text-accent"
+    data-hero-item
+  >
+    <Icon name="arrow-down" class="size-5 motion-safe:animate-bounce" />
+  </a>
+
+  <script>
+    // Lazy-load the Three.js scene after first paint; skip entirely for
+    // small screens and reduced-motion users (they keep the CSS gradient).
+    const wantsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const bigEnough = window.matchMedia('(min-width: 768px)').matches;
+    if (wantsMotion && bigEnough) {
+      const start = () => import('../scripts/particles').then((m) => m.initParticles());
+      'requestIdleCallback' in window
+        ? requestIdleCallback(start, { timeout: 2000 })
+        : setTimeout(start, 300);
+    }
+  </script>
+</section>

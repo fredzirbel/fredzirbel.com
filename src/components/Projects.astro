@@ -1,0 +1,66 @@
+---
+import Section from './Section.astro';
+import Icon from './Icon.astro';
+
+const projects = [
+  {
+    name: 'SOC Box',
+    subtitle: "The SOC Analyst's Toolbox",
+    href: 'https://github.com/fredzirbel/SOCBox',
+    description:
+      'Containerized toolbox that detonates suspicious URLs across 8 concurrent security analyzers with severity-aware threat intel scoring, enriches IPs across OSINT sources, and generates Defender XDR/Sentinel KQL hunting queries from any indicator.',
+    tags: ['Python', 'Docker', 'Threat Intel', 'KQL'],
+  },
+  {
+    name: 'SIGIL',
+    subtitle: 'Sigma Intelligence Governance & Integration Layer',
+    href: 'https://github.com/fredzirbel/SIGIL',
+    description:
+      'Detection-as-Code framework that validates Sigma rules, converts them to Splunk SPL and Sentinel KQL, tests detections against sample logs, and maps ATT&CK coverage gaps through an interactive dashboard with CI/CD integration.',
+    tags: ['Python', 'Sigma', 'MITRE ATT&CK', 'CI/CD'],
+  },
+  {
+    name: 'HomeSOC Platform',
+    subtitle: 'Live homelab detection engineering',
+    href: 'https://github.com/fredzirbel/homesoc-platform',
+    description:
+      'Homelab detection platform deployed in Proxmox LXC that ingests OPNsense and Proxmox telemetry into OpenSearch, runs ATT&CK-mapped detections, and sends tuned Discord alerts for personal triage.',
+    tags: ['OpenSearch', 'Proxmox', 'OPNsense', 'Detection'],
+  },
+];
+---
+
+<Section id="projects" eyebrow="Projects" heading="Things I've built">
+  <div class="grid gap-5" data-reveal-stagger>
+    {
+      projects.map((project) => (
+        <a
+          href={project.href}
+          rel="noopener"
+          class="group block rounded-lg border border-line bg-surface p-6 sm:p-8 transition-[border-color,transform] duration-(--duration-base) ease-(--ease-out-soft) hover:border-accent/50 hover:-translate-y-1 motion-reduce:hover:translate-y-0"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-heading text-xl font-bold group-hover:text-accent transition-colors duration-(--duration-fast)">
+                {project.name}
+              </h3>
+              <p class="font-mono text-xs text-muted-fg mt-1">{project.subtitle}</p>
+            </div>
+            <Icon
+              name="arrow-up-right"
+              class="size-5 shrink-0 text-muted-fg transition-[color,transform] duration-(--duration-fast) group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </div>
+          <p class="mt-4 max-w-3xl text-sm text-muted-fg">{project.description}</p>
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <li class="rounded border border-line px-2 py-1 font-mono text-[11px] text-muted-fg">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </a>
+      ))
+    }
+  </div>
+</Section>
