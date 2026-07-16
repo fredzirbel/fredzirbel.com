@@ -15,13 +15,19 @@ import {
   WebGLRenderer,
 } from 'three';
 
-const NODE_COUNT = 80;
+const NODE_COUNT = 90;
 const BOUNDS = { x: 34, y: 18, z: 8 };
 const LINK_DISTANCE = 5.5;
 const MOUSE_RADIUS = 5;
-const ACCENT = 0x22d3ee;
+const NODE_COLOR = 0x9dc2cc; // accent-bright
+const LINK_COLOR = 0x62929e; // pacific cyan
 
-export function initParticles(): void {
+interface ParticleOptions {
+  /** When false, render the network once as a static backdrop (reduced motion) */
+  animate: boolean;
+}
+
+export function initParticles({ animate }: ParticleOptions = { animate: true }): void {
   const container = document.getElementById('hero-canvas');
   if (!container || container.querySelector('canvas')) return;
 
@@ -55,7 +61,7 @@ export function initParticles(): void {
   pointsGeometry.setAttribute('position', new BufferAttribute(positions, 3));
   const points = new Points(
     pointsGeometry,
-    new PointsMaterial({ color: ACCENT, size: 0.14, transparent: true, opacity: 0.85 }),
+    new PointsMaterial({ color: NODE_COLOR, size: 0.14, transparent: true, opacity: 0.85 }),
   );
   scene.add(points);
 
@@ -66,7 +72,7 @@ export function initParticles(): void {
   lineGeometry.setAttribute('position', new BufferAttribute(linePositions, 3));
   const lines = new LineSegments(
     lineGeometry,
-    new LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.12 }),
+    new LineBasicMaterial({ color: LINK_COLOR, transparent: true, opacity: 0.22 }),
   );
   scene.add(lines);
 
@@ -148,21 +154,27 @@ export function initParticles(): void {
     if (inView && !document.hidden) step();
     requestAnimationFrame(loop);
   }
-  loop();
 
-  // Pause when the hero scrolls out of view
-  new IntersectionObserver(
-    (entries) => {
-      inView = entries[0]?.isIntersecting ?? true;
-    },
-    { threshold: 0 },
-  ).observe(container);
+  if (animate) {
+    loop();
+    // Pause when the hero scrolls out of view
+    new IntersectionObserver(
+      (entries) => {
+        inView = entries[0]?.isIntersecting ?? true;
+      },
+      { threshold: 0 },
+    ).observe(container);
+  } else {
+    // Reduced motion: draw the network once as a static backdrop
+    step();
+  }
 
   window.addEventListener('resize', () => {
     const { clientWidth, clientHeight } = container;
     camera.aspect = clientWidth / clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(clientWidth, clientHeight);
+    if (!animate) step();
   });
 
   // Astro view transitions or page hide: stop cleanly

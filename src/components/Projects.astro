@@ -30,31 +30,37 @@ const projects = [
 ];
 ---
 
-<Section id="projects" eyebrow="Projects" heading="Things I've built">
+<Section id="projects" number="03" eyebrow="Projects" heading="Things I've built">
   <div class="grid gap-5" data-reveal-stagger>
     {
-      projects.map((project) => (
+      projects.map((project, index) => (
         <a
           href={project.href}
           rel="noopener"
-          class="group block rounded-lg border border-line bg-surface p-6 sm:p-8 transition-[border-color,transform] duration-(--duration-base) ease-(--ease-out-soft) hover:border-accent/50 hover:-translate-y-1 motion-reduce:hover:translate-y-0"
+          class="project-card group relative block overflow-hidden rounded-lg border border-line bg-surface p-6 sm:p-8 transition-[border-color,transform,box-shadow] duration-(--duration-base) ease-(--ease-out-soft) hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_10px_40px_rgb(0_0_0/0.3),0_0_30px_rgb(98_146_158/0.12)] motion-reduce:hover:translate-y-0"
         >
-          <div class="flex items-start justify-between gap-4">
+          <span
+            class="absolute right-6 top-6 font-mono text-xs text-muted-fg/50 sm:right-8 sm:top-8"
+            aria-hidden="true"
+          >
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div class="flex items-start gap-4 pr-10">
             <div>
-              <h3 class="font-heading text-xl font-bold group-hover:text-accent transition-colors duration-(--duration-fast)">
+              <h3 class="font-heading text-xl font-bold transition-colors duration-(--duration-fast) group-hover:text-accent-bright">
                 {project.name}
+                <Icon
+                  name="arrow-up-right"
+                  class="ml-1 inline size-4 text-muted-fg transition-[color,transform] duration-(--duration-fast) group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-bright"
+                />
               </h3>
-              <p class="font-mono text-xs text-muted-fg mt-1">{project.subtitle}</p>
+              <p class="mt-1 font-mono text-xs text-muted-fg">{project.subtitle}</p>
             </div>
-            <Icon
-              name="arrow-up-right"
-              class="size-5 shrink-0 text-muted-fg transition-[color,transform] duration-(--duration-fast) group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
           </div>
           <p class="mt-4 max-w-3xl text-sm text-muted-fg">{project.description}</p>
           <ul class="mt-5 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
-              <li class="rounded border border-line px-2 py-1 font-mono text-[11px] text-muted-fg">
+              <li class="rounded border border-line bg-raised/50 px-2 py-1 font-mono text-[11px] text-muted-fg transition-colors duration-(--duration-fast) group-hover:border-accent/30">
                 {tag}
               </li>
             ))}
@@ -64,3 +70,29 @@ const projects = [
     }
   </div>
 </Section>
+
+<style>
+  /* Shine sweep across the card on hover */
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgb(253 253 255 / 0.05) 50%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform 700ms var(--ease-out-soft);
+    pointer-events: none;
+  }
+  .project-card:hover::before {
+    transform: translateX(100%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html:not(.force-motion)) .project-card::before {
+      display: none;
+    }
+  }
+</style>

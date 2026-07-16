@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Semantic color tokens - dark minimal, single cyan accent */
-  --color-background: #0a0a0f;
-  --color-surface: #111118;
-  --color-foreground: #f4f4f5;
-  --color-muted-fg: #a1a1aa;
-  --color-line: rgb(255 255 255 / 0.08);
-  --color-accent: #22d3ee;
+  /* Palette: Gunmetal / White / Silver / Pacific Cyan / Blue Slate */
+  --color-background: #393d3f;
+  --color-surface: #34383a;
+  --color-raised: #41464a;
+  --color-foreground: #fdfdff;
+  --color-muted-fg: #c6c5b9;
+  --color-line: rgb(253 253 255 / 0.12);
+  --color-accent: #62929e;
+  /* Lightened tint of the accent for small text on the dark background (AA contrast) */
+  --color-accent-bright: #9dc2cc;
+  --color-slate: #546a7b;
 
   /* Typography */
   --font-heading: "Archivo Variable", system-ui, sans-serif;
@@ -18,12 +22,34 @@
   --duration-fast: 200ms;
   --duration-base: 300ms;
   --ease-out-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float-a: float-a 20s ease-in-out infinite alternate;
+  --animate-float-b: float-b 26s ease-in-out infinite alternate;
+  --animate-gradient-pan: gradient-pan 8s ease-in-out infinite alternate;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float-a {
+    from { transform: translate(-8%, -6%) scale(1); }
+    to { transform: translate(10%, 8%) scale(1.15); }
+  }
+  @keyframes float-b {
+    from { transform: translate(6%, 10%) scale(1.1); }
+    to { transform: translate(-10%, -8%) scale(0.95); }
+  }
+  @keyframes gradient-pan {
+    from { background-position: 0% 50%; }
+    to { background-position: 100% 50%; }
+  }
 }
 
 html {
   background-color: var(--color-background);
   color-scheme: dark;
-  scrollbar-color: var(--color-muted-fg) var(--color-background);
+  scrollbar-color: var(--color-slate) var(--color-background);
 }
 
 body {
@@ -42,7 +68,7 @@ body::after {
   inset: 0;
   z-index: 50;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -52,16 +78,51 @@ body::after {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-accent-bright);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
+/* Gradient statement text (hero name, footer CTA) */
+.text-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-foreground) 20%,
+    var(--color-muted-fg) 45%,
+    var(--color-accent-bright) 75%,
+    var(--color-accent) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Soft glowing orbs used behind the hero and footer */
+.orb {
+  position: absolute;
+  border-radius: 100%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* Faint blueprint grid behind the hero */
+.grid-lines {
+  background-image:
+    linear-gradient(rgb(253 253 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(253 253 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+}
+
+/* Respect reduced motion, unless the visitor explicitly opts back in
+   (html.force-motion is set from localStorage by motion.ts) */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html:not(.force-motion) *,
+  html:not(.force-motion) *::before,
+  html:not(.force-motion) *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -104,7 +165,7 @@ body::after {
   margin-bottom: 0.4rem;
 }
 .prose a {
-  color: var(--color-accent);
+  color: var(--color-accent-bright);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

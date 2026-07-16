@@ -1,29 +1,35 @@
 ---
 import Section from './Section.astro';
+
+const stats = [
+  { value: '2,500+', label: 'environments defended' },
+  { value: '9', label: 'SIEM & EDR/XDR platforms' },
+  { value: '7', label: 'industry certifications' },
+];
 ---
 
-<Section id="about" eyebrow="About" heading="Defense at scale, learning in public">
+<Section id="about" number="01" eyebrow="About" heading="Defense at scale, learning in public">
   <div class="max-w-2xl space-y-5 text-muted-fg">
     <p>
-      I'm a Senior Security Analyst at
-      <a
-        href="https://www.criticalstart.com"
-        rel="noopener"
-        class="text-foreground underline decoration-line underline-offset-4 transition-colors duration-(--duration-fast) hover:text-accent hover:decoration-accent"
-      >Critical Start</a>, working across multiple SIEM and EDR/XDR platforms to
-      triage, investigate, contain, and escalate threats in 2,500+ multi-tenant
-      customer environments. My focus is threat investigation, log analysis, and
-      tuning detection logic to cut alert noise at scale.
+      By day I'm a Principal Security Analyst at <a href="https://www.criticalstart.com" rel="noopener" class="text-foreground underline decoration-accent/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-accent-bright hover:decoration-accent">Critical Start</a>, a 24/7 MDR protecting 2,500+ customer environments. When an alert fires, my job is deciding whether it's noise or an incident: digging through the logs to prove it, and executing remediation on live threats when it's real.
     </p>
     <p>
-      Alongside analyst work, I build security-focused projects to learn the
-      underlying technologies hands-on and automate routine SOC tasks. Right now
-      I'm going deeper on detection engineering: writing and testing my own
-      detection rules, and documenting what I learn on the
-      <a
-        href="/blog"
-        class="text-foreground underline decoration-line underline-offset-4 transition-colors duration-(--duration-fast) hover:text-accent hover:decoration-accent"
-      >blog</a>.
+      The rest of the time I build the tools I wish I had on shift: a detection-as-code pipeline, a URL detonation toolbox, a homelab SOC. Building them is how I learn what's actually happening under the hood, and I document what I find on the <a href="/blog" class="text-foreground underline decoration-accent/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-accent-bright hover:decoration-accent">blog</a>.
     </p>
   </div>
+
+  <dl class="mt-14 grid gap-4 sm:grid-cols-3" data-reveal-stagger>
+    {
+      stats.map((stat) => (
+        <div class="flex flex-col-reverse gap-1 rounded-lg border border-line bg-surface/60 p-6 transition-colors duration-(--duration-base) hover:border-accent/40">
+          <dt class="font-mono text-xs uppercase tracking-widest text-muted-fg">
+            {stat.label}
+          </dt>
+          <dd class="font-heading text-4xl font-black tracking-tight text-accent-bright">
+            {stat.value}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
 </Section>

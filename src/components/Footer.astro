@@ -4,23 +4,40 @@ import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer id="contact" class="border-t border-line">
-  <div class="mx-auto max-w-5xl px-6 py-20 sm:py-28">
-    <p class="font-mono text-xs uppercase tracking-widest text-accent mb-4">Contact</p>
-    <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight mb-6">
-      Get in touch
-    </h2>
-    <p class="text-muted-fg max-w-xl mb-10">
-      Open to talking about detection engineering, SOC operations, or anything
-      security. The fastest way to reach me is email or LinkedIn.
+<footer id="contact" class="relative overflow-hidden border-t border-line">
+  <div
+    class="orb left-1/2 top-full h-[40vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/3 opacity-20"
+    style="background: radial-gradient(circle, var(--color-accent), transparent 65%);"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="relative mx-auto max-w-5xl px-6 py-24 sm:py-32">
+    <p class="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-widest">
+      <span class="text-accent-bright">06</span>
+      <span class="text-muted-fg">Contact</span>
+      <span class="h-px max-w-24 flex-1 bg-line" aria-hidden="true"></span>
     </p>
-    <ul class="flex flex-wrap items-center gap-x-8 gap-y-4">
+    <a
+      href="mailto:fredzirbel@pm.me"
+      class="group inline-block font-heading text-[clamp(2.5rem,7vw,5.5rem)] font-black leading-none tracking-tight"
+    >
+      <span
+        class="text-gradient animate-gradient-pan transition-opacity duration-(--duration-base) group-hover:opacity-80"
+      >
+        Let's talk<span aria-hidden="true">&nbsp;&rarr;</span>
+      </span>
+    </a>
+    <p class="mt-8 max-w-xl text-muted-fg">
+      Open to conversations about detection engineering, SOC operations, or
+      anything security. Email is fastest; LinkedIn works too.
+    </p>
+    <ul class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
       <li>
         <a
           href="mailto:fredzirbel@pm.me"
-          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+          class="group inline-flex items-center gap-2 text-sm transition-colors duration-(--duration-fast) hover:text-accent-bright"
         >
-          <Icon name="mail" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          <Icon name="mail" class="size-4 text-muted-fg transition-colors duration-(--duration-fast) group-hover:text-accent-bright" />
           fredzirbel@pm.me
         </a>
       </li>
@@ -28,9 +45,9 @@ const year = new Date().getFullYear();
         <a
           href="https://github.com/fredzirbel"
           rel="noopener"
-          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+          class="group inline-flex items-center gap-2 text-sm transition-colors duration-(--duration-fast) hover:text-accent-bright"
         >
-          <Icon name="github" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          <Icon name="github" class="size-4 text-muted-fg transition-colors duration-(--duration-fast) group-hover:text-accent-bright" />
           GitHub
         </a>
       </li>
@@ -38,10 +55,19 @@ const year = new Date().getFullYear();
         <a
           href="https://linkedin.com/in/fredzirbel"
           rel="noopener"
-          class="group inline-flex items-center gap-2 text-sm hover:text-accent transition-colors duration-(--duration-fast)"
+          class="group inline-flex items-center gap-2 text-sm transition-colors duration-(--duration-fast) hover:text-accent-bright"
         >
-          <Icon name="linkedin" class="size-4 text-muted-fg group-hover:text-accent transition-colors duration-(--duration-fast)" />
+          <Icon name="linkedin" class="size-4 text-muted-fg transition-colors duration-(--duration-fast) group-hover:text-accent-bright" />
           LinkedIn
+        </a>
+      </li>
+      <li>
+        <a
+          href="/rss.xml"
+          class="group inline-flex items-center gap-2 text-sm transition-colors duration-(--duration-fast) hover:text-accent-bright"
+        >
+          <Icon name="rss" class="size-4 text-muted-fg transition-colors duration-(--duration-fast) group-hover:text-accent-bright" />
+          RSS
         </a>
       </li>
     </ul>

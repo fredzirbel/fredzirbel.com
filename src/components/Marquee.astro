@@ -1,0 +1,55 @@
+---
+/**
+ * Infinite scrolling strip of the platforms and tools Fred works with
+ * (from the GitHub profile README). The list is rendered twice so the
+ * 50% translate loop is seamless; static row under reduced motion.
+ */
+const tools = [
+  'Microsoft Sentinel',
+  'Splunk',
+  'Defender XDR',
+  'CrowdStrike Falcon',
+  'Cortex XDR',
+  'Cortex XSIAM',
+  'SentinelOne',
+  'Falcon Next-Gen SIEM',
+  'Sumo Logic',
+  'KQL',
+  'Python',
+  'Azure',
+  'Entra ID',
+  'Wireshark',
+  'Nmap',
+];
+---
+
+<div
+  class="relative overflow-hidden border-y border-line bg-surface/50 py-5"
+  aria-label="Platforms and tools"
+>
+  <div
+    class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-background to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-background to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+  <ul class="flex w-max animate-marquee gap-12 pr-12">
+    {
+      [0, 1].map((copy) =>
+        tools.map((tool) => (
+          <li
+            aria-hidden={copy === 1 ? 'true' : undefined}
+            class="flex items-center gap-3 whitespace-nowrap font-mono text-xs uppercase tracking-widest text-muted-fg"
+          >
+            <span class="size-1 rounded-full bg-accent" aria-hidden="true" />
+            {tool}
+          </li>
+        )),
+      )
+    }
+  </ul>
+</div>

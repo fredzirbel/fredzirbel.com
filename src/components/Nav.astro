@@ -17,52 +17,48 @@ const currentPath = Astro.url.pathname;
 <header
   id="site-nav"
   data-delayed={delayed ? 'true' : undefined}
-  class="fixed top-0 inset-x-0 z-40 border-b border-transparent transition-[background-color,border-color,opacity,transform] duration-(--duration-base)"
+  class="fixed top-4 inset-x-0 z-40 flex justify-center px-6 transition-[opacity,transform] duration-(--duration-base)"
 >
   <nav
-    class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
+    class="rounded-full border border-line bg-surface/60 px-2 py-1.5 backdrop-blur-md transition-colors duration-(--duration-base)"
     aria-label="Main"
   >
-    <a
-      href="/"
-      class="font-heading text-sm font-bold tracking-tight hover:text-accent transition-colors duration-(--duration-fast)"
-    >
-      fred zirbel
-    </a>
-    <ul class="flex items-center gap-6 sm:gap-8">
+    <ul class="flex items-center gap-1">
       {
-        links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              aria-current={currentPath.startsWith('/blog') && link.href === '/blog' ? 'page' : undefined}
-              class:list={[
-                'text-sm transition-colors duration-(--duration-fast) hover:text-accent',
-                currentPath.startsWith('/blog') && link.href === '/blog'
-                  ? 'text-accent'
-                  : 'text-muted-fg',
-              ]}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))
+        links.map((link) => {
+          const active = currentPath.startsWith('/blog') && link.href === '/blog';
+          return (
+            <li>
+              <a
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'inline-block rounded-full px-4 py-1.5 text-sm transition-colors duration-(--duration-fast)',
+                  active
+                    ? 'bg-raised text-accent-bright'
+                    : 'text-muted-fg hover:text-foreground hover:bg-raised/70',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
   </nav>
 </header>
 
 <style>
-  /* Solid backdrop once scrolled (class added by motion script) */
-  #site-nav.nav-scrolled {
-    background-color: rgb(10 10 15 / 0.85);
-    backdrop-filter: blur(12px);
-    border-color: var(--color-line);
+  /* Stronger backdrop once scrolled (class added by motion script) */
+  #site-nav.nav-scrolled nav {
+    background-color: rgb(52 56 58 / 0.85);
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.25);
   }
   /* Hidden state before the hero is passed (only applied when JS + motion allowed) */
   #site-nav.nav-hidden {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-12px);
     pointer-events: none;
   }
 </style>

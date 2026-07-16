@@ -7,7 +7,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// localStorage 'force-motion' = '1' opts back into full animation even when
+// the OS requests reduced motion (useful for testing; also flips CSS
+// animations back on via the html.force-motion class in global.css)
+const forcedMotion = localStorage.getItem('force-motion') === '1';
+if (forcedMotion) document.documentElement.classList.add('force-motion');
+const reducedMotion =
+  !forcedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nav = document.getElementById('site-nav');
 const navDelayed = nav?.dataset.delayed === 'true';
 
@@ -27,6 +33,8 @@ if (!reducedMotion) {
 
   // Lenis drives scrolling through GSAP's ticker so ScrollTrigger stays in sync
   const lenis = new Lenis();
+  // Exposed for debugging and console experimentation
+  (window as unknown as { __lenis: Lenis }).__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
