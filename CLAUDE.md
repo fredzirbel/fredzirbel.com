@@ -1,22 +1,25 @@
+# fredzirbel.com - SIGNAL (v2)
+
+Next.js 16 (App Router, static export) + TypeScript + Tailwind CSS 4.
+Cinematic portfolio + markdown blog for Fred Zirbel.
+
 ## Development
 
-When starting the dev server, use background mode:
+- Dev server: `npm run dev` (Next dev on http://localhost:3000). Use the
+  Browser pane preview tools to open it; do not block the shell.
+- Build: `npm run build` (static export to `out/`)
 
-```
-astro dev --background
-```
+## Architecture notes
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
-
-## Documentation
-
-Full documentation: https://docs.astro.build
-
-Consult these guides before working on related tasks:
-
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- `app/` routes; `components/sections/` page sections; `components/fx/`
+  client-side effect systems (shader background, wave field, cursor,
+  smooth scroll, preloader)
+- `content/blog/*.md` posts parsed by `lib/posts.ts` (gray-matter)
+- Page background color lives on `html` ONLY (body transparent) - an
+  opaque body background paints over fixed effect layers
+- Never use `requestIdleCallback` for must-run work (frozen in hidden
+  tabs); use load + setTimeout
+- All motion respects `prefers-reduced-motion`; `localStorage
+  force-motion=1` (html.force-motion) opts back in for testing
+- The in-app Browser pane cannot render motion or capture screenshots;
+  visual verification requires Fred's real-browser screenshots

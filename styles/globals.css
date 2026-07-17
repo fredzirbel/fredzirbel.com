@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+@theme {
+  /* SIGNAL palette - void black, warm ink, acid signal, violet trace */
+  --color-void: #050507;
+  --color-panel: #0c0c12;
+  --color-ink: #f2f2ef;
+  --color-muted: #8b8b99;
+  --color-line: rgb(242 242 239 / 0.09);
+  --color-signal: #c6ff4a;
+  --color-trace: #7a87ff;
+
+  /* Motion tokens - snappy rhythm */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 32s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+/* Fonts arrive as CSS variables from next/font in app/layout.tsx */
+@theme inline {
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-grotesk);
+  --font-mono: var(--font-jetbrains);
+}
+
+html {
+  /* Background lives on html ONLY - body must stay transparent so the
+     fixed effect layers are never painted over (v1 lesson) */
+  background-color: var(--color-void);
+  color-scheme: dark;
+  scrollbar-color: var(--color-muted) var(--color-void);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--color-signal);
+  color: var(--color-void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Film grain */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Display type helpers */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-ink);
+}
+.text-outline-signal {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-signal);
+}
+
+/* Custom cursor active: suppress the native cursor everywhere */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* SplitText lines mask for clean rise reveals */
+.split-mask .split-line {
+  overflow: clip;
+}
+
+/* CSS scroll-driven reveal (progressive enhancement, off main thread).
+   GSAP-managed elements opt out via data-gsap. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sda-reveal:not([data-gsap]) {
+      animation: sda-rise both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes sda-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduced motion: kill everything unless the visitor opted back in */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.force-motion) *,
+  html:not(.force-motion) *::before,
+  html:not(.force-motion) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* View transition morphs (blog titles) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+/* Prose for blog posts */
+.prose {
+  max-width: 68ch;
+}
+.prose h2,
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.prose h2 { font-size: 1.5rem; }
+.prose h3 { font-size: 1.2rem; }
+.prose p,
+.prose ul,
+.prose ol {
+  color: var(--color-muted);
+  margin-bottom: 1.25rem;
+}
+.prose ul { list-style: disc; padding-left: 1.5rem; }
+.prose ol { list-style: decimal; padding-left: 1.5rem; }
+.prose li { margin-bottom: 0.4rem; }
+.prose a {
+  color: var(--color-signal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose strong { color: var(--color-ink); }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--color-ink);
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.prose pre {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.prose blockquote {
+  border-left: 2px solid var(--color-signal);
+  padding-left: 1.25rem;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}

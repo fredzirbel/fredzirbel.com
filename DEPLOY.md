@@ -17,9 +17,9 @@ git push -u origin main
 2. Workers & Pages -> Create -> Pages -> Connect to Git
 3. Authorize GitHub and select `fredzirbel/fredzirbel.com`
 4. Build settings:
-   - Framework preset: **Astro**
+   - Framework preset: **Next.js (Static HTML Export)**
    - Build command: `npm run build`
-   - Build output directory: `dist`
+   - Build output directory: `out`
 5. Save and Deploy. First build takes 1-2 minutes; you get a
    `*.pages.dev` preview URL immediately.
 
