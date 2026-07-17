@@ -28,8 +28,9 @@ updateNav();
 if (!reducedMotion) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Lenis drives scrolling through GSAP's ticker so ScrollTrigger stays in sync
-  const lenis = new Lenis();
+  // Lenis drives scrolling through GSAP's ticker so ScrollTrigger stays in sync.
+  // Higher lerp = the page catches up to the wheel faster (snappier feel)
+  const lenis = new Lenis({ lerp: 0.16, wheelMultiplier: 1.1 });
   // Exposed for debugging and console experimentation
   (window as unknown as { __lenis: Lenis }).__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
@@ -56,11 +57,11 @@ if (!reducedMotion) {
   if (heroItems.length > 0) {
     gsap.from(heroItems, {
       opacity: 0,
-      y: 16,
-      duration: 0.5,
-      ease: 'power2.out',
-      stagger: 0.08,
-      delay: 0.1,
+      y: 24,
+      duration: 0.55,
+      ease: 'power3.out',
+      stagger: 0.07,
+      delay: 0.05,
     });
   }
 
@@ -77,13 +78,13 @@ if (!reducedMotion) {
     }
     gsap.from(targets, {
       opacity: 0,
-      y: 14,
-      duration: 0.4,
-      ease: 'power1.out',
+      y: 28,
+      duration: 0.5,
+      ease: 'power3.out',
       stagger: 0.06,
       scrollTrigger: {
         trigger: section,
-        start: 'top 85%',
+        start: 'top 88%',
         once: true,
       },
     });

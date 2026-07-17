@@ -46,9 +46,9 @@ const certs = [
           <>
             <BrandIcon
               name={cert.org}
-              class="pointer-events-none absolute -bottom-4 -right-4 size-24 text-foreground opacity-[0.05] transition-opacity duration-(--duration-base) group-hover:opacity-[0.09]"
+              class="pointer-events-none absolute right-4 top-1/2 size-12 -translate-y-1/2 text-foreground opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.14]"
             />
-            <span class="relative font-mono text-xs">{cert.name}</span>
+            <span class="relative block pr-16 font-mono text-xs">{cert.name}</span>
           </>
         );
         return (
