@@ -54,7 +54,9 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-background);
+  /* No background here: the page background lives on html only, so the
+     negative z-index layers (aurora, hero grid, particle canvas) paint
+     above the root canvas instead of being buried under an opaque body */
   color: var(--color-foreground);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
