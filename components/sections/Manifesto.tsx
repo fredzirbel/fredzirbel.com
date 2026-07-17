@@ -45,9 +45,13 @@ export default function Manifesto() {
   );
 
   return (
-    <section ref={scope} id="about" className="scroll-mt-24 px-6 py-32 md:px-12 md:py-44">
+    <section
+      ref={scope}
+      id="about"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-32 md:px-12 md:py-44"
+    >
       <p className="mb-10 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="text-signal">01</span> About
+        <span className="mr-3 text-signal">01</span>About
       </p>
       <p
         data-manifesto
@@ -60,7 +64,7 @@ export default function Manifesto() {
 
       <div
         data-bio-grid
-        className="mt-20 grid max-w-5xl gap-10 text-muted md:grid-cols-2"
+        className="mt-20 grid max-w-4xl gap-10 text-muted md:ml-auto md:grid-cols-2"
       >
         <p data-bio>
           By day I&apos;m a Principal Security Analyst at{' '}

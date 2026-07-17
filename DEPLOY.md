@@ -42,6 +42,15 @@ become one click).
 - https://fredzirbel.com/rss.xml and /sitemap-index.xml respond
 - Push a trivial commit and confirm a new deploy runs
 
+## Email: mail@fredzirbel.com
+
+The site and resume use mail@fredzirbel.com. Once the domain's DNS is on
+Cloudflare: dashboard -> Email -> Email Routing -> enable, create a
+custom address `mail@fredzirbel.com` forwarding to your Proton inbox,
+and let Cloudflare add the MX/SPF records. Free, takes 2 minutes.
+(To also SEND from that address, configure it in Proton as an external
+address or use Proton's custom-domain support.)
+
 ## Notes
 
 - Security headers (CSP, HSTS, etc.) can be added later via a

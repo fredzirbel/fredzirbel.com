@@ -12,7 +12,7 @@ export default function BlogIndex() {
   const posts = getPosts();
 
   return (
-    <div className="px-6 pb-24 pt-36 md:px-12">
+    <div className="mx-auto max-w-[1440px] px-6 pb-24 pt-36 md:px-12">
       <p className="mb-4 font-mono text-xs uppercase tracking-widest text-muted">Blog</p>
       <h1
         className="font-display text-[clamp(3rem,9vw,7rem)] font-black uppercase leading-none tracking-tight"

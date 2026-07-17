@@ -1,4 +1,4 @@
-import { filledIcons, strokedIcons } from '@/lib/icons';
+import { filledIcons, strokedIcons, textIcons } from '@/lib/icons';
 
 interface Props {
   name: string;
@@ -7,6 +7,18 @@ interface Props {
 
 /** Inline brand/glyph SVG resolved at build time. */
 export default function BrandIcon({ name, className }: Props) {
+  const text = textIcons[name];
+  if (text) {
+    return (
+      <span
+        aria-hidden="true"
+        className={`${className ?? ''} flex items-center justify-center font-display text-[0.8em] font-black leading-none tracking-tight`}
+      >
+        {text}
+      </span>
+    );
+  }
+
   const filled = filledIcons[name];
   const stroked = strokedIcons[name];
   const markup = filled ?? stroked;

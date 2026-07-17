@@ -18,7 +18,7 @@ const stats = [
 
 const certs = [
   { name: 'CompTIA SecurityX (CASP+)', org: 'comptia', href: null },
-  { name: 'ISACA CISM', org: 'shieldCheck', href: null },
+  { name: 'ISACA CISM', org: 'isaca', href: null },
   {
     name: 'CompTIA CySA+',
     org: 'comptia',
@@ -99,7 +99,9 @@ export default function Bento() {
         scrollTrigger: { trigger: scope.current, start: 'top 82%', once: true },
       });
 
-      // Velocity-reactive marquee: speeds up and skews with scroll
+      // Velocity-reactive marquee: speeds up and skews with scroll.
+      // quickTo tweens touch only their own property, so the infinite
+      // xPercent loop is never overwritten (overwrite:true here killed it).
       if (marqueeTrack.current) {
         const tween = gsap.to(marqueeTrack.current, {
           xPercent: -50,
@@ -107,17 +109,40 @@ export default function Bento() {
           ease: 'none',
           duration: 28,
         });
-        const proxy = { skew: 0 };
-        ScrollTriggerVelocity(marqueeTrack.current, tween, proxy);
+        const timeScaleTo = gsap.quickTo(tween, 'timeScale', {
+          duration: 0.25,
+          ease: 'power2.out',
+        });
+        const skewTo = gsap.quickTo(marqueeTrack.current, 'skewX', {
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+        let settle: gsap.core.Tween | null = null;
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            const velocity = self.getVelocity();
+            timeScaleTo(1 + gsap.utils.clamp(0, 3, Math.abs(velocity) / 900));
+            skewTo(gsap.utils.clamp(-3, 3, velocity / 500));
+            settle?.kill();
+            settle = gsap.delayedCall(0.25, () => {
+              timeScaleTo(1);
+              skewTo(0);
+            });
+          },
+        });
       }
     },
     { scope },
   );
 
   return (
-    <section ref={scope} id="credentials" className="scroll-mt-24 px-6 py-24 md:px-12 md:py-32">
+    <section
+      ref={scope}
+      id="credentials"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-32"
+    >
       <p className="mb-14 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="text-signal">04</span> Numbers &amp; credentials
+        <span className="mr-3 text-signal">04</span>Numbers &amp; credentials
       </p>
 
       <div className="grid gap-4 md:grid-cols-4">
@@ -228,30 +253,3 @@ export default function Bento() {
   );
 }
 
-/** Marquee reacts to scroll velocity: faster + slight skew, then settles. */
-function ScrollTriggerVelocity(
-  el: HTMLElement,
-  tween: gsap.core.Tween,
-  proxy: { skew: number },
-) {
-  ScrollTrigger.create({
-    onUpdate: (self) => {
-      const velocity = self.getVelocity();
-      const boost = gsap.utils.clamp(0, 3, Math.abs(velocity) / 900);
-      gsap.to(tween, { timeScale: 1 + boost, duration: 0.2, overwrite: true });
-      const skew = gsap.utils.clamp(-4, 4, velocity / 400);
-      if (Math.abs(skew) > Math.abs(proxy.skew)) {
-        proxy.skew = skew;
-        gsap.to(el, {
-          skewX: skew,
-          duration: 0.25,
-          overwrite: true,
-          onComplete: () => {
-            proxy.skew = 0;
-            gsap.to(el, { skewX: 0, duration: 0.6, ease: 'power3.out' });
-          },
-        });
-      }
-    },
-  });
-}

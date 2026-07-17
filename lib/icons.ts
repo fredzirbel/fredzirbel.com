@@ -6,9 +6,11 @@
  */
 import {
   siComptia,
+  siGithub,
   siIsc2,
   siPaloaltonetworks,
   siPython,
+  siRss,
   siSplunk,
   siSumologic,
   siWireshark,
@@ -26,6 +28,13 @@ export const filledIcons: Record<string, string> = {
   // Microsoft's four squares - used for Sentinel, Defender, Azure, Entra, KQL
   microsoft:
     '<path d="M2 2h9.5v9.5H2zM12.5 2H22v9.5h-9.5zM2 12.5h9.5V22H2zM12.5 12.5H22V22h-9.5z"/>',
+  github: `<path d="${siGithub.path}"/>`,
+  rss: `<path d="${siRss.path}"/>`,
+};
+
+/** Brands with no redistributable mark render as styled wordmarks. */
+export const textIcons: Record<string, string> = {
+  isaca: 'ISACA',
 };
 
 /** Stroked glyphs (stroke: currentColor, no fill) - Lucide-style neutrals */
@@ -41,4 +50,8 @@ export const strokedIcons: Record<string, string> = {
   // Scanner crosshair for Nmap
   radar:
     '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/>',
+  // Contact glyphs (Lucide, MIT)
+  mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  linkedin:
+    '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
 };

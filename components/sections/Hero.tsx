@@ -65,7 +65,7 @@ export default function Hero() {
     <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
       <WaveField />
 
-      <div className="relative px-6 pb-24 md:px-12 md:pb-16">
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-24 md:px-12 md:pb-16">
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"

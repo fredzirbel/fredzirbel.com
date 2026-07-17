@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import ProgressBar from '@/components/fx/ProgressBar';
 import { formatDate, getPost, getPosts } from '@/lib/posts';
 
 interface Props {
@@ -27,8 +26,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <article className="px-6 pb-24 pt-36 md:px-12">
-      <ProgressBar />
+    <article className="mx-auto max-w-[1440px] px-6 pb-24 pt-36 md:px-12">
       <header className="mb-14">
         <Link
           href="/blog/"

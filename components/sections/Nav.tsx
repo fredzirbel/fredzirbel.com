@@ -55,7 +55,7 @@ export default function Nav() {
     >
       <nav
         aria-label="Main"
-        className="flex items-center justify-between px-6 py-4 md:px-12"
+        className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 md:px-12"
       >
         <Link
           href="/"

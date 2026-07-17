@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import Cursor from '@/components/fx/Cursor';
+import ProgressBar from '@/components/fx/ProgressBar';
 import ShaderBackground from '@/components/fx/ShaderBackground';
 import SmoothScroll from '@/components/fx/SmoothScroll';
 import Nav from '@/components/sections/Nav';
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Cursor />
         <SmoothScroll>
           <div className="relative z-10">
+            <ProgressBar />
             <Nav />
             <main id="main">{children}</main>
           </div>

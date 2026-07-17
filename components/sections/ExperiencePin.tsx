@@ -82,15 +82,17 @@ export default function ExperiencePin() {
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
           <p className="mb-6 font-mono text-xs uppercase tracking-widest text-muted">
-            <span className="text-signal">03</span> Experience
+            <span className="mr-3 text-signal">03</span>Experience
           </p>
           <h2
             className="font-display text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tight"
             style={{ fontStretch: '115%' }}
           >
-            Critical
-            <br />
-            Start
+            <a href="https://www.criticalstart.com" rel="noopener">
+              Critical
+              <br />
+              Start
+            </a>
           </h2>
           <p className="mt-6 max-w-sm text-muted">
             24/7 Managed Detection and Response - Plano, TX. Two years, three

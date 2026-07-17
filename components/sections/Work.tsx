@@ -57,8 +57,8 @@ export default function Work() {
 
   return (
     <section ref={scope} id="work" className="scroll-mt-24 py-24 md:py-32">
-      <p className="mb-14 px-6 font-mono text-xs uppercase tracking-widest text-muted md:px-12">
-        <span className="text-signal">02</span> Selected work
+      <p className="mx-auto mb-14 max-w-[1440px] px-6 font-mono text-xs uppercase tracking-widest text-muted md:px-12">
+        <span className="mr-3 text-signal">02</span>Selected work
       </p>
 
       <div className="border-t border-line">
@@ -75,7 +75,7 @@ export default function Work() {
               aria-hidden="true"
               className="absolute inset-y-0 right-0 w-1/3 translate-x-full bg-gradient-to-l from-signal/10 to-transparent transition-transform duration-(--duration-base) ease-(--ease-out-expo) group-hover:translate-x-0"
             />
-            <div className="relative flex flex-col gap-6 md:flex-row md:items-baseline md:gap-12">
+            <div className="relative mx-auto flex max-w-[1440px] flex-col gap-6 md:flex-row md:items-baseline md:gap-12">
               <span className="font-mono text-sm text-muted/60">
                 {String(i + 1).padStart(2, '0')}
               </span>

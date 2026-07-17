@@ -7,9 +7,12 @@ import { formatDate, type Post } from '@/lib/posts';
  */
 export default function Writing({ posts }: { posts: Post[] }) {
   return (
-    <section id="writing" className="scroll-mt-24 px-6 py-24 md:px-12 md:py-32">
+    <section
+      id="writing"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-32"
+    >
       <p className="mb-14 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="text-signal">05</span> Writing
+        <span className="mr-3 text-signal">05</span>Writing
       </p>
 
       <div className="border-t border-line">
