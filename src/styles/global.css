@@ -102,7 +102,7 @@ body::after {
 .orb {
   position: absolute;
   border-radius: 100%;
-  filter: blur(90px);
+  filter: blur(60px);
   pointer-events: none;
 }
 

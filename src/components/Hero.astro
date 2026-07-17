@@ -74,9 +74,13 @@ import Icon from './Icon.astro';
     if (bigEnough) {
       const start = () =>
         import('../scripts/particles').then((m) => m.initParticles({ animate: wantsMotion }));
-      'requestIdleCallback' in window
-        ? requestIdleCallback(start, { timeout: 2000 })
-        : setTimeout(start, 300);
+      // Plain timers instead of requestIdleCallback: Chrome freezes idle
+      // callbacks in hidden tabs, which would leave the scene unmounted
+      if (document.readyState === 'complete') {
+        setTimeout(start, 300);
+      } else {
+        window.addEventListener('load', () => setTimeout(start, 300), { once: true });
+      }
     }
   </script>
 </section>

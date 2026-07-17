@@ -55,16 +55,16 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
     positions[i * 3] = (Math.random() - 0.5) * 2 * BOUNDS.x;
     positions[i * 3 + 1] = (Math.random() - 0.5) * 2 * BOUNDS.y;
     positions[i * 3 + 2] = (Math.random() - 0.5) * 2 * BOUNDS.z;
-    velocities[i * 3] = (Math.random() - 0.5) * 0.02;
-    velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.02;
-    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.01;
+    velocities[i * 3] = (Math.random() - 0.5) * 0.035;
+    velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.035;
+    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.018;
   }
 
   const pointsGeometry = new BufferGeometry();
   pointsGeometry.setAttribute('position', new BufferAttribute(positions, 3));
   const points = new Points(
     pointsGeometry,
-    new PointsMaterial({ color: NODE_COLOR, size: 0.14, transparent: true, opacity: 0.85 }),
+    new PointsMaterial({ color: NODE_COLOR, size: 0.18, transparent: true, opacity: 0.95 }),
   );
   scene.add(points);
 
@@ -75,23 +75,34 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
   lineGeometry.setAttribute('position', new BufferAttribute(linePositions, 3));
   const lines = new LineSegments(
     lineGeometry,
-    new LineBasicMaterial({ color: LINK_COLOR, transparent: true, opacity: 0.22 }),
+    new LineBasicMaterial({ color: LINK_COLOR, transparent: true, opacity: 0.32 }),
   );
   scene.add(lines);
 
   // Slowly tumbling wireframe icosahedron anchored to the right of the hero
   const ico = new Mesh(
     new IcosahedronGeometry(7, 1),
-    new MeshBasicMaterial({ color: LINK_COLOR, wireframe: true, transparent: true, opacity: 0.16 }),
+    new MeshBasicMaterial({ color: LINK_COLOR, wireframe: true, transparent: true, opacity: 0.35 }),
   );
-  ico.position.set(15, 1, -6);
   scene.add(ico);
   const icoInner = new Mesh(
     new IcosahedronGeometry(3.4, 0),
-    new MeshBasicMaterial({ color: NODE_COLOR, wireframe: true, transparent: true, opacity: 0.22 }),
+    new MeshBasicMaterial({ color: NODE_COLOR, wireframe: true, transparent: true, opacity: 0.45 }),
   );
-  icoInner.position.copy(ico.position);
   scene.add(icoInner);
+
+  // Keep the icosahedron on screen at any aspect ratio: place it a bit
+  // right of center relative to the visible frustum at its depth
+  const ICO_DEPTH = -6;
+  function placeIco(): void {
+    const dist = camera.position.z - ICO_DEPTH;
+    const halfH = Math.tan((camera.fov * Math.PI) / 360) * dist;
+    const halfW = halfH * camera.aspect;
+    const x = Math.min(halfW * 0.55, halfW - 8);
+    ico.position.set(x, 1, ICO_DEPTH);
+    icoInner.position.copy(ico.position);
+  }
+  placeIco();
 
   // Cursor position in world space (z = 0 plane) + NDC for camera parallax
   let mouseX = Infinity;
@@ -168,10 +179,10 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
     lineGeometry.attributes.position.needsUpdate = true;
 
     // Tumble the icosahedra in opposite directions
-    ico.rotation.x += 0.0012;
-    ico.rotation.y += 0.0016;
-    icoInner.rotation.x -= 0.002;
-    icoInner.rotation.y -= 0.0014;
+    ico.rotation.x += 0.0022;
+    ico.rotation.y += 0.003;
+    icoInner.rotation.x -= 0.0036;
+    icoInner.rotation.y -= 0.0026;
 
     // Gentle camera parallax toward the cursor
     camera.position.x += (parallaxX * 1.4 - camera.position.x) * 0.03;
@@ -206,6 +217,7 @@ export function initParticles({ animate }: ParticleOptions = { animate: true }):
     camera.aspect = clientWidth / clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(clientWidth, clientHeight);
+    placeIco();
     if (!animate) step();
   });
 
