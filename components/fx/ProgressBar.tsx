@@ -1,26 +1,47 @@
 'use client';
 
-/** Scroll progress: a bright signal bar across the very top of every page. */
+/**
+ * Scroll progress: a bright signal bar across the very top of every page.
+ * Driven by a rAF loop that reads Lenis's own progress when present (Lenis
+ * intercepts wheel, so a plain window 'scroll' event can be missed) and
+ * falls back to window scroll otherwise.
+ */
 import { useEffect, useRef } from 'react';
+
+interface LenisLike {
+  progress?: number;
+  scroll?: number;
+  limit?: number;
+}
 
 export default function ProgressBar() {
   const bar = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
+    let raf = 0;
+    let last = -1;
+
+    const read = (): number => {
+      const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis;
+      if (lenis && typeof lenis.progress === 'number' && Number.isFinite(lenis.progress)) {
+        return lenis.progress;
+      }
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
       const y = window.scrollY || doc.scrollTop;
-      const progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
-      if (bar.current) bar.current.style.transform = `scaleX(${progress})`;
+      return max > 0 ? y / max : 0;
     };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+
+    const tick = () => {
+      const p = Math.min(Math.max(read(), 0), 1);
+      if (bar.current && Math.abs(p - last) > 0.0005) {
+        bar.current.style.transform = `scaleX(${p})`;
+        last = p;
+      }
+      raf = requestAnimationFrame(tick);
     };
+    tick();
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (

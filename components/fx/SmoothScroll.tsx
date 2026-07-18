@@ -16,13 +16,21 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (!allowed) return;
     registerGsap();
+    const lenis = lenisRef.current?.lenis;
+    // Expose the instance so the progress bar can read scroll progress
+    // directly (Lenis intercepts wheel, so a plain window 'scroll' listener
+    // can miss updates)
+    (window as unknown as { __lenis?: unknown }).__lenis = lenis;
     const update = (time: number) => {
       lenisRef.current?.lenis?.raf(time * 1000);
     };
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
-    lenisRef.current?.lenis?.on('scroll', ScrollTrigger.update);
-    return () => gsap.ticker.remove(update);
+    lenis?.on('scroll', ScrollTrigger.update);
+    return () => {
+      gsap.ticker.remove(update);
+      (window as unknown as { __lenis?: unknown }).__lenis = undefined;
+    };
   }, [allowed]);
 
   if (!allowed) return <>{children}</>;

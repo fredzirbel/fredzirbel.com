@@ -58,7 +58,13 @@ function Terminal({ animate, typeKey }: { animate: boolean; typeKey: number }) {
     const rows = 6;
     const cols = 20;
     for (let r = 0; r < rows; r++) {
-      const lineLength = Math.max(3, Math.floor(cols * (0.35 + Math.random() * 0.55)));
+      // Widely varied line lengths; the last line is deliberately short so
+      // the cursor parks right after it, like a cursor at the end of a line
+      // of code rather than at the screen edge.
+      const lineLength =
+        r === rows - 1
+          ? 3 + Math.floor(Math.random() * 5)
+          : Math.max(2, Math.floor(cols * (0.2 + Math.random() * 0.8)));
       for (let c = 0; c < lineLength; c++) {
         const x = X0 + c * COL_STEP;
         const y = Y0 - r * ROW_STEP;

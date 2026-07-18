@@ -58,13 +58,13 @@ export default function Hero() {
           },
         });
         gsap.to('[data-hero-lift]', {
-          yPercent: -25,
+          yPercent: -20,
           opacity: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: scope.current,
             start: 'top top',
-            end: 'bottom 75%',
+            end: 'bottom 65%',
             scrub: true,
           },
         });
@@ -76,10 +76,17 @@ export default function Hero() {
   );
 
   return (
-    <section ref={scope} className="relative flex min-h-[90dvh] flex-col justify-end overflow-hidden">
+    <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
       <WaveField />
 
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-12 md:px-12 md:pb-10">
+      {/* Dissolve the wave-field into the void near the bottom so the handoff
+          into About is a soft fade, not a hard cut */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-2/5 bg-linear-to-b from-transparent to-void"
+      />
+
+      <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"

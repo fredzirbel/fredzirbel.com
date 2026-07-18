@@ -67,27 +67,29 @@ export default function ExperiencePin() {
       const el = track.current;
       if (!el) return;
 
-      const distance = () => el.scrollWidth - window.innerWidth;
-      gsap.to(el, {
-        x: () => -distance(),
-        ease: 'none',
+      const getDist = () => el.scrollWidth - window.innerWidth;
+      // Panels are centered (h-screen track); after they pin, hold for a
+      // short stretch of scroll before the horizontal scrub begins.
+      const holdPx = window.innerHeight * 0.35;
+
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scope.current,
-          // 'center center' + a taller-than-viewport section means the user
-          // scrolls until the panels settle in the vertical middle of the
-          // screen, and only then does the horizontal scrub begin
-          start: 'center center',
+          start: 'top top',
           pin: true,
-          // pinType 'transform' avoids switching to fixed positioning, which
-          // (combined with scrollbar-gutter: stable) stops the horizontal
-          // left-to-center jump when the pin engages
+          // pinType 'transform' avoids fixed positioning, which (with
+          // scrollbar-gutter: stable) stops the horizontal jump on pin
           pinType: 'transform',
           anticipatePin: 1,
           scrub: 1,
-          end: () => `+=${distance()}`,
+          end: () => `+=${holdPx + getDist()}`,
           invalidateOnRefresh: true,
         },
       });
+      // Hold: nothing moves for the first stretch of the pin
+      tl.to(el, { x: 0, ease: 'none', duration: holdPx });
+      // Then scrub horizontally through the role panels
+      tl.to(el, { x: () => -getDist(), ease: 'none', duration: getDist() });
     },
     { scope },
   );
@@ -96,11 +98,11 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-12 md:flex md:min-h-[115vh] md:items-center md:py-0"
+      className="scroll-mt-24 overflow-hidden py-10 md:py-0"
     >
       <div
         ref={track}
-        className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12"
+        className="flex flex-col gap-10 px-6 md:h-screen md:w-max md:flex-row md:items-center md:gap-14 md:px-12"
       >
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
