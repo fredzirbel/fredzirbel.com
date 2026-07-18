@@ -51,9 +51,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ShaderBackground />
         <Cursor />
+        <ProgressBar />
         <SmoothScroll>
           <div className="relative z-10">
-            <ProgressBar />
             <Nav />
             <main id="main">{children}</main>
           </div>

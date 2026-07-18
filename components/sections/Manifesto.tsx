@@ -7,6 +7,7 @@
  */
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
+import TerminalObject from '@/components/fx/TerminalObject';
 import { gsap, motionAllowed, registerGsap, SplitText } from '@/lib/motion';
 
 export default function Manifesto() {
@@ -48,10 +49,10 @@ export default function Manifesto() {
     <section
       ref={scope}
       id="about"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-32 md:px-12 md:py-44"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-28"
     >
-      <p className="mb-10 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="mr-3 text-signal">01</span>About
+      <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+        <span className="mr-4 text-signal">01</span>About
       </p>
       <p
         data-manifesto
@@ -64,8 +65,9 @@ export default function Manifesto() {
 
       <div
         data-bio-grid
-        className="mt-20 grid max-w-4xl gap-10 text-muted md:ml-auto md:grid-cols-2"
+        className="mt-16 grid items-center gap-10 text-muted md:grid-cols-3 md:gap-14"
       >
+        <TerminalObject />
         <p data-bio>
           By day I&apos;m a Principal Security Analyst at{' '}
           <a

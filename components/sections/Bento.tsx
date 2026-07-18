@@ -139,10 +139,10 @@ export default function Bento() {
     <section
       ref={scope}
       id="credentials"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-32"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
-      <p className="mb-14 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="mr-3 text-signal">04</span>Numbers &amp; credentials
+      <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+        <span className="mr-4 text-signal">04</span>Numbers &amp; credentials
       </p>
 
       <div className="grid gap-4 md:grid-cols-4">
@@ -227,11 +227,11 @@ export default function Bento() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-void to-transparent"
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-void to-transparent"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-void to-transparent"
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-void to-transparent"
           />
           <ul ref={marqueeTrack} className="flex w-max gap-16 pr-16">
             {[0, 1].map((copy) =>

@@ -56,9 +56,9 @@ export default function Work() {
   );
 
   return (
-    <section ref={scope} id="work" className="scroll-mt-24 py-24 md:py-32">
-      <p className="mx-auto mb-14 max-w-[1440px] px-6 font-mono text-xs uppercase tracking-widest text-muted md:px-12">
-        <span className="mr-3 text-signal">02</span>Selected work
+    <section ref={scope} id="work" className="scroll-mt-24 py-16 md:py-24">
+      <p className="mx-auto mb-12 max-w-[1440px] px-6 font-mono text-xl uppercase tracking-[0.2em] text-muted md:px-12">
+        <span className="mr-4 text-signal">02</span>Projects
       </p>
 
       <div className="border-t border-line">
@@ -73,7 +73,7 @@ export default function Work() {
           >
             <div
               aria-hidden="true"
-              className="absolute inset-y-0 right-0 w-1/3 translate-x-full bg-gradient-to-l from-signal/10 to-transparent transition-transform duration-(--duration-base) ease-(--ease-out-expo) group-hover:translate-x-0"
+              className="absolute inset-y-0 right-0 w-1/3 translate-x-full bg-linear-to-l from-signal/10 to-transparent transition-transform duration-(--duration-base) ease-(--ease-out-expo) group-hover:translate-x-0"
             />
             <div className="relative mx-auto flex max-w-[1440px] flex-col gap-6 md:flex-row md:items-baseline md:gap-12">
               <span className="font-mono text-sm text-muted/60">
@@ -91,11 +91,11 @@ export default function Work() {
                 </p>
                 <p className="mt-5 max-w-2xl text-sm text-muted">{project.description}</p>
               </div>
-              <ul className="flex shrink-0 flex-wrap gap-2 md:max-w-44 md:justify-end">
+              <ul className="flex shrink-0 flex-wrap gap-2.5 md:max-w-56 md:justify-end">
                 {project.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="rounded-full border border-line px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-muted"
+                    className="rounded-full border border-line px-4 py-1.5 font-mono text-sm uppercase tracking-wider text-muted"
                   >
                     {tag}
                   </li>

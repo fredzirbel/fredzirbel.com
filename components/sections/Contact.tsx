@@ -22,9 +22,9 @@ export default function Contact() {
           filter: 'blur(80px)',
         }}
       />
-      <div className="relative mx-auto max-w-[1440px] px-6 pb-10 pt-24 md:px-12 md:pt-36">
-        <p className="mb-10 font-mono text-xs uppercase tracking-widest text-muted">
-          <span className="mr-3 text-signal">06</span>Contact
+      <div className="relative mx-auto max-w-[1440px] px-6 pb-10 pt-16 md:px-12 md:pt-24">
+        <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+          <span className="mr-4 text-signal">06</span>Contact
         </p>
 
         <Magnetic className="inline-block" strength={0.2}>

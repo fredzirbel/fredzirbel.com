@@ -9,10 +9,10 @@ export default function Writing({ posts }: { posts: Post[] }) {
   return (
     <section
       id="writing"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-32"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
-      <p className="mb-14 font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="mr-3 text-signal">05</span>Writing
+      <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+        <span className="mr-4 text-signal">05</span>Writing
       </p>
 
       <div className="border-t border-line">

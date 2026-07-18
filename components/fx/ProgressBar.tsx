@@ -25,7 +25,7 @@ export default function ProgressBar() {
     <div
       ref={bar}
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-trace via-signal to-signal"
+      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-linear-to-r from-trace via-signal to-signal"
     />
   );
 }

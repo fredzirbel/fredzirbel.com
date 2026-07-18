@@ -63,7 +63,11 @@ export default function ExperiencePin() {
         ease: 'none',
         scrollTrigger: {
           trigger: scope.current,
+          // Explicit start: the default ('top bottom') engaged the pin the
+          // moment the section entered the viewport, causing a hard snap
+          start: 'top top',
           pin: true,
+          anticipatePin: 1,
           scrub: 1,
           end: () => `+=${distance()}`,
           invalidateOnRefresh: true,
@@ -81,8 +85,8 @@ export default function ExperiencePin() {
       >
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
-          <p className="mb-6 font-mono text-xs uppercase tracking-widest text-muted">
-            <span className="mr-3 text-signal">03</span>Experience
+          <p className="mb-6 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+            <span className="mr-4 text-signal">03</span>Experience
           </p>
           <h2
             className="font-display text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tight"
@@ -131,15 +135,15 @@ export default function ExperiencePin() {
         ))}
 
         {/* Platforms wall */}
-        <div className="md:w-[26rem] md:shrink-0">
-          <p className="mb-5 font-mono text-xs uppercase tracking-widest text-muted">
+        <div className="md:w-[30rem] md:shrink-0">
+          <p className="mb-6 font-mono text-sm uppercase tracking-[0.2em] text-muted">
             Daily platforms &amp; frameworks
           </p>
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-3">
             {platforms.map((platform) => (
               <li
                 key={platform}
-                className="rounded-full border border-line bg-panel/70 px-3.5 py-1.5 font-mono text-[11px] text-muted"
+                className="rounded-full border border-line bg-panel/70 px-5 py-2.5 font-mono text-sm text-muted"
               >
                 {platform}
               </li>
