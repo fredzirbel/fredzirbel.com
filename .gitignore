@@ -2,6 +2,9 @@
 /.next/
 /out/
 
+# cloudflare wrangler
+.wrangler/
+
 # dependencies
 node_modules/
 
