@@ -4,7 +4,7 @@ import BrandIcon from '@/components/sections/BrandIcon';
 const year = new Date().getFullYear();
 
 const links = [
-  { href: 'mailto:mail@fredzirbel.com', label: 'mail@fredzirbel.com', icon: 'mail' },
+  { href: 'mailto:me@fredzirbel.com', label: 'me@fredzirbel.com', icon: 'mail' },
   { href: 'https://github.com/fredzirbel', label: 'GitHub', icon: 'github' },
   { href: 'https://linkedin.com/in/fredzirbel', label: 'LinkedIn', icon: 'linkedin' },
   { href: '/rss.xml', label: 'RSS', icon: 'rss' },
@@ -29,7 +29,7 @@ export default function Contact() {
 
         <Magnetic className="inline-block" strength={0.2}>
           <a
-            href="mailto:mail@fredzirbel.com"
+            href="mailto:me@fredzirbel.com"
             className="text-outline group block font-display text-[clamp(3rem,12vw,11rem)] font-black uppercase leading-[0.9] tracking-tight transition-colors duration-(--duration-base) hover:text-signal hover:[-webkit-text-stroke-width:0px]"
             style={{ fontStretch: '120%' }}
           >
