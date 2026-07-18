@@ -18,6 +18,15 @@ export default function Manifesto() {
       if (!motionAllowed()) return;
       registerGsap();
 
+      // Eyebrow eases up as the section arrives, connecting the hero handoff
+      gsap.from('[data-about-eyebrow]', {
+        opacity: 0,
+        y: 24,
+        duration: 0.5,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: scope.current, start: 'top 82%', once: true },
+      });
+
       const split = SplitText.create('[data-manifesto]', { type: 'words' });
       gsap.from(split.words, {
         opacity: 0.12,
@@ -49,9 +58,12 @@ export default function Manifesto() {
     <section
       ref={scope}
       id="about"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-24 md:px-12 md:py-28"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-14"
     >
-      <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
+      <p
+        data-about-eyebrow
+        className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted"
+      >
         <span className="mr-4 text-signal">01</span>About
       </p>
       <p
@@ -72,21 +84,23 @@ export default function Manifesto() {
           By day I&apos;m a Principal Security Analyst at{' '}
           <a
             href="https://www.criticalstart.com"
-            rel="noopener"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-ink underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-signal hover:decoration-signal"
           >
             Critical Start
           </a>
-          , a 24/7 MDR protecting 2,500+ customer environments. When an alert
-          fires, my job is deciding whether it&apos;s noise or an incident:
-          digging through the logs to prove it, and executing remediation on
-          live threats when it&apos;s real.
+          , a 24/7 MDR protecting 2,500+ customer environments. I triage and
+          investigate alerts across 30+ integrated security products, decide
+          whether each one is noise or a real incident, and execute remediation
+          on live threats when it counts.
         </p>
         <p data-bio>
-          The rest of the time I build the tools I wish I had on shift: a
-          detection-as-code pipeline, a URL detonation toolbox, a homelab SOC.
-          Building them is how I learn what&apos;s actually happening under
-          the hood, and I document what I find on the{' '}
+          Outside of work I go deeper on the craft - detection engineering,
+          incident response, and security automation. I build projects like a
+          detection-as-code pipeline, a URL detonation toolbox, and a homelab
+          SOC to learn how the tooling actually works under the hood, and I
+          write up what I find on the{' '}
           <a
             href="/blog/"
             className="text-ink underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-signal hover:decoration-signal"

@@ -13,23 +13,33 @@ import { gsap, motionAllowed, registerGsap } from '@/lib/motion';
 const roles = [
   {
     title: 'Principal Security Analyst',
-    period: 'Current',
+    period: 'Jul 2026 - Present',
     bullets: [
-      'Investigate and respond to phishing, malware, and identity-based intrusion attempts across 2,500+ multi-tenant environments in an MDR operation',
-      'Log and endpoint-telemetry analysis with custom KQL - correlating URL clicks, downloads, identity activity, and process telemetry to establish root cause',
-      'Execute containment through EDR/XDR consoles: host isolation, account disablement, session termination',
-      'Evidence-backed escalations with attribution and timeline; 3-5 weekly high-priority incident calls with stakeholders',
-      'Detect cross-tenant phishing and malware campaigns from shared indicators for coordinated multi-customer response',
-      'Engineer SOC detection content: 500+ suppression filters, escalation templates, daily quality gate on suppression and orchestration changes',
+      'Investigate and respond to phishing, malware, and identity-based intrusions across 2,500+ multi-tenant environments, triaging alerts from 30+ integrated security products',
+      'Maintain a 16-minute average time to investigation (TTI) while working 300+ alerts monthly',
+      'Execute remediation on live incidents - host isolations, credential resets, session revocations, email deletions, file quarantines - under a dual-authorization workflow',
+      'Communicate directly with customer stakeholders during high-priority incidents on impact, remediation status, and response decisions',
+      'Train and mentor L1 analysts on investigation workflows and escalation quality',
+    ],
+  },
+  {
+    title: 'Senior Security Analyst',
+    period: 'Jul 2025 - Jul 2026',
+    bullets: [
+      'Performed log and endpoint-telemetry analysis with custom KQL, correlating URL clicks, downloads, identity activity, and process telemetry to reconstruct attacker actions',
+      'Seconded and verified remediation actions initiated by principal analysts - confirming scope, target accuracy, and justification before execution',
+      'Briefed customer stakeholders in 3-5 weekly high-priority incident calls with evidence-backed findings and attribution',
+      'Detected and correlated cross-tenant phishing and malware campaigns from shared indicators for coordinated, multi-customer response',
+      'Engineered 500+ suppression filters (KVP logic + regex), eliminating thousands of recurring false positives; daily pre-deployment quality gate',
     ],
   },
   {
     title: 'Security Analyst',
     period: 'Oct 2024 - Jul 2025',
     bullets: [
-      'Triaged 300+ monthly security alerts across a large multi-tenant client base: identity threats, phishing, malware, endpoint activity',
-      'Developed KQL investigation queries in Microsoft Sentinel and Defender for root-cause analysis',
-      'Client-ready escalations with accurate attribution; recognized during onboarding for escalation accuracy and consistency',
+      'Triaged and investigated identity threats, phishing, malware, and endpoint alerts across a large client base using Defender, Sentinel, CrowdStrike, and SentinelOne',
+      'Developed custom KQL queries in Microsoft Sentinel and Defender to scope incidents across identity, endpoint, and email telemetry',
+      'Produced client-ready escalations with accurate attribution and remediation guidance, supporting senior-led customer communications',
     ],
   },
 ];
@@ -67,6 +77,10 @@ export default function ExperiencePin() {
           // moment the section entered the viewport, causing a hard snap
           start: 'top top',
           pin: true,
+          // pinType 'transform' avoids switching to fixed positioning, which
+          // (combined with scrollbar-gutter: stable) stops the horizontal
+          // left-to-center jump when the pin engages
+          pinType: 'transform',
           anticipatePin: 1,
           scrub: 1,
           end: () => `+=${distance()}`,
@@ -92,15 +106,19 @@ export default function ExperiencePin() {
             className="font-display text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tight"
             style={{ fontStretch: '115%' }}
           >
-            <a href="https://www.criticalstart.com" rel="noopener">
+            <a
+              href="https://www.criticalstart.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Critical
               <br />
               Start
             </a>
           </h2>
           <p className="mt-6 max-w-sm text-muted">
-            24/7 Managed Detection and Response - Plano, TX. Two years, three
-            roles, thousands of investigations.
+            24/7 Managed Detection and Response - Plano, TX. Nearly two years,
+            three roles, thousands of investigations.
           </p>
           <p
             aria-hidden="true"

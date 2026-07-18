@@ -139,7 +139,7 @@ export default function Bento() {
     <section
       ref={scope}
       id="credentials"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-12 md:px-12 md:py-16"
     >
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
         <span className="mr-4 text-signal">04</span>Numbers &amp; credentials
@@ -194,9 +194,9 @@ export default function Bento() {
                 <>
                   <BrandIcon
                     name={cert.org}
-                    className="pointer-events-none absolute right-3 top-1/2 size-9 -translate-y-1/2 text-ink opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16]"
+                    className="pointer-events-none absolute right-3 top-1/2 size-12 -translate-y-1/2 text-ink opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16]"
                   />
-                  <span className="relative block pr-12 font-mono text-xs">{cert.name}</span>
+                  <span className="relative block pr-14 font-mono text-xs">{cert.name}</span>
                 </>
               );
               const cls =
@@ -206,7 +206,8 @@ export default function Bento() {
                   {cert.href ? (
                     <a
                       href={cert.href}
-                      rel="noopener"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`${cls} hover:border-signal/50 hover:text-signal`}
                     >
                       {inner}

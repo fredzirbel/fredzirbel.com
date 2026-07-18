@@ -13,6 +13,7 @@ import { gsap, motionAllowed, registerGsap, SplitText } from '@/lib/motion';
 export default function Hero() {
   const scope = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
+  const foreground = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -40,7 +41,9 @@ export default function Hero() {
         delay: 0.75,
       });
 
-      // Scroll scrub: headline recedes as the hero releases
+      // Scroll transition into About: the headline recedes while the
+      // foreground (subline + CTAs + scroll hint) lifts and fades away,
+      // easing the handoff instead of a hard cut.
       if (window.matchMedia('(min-width: 768px)').matches) {
         gsap.to(title.current, {
           scale: 0.72,
@@ -51,6 +54,17 @@ export default function Hero() {
             trigger: scope.current,
             start: 'top top',
             end: 'bottom 40%',
+            scrub: true,
+          },
+        });
+        gsap.to('[data-hero-lift]', {
+          yPercent: -45,
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: scope.current,
+            start: 'top top',
+            end: 'bottom 60%',
             scrub: true,
           },
         });
@@ -65,7 +79,7 @@ export default function Hero() {
     <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
       <WaveField />
 
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-24 md:px-12 md:pb-16">
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"
@@ -82,7 +96,10 @@ export default function Hero() {
           </span>
         </h1>
 
-        <div className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div
+          data-hero-lift
+          className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
+        >
           <p data-hero-fade className="max-w-md text-base text-muted sm:text-lg">
             A home for learning cybersecurity in the open - threat
             investigation by day, security tooling and write-ups the rest of

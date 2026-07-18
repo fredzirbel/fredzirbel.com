@@ -43,7 +43,8 @@ export default function Contact() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  rel={link.href.startsWith('http') ? 'noopener' : undefined}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="group inline-flex items-center gap-2.5 text-sm text-muted transition-colors duration-(--duration-fast) hover:text-signal"
                 >
                   <BrandIcon

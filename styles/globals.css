@@ -36,6 +36,9 @@ html {
   background-color: var(--color-void);
   color-scheme: dark;
   scrollbar-color: var(--color-muted) var(--color-void);
+  /* Always reserve scrollbar space so pinning the Experience section
+     (which changes page height) can't shift content horizontally */
+  scrollbar-gutter: stable;
 }
 
 body {

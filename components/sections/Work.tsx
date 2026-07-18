@@ -56,7 +56,7 @@ export default function Work() {
   );
 
   return (
-    <section ref={scope} id="work" className="scroll-mt-24 py-16 md:py-24">
+    <section ref={scope} id="work" className="scroll-mt-24 py-12 md:py-16">
       <p className="mx-auto mb-12 max-w-[1440px] px-6 font-mono text-xl uppercase tracking-[0.2em] text-muted md:px-12">
         <span className="mr-4 text-signal">02</span>Projects
       </p>
@@ -66,7 +66,8 @@ export default function Work() {
           <a
             key={project.name}
             href={project.href}
-            rel="noopener"
+            target="_blank"
+            rel="noopener noreferrer"
             data-row
             data-cursor="view"
             className="group relative block overflow-hidden border-b border-line px-6 py-12 transition-colors duration-(--duration-base) hover:bg-panel/60 md:px-12 md:py-16"
