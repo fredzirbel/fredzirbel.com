@@ -58,7 +58,7 @@ export default function Manifesto() {
     <section
       ref={scope}
       id="about"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-14"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 pb-12 pt-2 md:px-12 md:pb-16 md:pt-4"
     >
       <p
         data-about-eyebrow

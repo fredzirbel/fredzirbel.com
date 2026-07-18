@@ -1,6 +1,6 @@
 'use client';
 
-/** Reading progress: a signal hairline across the top of blog posts. */
+/** Scroll progress: a bright signal bar across the very top of every page. */
 import { useEffect, useRef } from 'react';
 
 export default function ProgressBar() {
@@ -8,8 +8,10 @@ export default function ProgressBar() {
 
   useEffect(() => {
     const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? window.scrollY / max : 0;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const y = window.scrollY || doc.scrollTop;
+      const progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
       if (bar.current) bar.current.style.transform = `scaleX(${progress})`;
     };
     onScroll();
@@ -25,7 +27,7 @@ export default function ProgressBar() {
     <div
       ref={bar}
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-linear-to-r from-trace via-signal to-signal"
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-signal shadow-[0_0_10px_1px_rgb(198_255_74/0.6)] will-change-transform"
     />
   );
 }

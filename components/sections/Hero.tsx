@@ -58,13 +58,13 @@ export default function Hero() {
           },
         });
         gsap.to('[data-hero-lift]', {
-          yPercent: -45,
+          yPercent: -25,
           opacity: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: scope.current,
             start: 'top top',
-            end: 'bottom 60%',
+            end: 'bottom 75%',
             scrub: true,
           },
         });
@@ -76,10 +76,10 @@ export default function Hero() {
   );
 
   return (
-    <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
+    <section ref={scope} className="relative flex min-h-[90dvh] flex-col justify-end overflow-hidden">
       <WaveField />
 
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-12 md:px-12 md:pb-10">
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"

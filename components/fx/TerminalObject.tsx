@@ -16,10 +16,15 @@ const SIGNAL = 0xc6ff4a;
 const TRACE = 0x7a87ff;
 const INK = 0xf2f2ef;
 
-const COL_STEP = 0.125;
-const ROW_STEP = 0.24;
-const X0 = -1.35;
-const Y0 = 0.78;
+// Dot-matrix layout, centered inside the screen with margin so the text
+// and cursor never reach the bezel edge (points sit at group offset y=0.72).
+const COL_STEP = 0.11;
+const ROW_STEP = 0.2;
+const X0 = -1.05;
+const Y0 = 0.5;
+// Safe box the cursor is clamped to (points-local coords)
+const CURSOR_MAX_X = 1.1;
+const CURSOR_MIN_Y = -0.6;
 
 function edges(geo: THREE.BufferGeometry): THREE.EdgesGeometry {
   return new THREE.EdgesGeometry(geo);
@@ -50,10 +55,10 @@ function Terminal({ animate, typeKey }: { animate: boolean; typeKey: number }) {
   const { geometry, heads } = useMemo(() => {
     const positions: number[] = [];
     const heads: { x: number; y: number }[] = [];
-    const rows = 7;
-    const cols = 22;
+    const rows = 6;
+    const cols = 20;
     for (let r = 0; r < rows; r++) {
-      const lineLength = Math.max(3, Math.floor(cols * (0.35 + Math.random() * 0.6)));
+      const lineLength = Math.max(3, Math.floor(cols * (0.35 + Math.random() * 0.55)));
       for (let c = 0; c < lineLength; c++) {
         const x = X0 + c * COL_STEP;
         const y = Y0 - r * ROW_STEP;
@@ -93,11 +98,11 @@ function Terminal({ animate, typeKey }: { animate: boolean; typeKey: number }) {
     }
 
     if (group.current) {
-      const targetY = Math.sin(t * 0.4) * 0.2 + pointer.x * 0.18;
-      const targetX = -0.06 + pointer.y * 0.1;
+      const targetY = Math.sin(t * 0.4) * 0.14 + pointer.x * 0.12;
+      const targetX = -0.05 + pointer.y * 0.08;
       group.current.rotation.y += (targetY - group.current.rotation.y) * 0.05;
       group.current.rotation.x += (targetX - group.current.rotation.x) * 0.05;
-      group.current.position.y = Math.sin(t * 0.8) * 0.04;
+      group.current.position.y = Math.sin(t * 0.8) * 0.03;
     }
 
     // Typing reveal
@@ -106,18 +111,18 @@ function Terminal({ animate, typeKey }: { animate: boolean; typeKey: number }) {
     const revealed = Math.floor(progress * total);
     if (screenPoints.current) screenPoints.current.geometry.setDrawRange(0, revealed);
 
-    // Cursor: follow the head while typing, blink when done
+    // Cursor: follow the head while typing, blink when done. Clamp to the
+    // safe box so it can never sit outside the screen.
     if (cursor.current) {
       const mat = cursor.current.material as THREE.MeshBasicMaterial;
-      if (revealed < total) {
-        const head = heads[Math.min(revealed, total - 1)];
-        cursor.current.position.set(head.x, head.y, 0.13);
-        mat.opacity = 0.95; // solid while typing
-      } else {
-        const last = heads[total - 1];
-        cursor.current.position.set(last.x, last.y, 0.13);
-        mat.opacity = Math.floor(t * 2.2) % 2 === 0 ? 0.95 : 0.05;
-      }
+      const target = revealed < total ? heads[Math.min(revealed, total - 1)] : heads[total - 1];
+      cursor.current.position.set(
+        Math.min(target.x, CURSOR_MAX_X),
+        Math.max(target.y, CURSOR_MIN_Y),
+        0.13,
+      );
+      mat.opacity =
+        revealed < total ? 0.95 : Math.floor(t * 2.2) % 2 === 0 ? 0.95 : 0.05;
     }
   });
 

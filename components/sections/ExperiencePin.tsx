@@ -73,9 +73,10 @@ export default function ExperiencePin() {
         ease: 'none',
         scrollTrigger: {
           trigger: scope.current,
-          // Explicit start: the default ('top bottom') engaged the pin the
-          // moment the section entered the viewport, causing a hard snap
-          start: 'top top',
+          // 'center center' + a taller-than-viewport section means the user
+          // scrolls until the panels settle in the vertical middle of the
+          // screen, and only then does the horizontal scrub begin
+          start: 'center center',
           pin: true,
           // pinType 'transform' avoids switching to fixed positioning, which
           // (combined with scrollbar-gutter: stable) stops the horizontal
@@ -92,10 +93,14 @@ export default function ExperiencePin() {
   );
 
   return (
-    <section ref={scope} id="experience" className="scroll-mt-24 overflow-hidden py-24 md:py-0">
+    <section
+      ref={scope}
+      id="experience"
+      className="scroll-mt-24 overflow-hidden py-12 md:flex md:min-h-[115vh] md:items-center md:py-0"
+    >
       <div
         ref={track}
-        className="flex flex-col gap-10 px-6 md:h-screen md:w-max md:flex-row md:items-center md:gap-14 md:px-12"
+        className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12"
       >
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
