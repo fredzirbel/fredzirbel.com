@@ -80,9 +80,11 @@ export default function ExperiencePin() {
           // Pin when the panels reach the vertical center of the screen
           start: 'center center',
           pin: true,
-          // Default (fixed) pin: nesting a transform-pin with the track's
-          // own x transform was causing the sub-pixel vibration. scrollbar-
-          // gutter: stable already prevents the horizontal jump on pin.
+          // pinType 'transform' is required with Lenis: a fixed pin desyncs
+          // from Lenis's smooth scroll and the section drifts vertically.
+          // The vibration it used to cause is fixed by GPU-compositing the
+          // pinned section (will-change on the section, not just the track).
+          pinType: 'transform',
           scrub: true,
           end: () => `+=${getDist()}`,
           invalidateOnRefresh: true,
@@ -96,7 +98,7 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-16"
+      className="scroll-mt-24 overflow-hidden py-16 md:will-change-transform md:[backface-visibility:hidden]"
     >
       <div
         ref={track}
