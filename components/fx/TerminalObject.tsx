@@ -118,7 +118,8 @@ function Terminal({ animate, started }: { animate: boolean; started: boolean }) 
     const revealed = Math.floor(progress * total);
     if (screenPoints.current) screenPoints.current.geometry.setDrawRange(0, revealed);
 
-    // Cursor follows the head while typing, then parks and blinks at the end
+    // Cursor follows the head while typing, then parks and blinks at the end.
+    // It shares the screen group's frame, so coords match the dots exactly.
     if (cursor.current) {
       const mat = cursor.current.material as THREE.MeshBasicMaterial;
       if (revealed < total) {
@@ -127,11 +128,11 @@ function Terminal({ animate, started }: { animate: boolean; started: boolean }) 
         cursor.current.position.set(
           Math.min(positions.getX(i) + COL_STEP, CURSOR_MAX_X),
           positions.getY(i),
-          0.13,
+          0.02,
         );
         mat.opacity = 0.95;
       } else {
-        cursor.current.position.set(endPoint.x, endPoint.y, 0.13);
+        cursor.current.position.set(endPoint.x, endPoint.y, 0.02);
         mat.opacity = Math.floor(t * 2.2) % 2 === 0 ? 0.95 : 0.05;
       }
     }
@@ -141,13 +142,16 @@ function Terminal({ animate, started }: { animate: boolean; started: boolean }) 
     <group ref={group} scale={0.9}>
       <lineSegments geometry={parts.monitor.geo} material={parts.monitor.mat} position={[0, 0.7, 0]} />
       <lineSegments geometry={parts.bezel.geo} material={parts.bezel.mat} position={[0, 0.7, 0.115]} />
-      <points ref={screenPoints} geometry={geometry} position={[0, 0.72, 0.13]}>
-        <pointsMaterial color={TRACE} size={0.045} transparent opacity={0.85} />
-      </points>
-      <mesh ref={cursor} position={[X0, Y0, 0.13]}>
-        <planeGeometry args={[0.09, 0.16]} />
-        <meshBasicMaterial color={SIGNAL} transparent opacity={0.95} />
-      </mesh>
+      {/* Screen: dots and cursor share one frame so they align exactly */}
+      <group position={[0, 0.72, 0.13]}>
+        <points ref={screenPoints} geometry={geometry}>
+          <pointsMaterial color={TRACE} size={0.045} transparent opacity={0.85} />
+        </points>
+        <mesh ref={cursor} position={[X0, Y0, 0.02]}>
+          <planeGeometry args={[0.09, 0.16]} />
+          <meshBasicMaterial color={SIGNAL} transparent opacity={0.95} />
+        </mesh>
+      </group>
       <lineSegments geometry={parts.stand.geo} material={parts.stand.mat} position={[0, -0.85, 0]} />
       <lineSegments geometry={parts.base.geo} material={parts.base.mat} position={[0, -1.22, 0.1]} />
       <lineSegments

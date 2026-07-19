@@ -58,7 +58,7 @@ export default function Manifesto() {
     <section
       ref={scope}
       id="about"
-      className="mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center scroll-mt-24 px-6 py-20 md:px-12"
+      className="mx-auto flex min-h-[80dvh] max-w-[1440px] flex-col justify-center scroll-mt-24 px-6 py-12 md:px-12"
     >
       <p
         data-about-eyebrow

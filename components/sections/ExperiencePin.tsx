@@ -68,11 +68,13 @@ export default function ExperiencePin() {
       if (!el) return;
 
       const getDist = () => el.scrollWidth - window.innerWidth;
-      // Panels are centered (h-screen track); after they pin, hold for a
-      // short stretch of scroll before the horizontal scrub begins.
-      const holdPx = window.innerHeight * 0.35;
-
-      const tl = gsap.timeline({
+      // Panels are centered (h-screen track); the moment the section pins
+      // (centered in the viewport), the next scroll drives the horizontal
+      // scrub - no hold.
+      gsap.to(el, {
+        x: () => -getDist(),
+        ease: 'none',
+        force3D: true,
         scrollTrigger: {
           trigger: scope.current,
           start: 'top top',
@@ -81,15 +83,11 @@ export default function ExperiencePin() {
           // scrollbar-gutter: stable) stops the horizontal jump on pin
           pinType: 'transform',
           anticipatePin: 1,
-          scrub: 1,
-          end: () => `+=${holdPx + getDist()}`,
+          scrub: 0.6,
+          end: () => `+=${getDist()}`,
           invalidateOnRefresh: true,
         },
       });
-      // Hold: nothing moves for the first stretch of the pin
-      tl.to(el, { x: 0, ease: 'none', duration: holdPx });
-      // Then scrub horizontally through the role panels
-      tl.to(el, { x: () => -getDist(), ease: 'none', duration: getDist() });
     },
     { scope },
   );
@@ -98,11 +96,11 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-20 md:py-0"
+      className="scroll-mt-24 overflow-hidden py-12 md:py-0"
     >
       <div
         ref={track}
-        className="flex flex-col gap-10 px-6 md:h-screen md:w-max md:flex-row md:items-center md:gap-14 md:px-12"
+        className="flex flex-col gap-10 px-6 md:h-screen md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
       >
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
@@ -139,7 +137,7 @@ export default function ExperiencePin() {
         {roles.map((role) => (
           <article
             key={role.title}
-            className="rounded-xl border border-line bg-panel/70 p-7 backdrop-blur-sm md:w-[34rem] md:shrink-0"
+            className="rounded-xl border border-line bg-panel p-7 md:w-[34rem] md:shrink-0"
           >
             <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="font-display text-xl font-bold">{role.title}</h3>
