@@ -2,11 +2,16 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatDate, getPosts } from '@/lib/posts';
 
-export const metadata: Metadata = {
-  title: 'Blog',
-  description:
-    'Notes on detection engineering, SOC operations, and security tooling - documenting what I learn as I build.',
-};
+export function generateMetadata(): Metadata {
+  const empty = getPosts().length === 0;
+  return {
+    title: 'Blog',
+    description: 'Notes on detection engineering, SOC operations, and security tooling - documenting what I learn as I build.',
+    alternates: { canonical: '/blog/' },
+    robots: empty ? { index: false, follow: true } : undefined,
+    openGraph: { url: '/blog/', images: ['/opengraph-image'] },
+  };
+}
 
 export default function BlogIndex() {
   const posts = getPosts();

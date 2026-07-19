@@ -1,52 +1,36 @@
 'use client';
 
-/**
- * Lenis smooth scrolling driven by GSAP's ticker so ScrollTrigger stays
- * perfectly in sync. Renders children untouched when motion is off.
- */
-import { ReactLenis } from 'lenis/react';
-import type { LenisRef } from 'lenis/react';
-import { useEffect, useRef } from 'react';
-import { gsap, registerGsap, ScrollTrigger, useMotionAllowed } from '@/lib/motion';
+import Lenis from 'lenis';
+import { useEffect } from 'react';
+import { gsap, registerGsap, ScrollTrigger, useMotion } from '@/lib/motion';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<LenisRef>(null);
-  const allowed = useMotionAllowed();
+  const { enabled } = useMotion();
 
   useEffect(() => {
-    if (!allowed) return;
+    if (!enabled) return;
     registerGsap();
-    const lenis = lenisRef.current?.lenis;
-    // Expose the instance so the progress bar can read scroll progress
-    // directly (Lenis intercepts wheel, so a plain window 'scroll' listener
-    // can miss updates)
-    (window as unknown as { __lenis?: unknown }).__lenis = lenis;
-    const update = (time: number) => {
-      lenisRef.current?.lenis?.raf(time * 1000);
-    };
+    const lenis = new Lenis({
+      autoRaf: false,
+      lerp: 0.16,
+      wheelMultiplier: 1.1,
+      anchors: { offset: -72 },
+    });
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+    const update = (time: number) => lenis.raf(time * 1000);
+    const refresh = () => ScrollTrigger.update();
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
-    lenis?.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', refresh);
+
     return () => {
+      lenis.off('scroll', refresh);
       gsap.ticker.remove(update);
-      (window as unknown as { __lenis?: unknown }).__lenis = undefined;
+      lenis.destroy();
+      (window as unknown as { __lenis?: Lenis }).__lenis = undefined;
+      document.documentElement.style.scrollBehavior = 'auto';
     };
-  }, [allowed]);
+  }, [enabled]);
 
-  if (!allowed) return <>{children}</>;
-
-  return (
-    <ReactLenis
-      root
-      options={{
-        autoRaf: false,
-        lerp: 0.16,
-        wheelMultiplier: 1.1,
-        anchors: { offset: -72 },
-      }}
-      ref={lenisRef}
-    >
-      {children}
-    </ReactLenis>
-  );
+  return <>{children}</>;
 }

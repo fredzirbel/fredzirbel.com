@@ -4,7 +4,10 @@ import Cursor from '@/components/fx/Cursor';
 import ProgressBar from '@/components/fx/ProgressBar';
 import ShaderBackground from '@/components/fx/ShaderBackground';
 import SmoothScroll from '@/components/fx/SmoothScroll';
+import { EnableMotionPill } from '@/components/fx/MotionControls';
 import Nav from '@/components/sections/Nav';
+import { MotionProvider } from '@/lib/motion';
+import { getPosts } from '@/lib/posts';
 import '@/styles/globals.css';
 
 const archivo = Archivo({
@@ -32,11 +35,14 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: 'Fred Zirbel',
     type: 'website',
+    images: ['/opengraph-image'],
   },
+  alternates: { canonical: '/' },
   icons: { icon: '/favicon.svg' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const hasPosts = getPosts().length > 0;
   return (
     <html
       lang="en"
@@ -49,15 +55,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <ShaderBackground />
-        <Cursor />
-        <ProgressBar />
-        <SmoothScroll>
-          <div className="relative z-10">
-            <Nav />
-            <main id="main">{children}</main>
-          </div>
-        </SmoothScroll>
+        <MotionProvider>
+          <div aria-hidden="true" className="css-background fixed inset-0 z-0" />
+          <ShaderBackground />
+          <Cursor />
+          <ProgressBar />
+          <EnableMotionPill />
+          <SmoothScroll>
+            <div className="relative z-10">
+              <Nav hasPosts={hasPosts} />
+              <main id="main">{children}</main>
+            </div>
+          </SmoothScroll>
+        </MotionProvider>
       </body>
     </html>
   );

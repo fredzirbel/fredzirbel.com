@@ -11,7 +11,7 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { motionAllowed } from '@/lib/motion';
+import { useMotion } from '@/lib/motion';
 
 const SIGNAL = 0xc6ff4a;
 const TRACE = 0x7a87ff;
@@ -168,48 +168,27 @@ function Terminal({ animate, started }: { animate: boolean; started: boolean }) 
   );
 }
 
-export default function TerminalObject() {
-  const [ready, setReady] = useState<null | { animate: boolean }>(null);
+export default function TerminalObject({ active, onFailure }: { active: boolean; onFailure: () => void }) {
   const [started, setStarted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { enabled } = useMotion();
+  const animate = enabled && active;
 
   useEffect(() => {
-    if (!window.matchMedia('(min-width: 768px)').matches) return;
-    const timer = setTimeout(() => setReady({ animate: motionAllowed() }), 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Start typing once, the first time the terminal is well into view
-  useEffect(() => {
-    if (!ready?.animate || !containerRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setStarted(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 },
-    );
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [ready]);
-
-  if (!ready) return null;
+    if (animate) setStarted(true);
+  }, [animate]);
 
   return (
-    <div
-      ref={containerRef}
-      aria-hidden="true"
-      className="aspect-square w-full max-w-xs md:max-w-none"
-    >
+    <div className="absolute inset-0">
       <Canvas
         camera={{ position: [0, 0.2, 6.4], fov: 45 }}
         dpr={[1, 2]}
-        frameloop={ready.animate ? 'always' : 'demand'}
+        frameloop={animate ? 'always' : 'demand'}
         gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener('webglcontextlost', onFailure, { once: true });
+        }}
       >
-        <Terminal animate={ready.animate} started={started} />
+        <Terminal animate={animate} started={started} />
       </Canvas>
     </div>
   );

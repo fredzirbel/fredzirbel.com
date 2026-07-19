@@ -1,16 +1,20 @@
 import Magnetic from '@/components/fx/Magnetic';
 import BrandIcon from '@/components/sections/BrandIcon';
+import { MotionSelector } from '@/components/fx/MotionControls';
 
 const year = new Date().getFullYear();
 
-const links = [
+const baseLinks = [
   { href: 'mailto:me@fredzirbel.com', label: 'me@fredzirbel.com', icon: 'mail' },
   { href: 'https://github.com/fredzirbel', label: 'GitHub', icon: 'github' },
   { href: 'https://linkedin.com/in/fredzirbel', label: 'LinkedIn', icon: 'linkedin' },
-  { href: '/rss.xml', label: 'RSS', icon: 'rss' },
 ];
 
-export default function Contact() {
+export default function Contact({ hasPosts }: { hasPosts: boolean }) {
+  const links = [
+    ...baseLinks,
+    ...(hasPosts ? [{ href: '/rss.xml', label: 'RSS', icon: 'rss' }] : []),
+  ];
   return (
     <footer id="contact" className="relative overflow-hidden">
       <div
@@ -56,9 +60,12 @@ export default function Contact() {
               </li>
             ))}
           </ul>
-          <p className="font-mono text-xs text-muted">
-            {`© ${year} Fred Zirbel · Next.js on Cloudflare Pages`}
-          </p>
+          <div className="flex flex-col items-start gap-4 md:items-end">
+            <MotionSelector />
+            <p className="font-mono text-xs text-muted">
+              {`© ${year} Fred Zirbel · Next.js on Cloudflare Pages`}
+            </p>
+          </div>
         </div>
       </div>
     </footer>

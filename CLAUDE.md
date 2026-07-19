@@ -19,7 +19,12 @@ Cinematic portfolio + markdown blog for Fred Zirbel.
   opaque body background paints over fixed effect layers
 - Never use `requestIdleCallback` for must-run work (frozen in hidden
   tabs); use load + setTimeout
-- All motion respects `prefers-reduced-motion`; `localStorage
-  force-motion=1` (html.force-motion) opts back in for testing
+- All motion uses the shared MotionProvider; localStorage motion-preference
+  stores System / On / Reduced, with legacy force-motion=1 migrated
+  automatically
+- Three.js section effects load only near desktop viewports and always retain
+  SVG/CSS fallbacks; the global canvas retains a CSS background on failure
+- Verification: npm run typecheck, npm run test:unit, npm run build,
+  npm run check:export, and npm run test:e2e
 - The in-app Browser pane cannot render motion or capture screenshots;
   visual verification requires Fred's real-browser screenshots

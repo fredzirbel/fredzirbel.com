@@ -7,9 +7,9 @@
  * static frame under reduced motion.
  */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { motionAllowed } from '@/lib/motion';
+import { useMotion } from '@/lib/motion';
 
 const VERT = /* glsl */ `
 uniform float uTime;
@@ -103,35 +103,21 @@ function Field({ animate }: { animate: boolean }) {
   );
 }
 
-export default function WaveField() {
-  const [ready, setReady] = useState<null | { animate: boolean }>(null);
-
-  useEffect(() => {
-    if (!window.matchMedia('(min-width: 768px)').matches) return;
-    const timer = setTimeout(() => setReady({ animate: motionAllowed() }), 350);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!ready) return null;
-
-  // Soft mask so the particle field dissolves gently into the void at the
-  // top and bottom edges (a fade-out, not a hard line into the About section)
-  const fade =
-    'linear-gradient(to bottom, transparent 0%, black 20%, black 52%, transparent 92%)';
-
+export default function WaveField({ active, onFailure }: { active: boolean; onFailure: () => void }) {
+  const { enabled } = useMotion();
+  const animate = enabled && active;
   return (
-    <div
-      aria-hidden="true"
-      className="absolute inset-0"
-      style={{ maskImage: fade, WebkitMaskImage: fade }}
-    >
+    <div className="absolute inset-0">
       <Canvas
         camera={{ position: [0, 2.2, 10], fov: 55 }}
         dpr={[1, 2]}
-        frameloop={ready.animate ? 'always' : 'demand'}
+        frameloop={animate ? 'always' : 'demand'}
         gl={{ antialias: false, powerPreference: 'low-power' }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener('webglcontextlost', onFailure, { once: true });
+        }}
       >
-        <Field animate={ready.animate} />
+        <Field animate={animate} />
       </Canvas>
     </div>
   );
