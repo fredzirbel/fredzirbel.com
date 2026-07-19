@@ -12,7 +12,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <footer id="contact" className="relative overflow-hidden">
+    <footer id="contact" className="relative overflow-hidden md:-mt-[6vh]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-full h-[60vmax] w-[90vmax] -translate-x-1/2 -translate-y-1/4 rounded-full opacity-25"
@@ -22,7 +22,7 @@ export default function Contact() {
           filter: 'blur(80px)',
         }}
       />
-      <div className="relative mx-auto flex min-h-[80dvh] max-w-[1440px] flex-col justify-center px-6 py-12 md:px-12">
+      <div className="relative mx-auto flex min-h-[70dvh] max-w-[1440px] flex-col justify-center px-6 py-9 md:px-12">
         <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
           <span className="mr-4 text-signal">06</span>Contact
         </p>

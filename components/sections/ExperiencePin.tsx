@@ -82,8 +82,9 @@ export default function ExperiencePin() {
           // pinType 'transform' avoids fixed positioning, which (with
           // scrollbar-gutter: stable) stops the horizontal jump on pin
           pinType: 'transform',
-          anticipatePin: 1,
-          scrub: 0.6,
+          // scrub: true (direct) - Lenis already smooths the scroll, so a
+          // fractional scrub double-smooths and makes the panels vibrate
+          scrub: true,
           end: () => `+=${getDist()}`,
           invalidateOnRefresh: true,
         },
@@ -96,7 +97,7 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-12 md:py-0"
+      className="scroll-mt-24 overflow-hidden py-9 md:py-0"
     >
       <div
         ref={track}

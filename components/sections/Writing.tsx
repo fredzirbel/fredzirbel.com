@@ -9,7 +9,7 @@ export default function Writing({ posts }: { posts: Post[] }) {
   return (
     <section
       id="writing"
-      className="mx-auto flex min-h-[80dvh] max-w-[1440px] flex-col justify-center scroll-mt-24 px-6 py-12 md:px-12"
+      className="mx-auto flex min-h-[70dvh] max-w-[1440px] flex-col justify-center scroll-mt-24 px-6 py-9 md:px-12"
     >
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
         <span className="mr-4 text-signal">05</span>Writing
