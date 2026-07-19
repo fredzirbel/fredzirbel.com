@@ -77,13 +77,12 @@ export default function ExperiencePin() {
         force3D: true,
         scrollTrigger: {
           trigger: scope.current,
-          start: 'top top',
+          // Pin when the panels reach the vertical center of the screen
+          start: 'center center',
           pin: true,
-          // pinType 'transform' avoids fixed positioning, which (with
-          // scrollbar-gutter: stable) stops the horizontal jump on pin
-          pinType: 'transform',
-          // scrub: true (direct) - Lenis already smooths the scroll, so a
-          // fractional scrub double-smooths and makes the panels vibrate
+          // Default (fixed) pin: nesting a transform-pin with the track's
+          // own x transform was causing the sub-pixel vibration. scrollbar-
+          // gutter: stable already prevents the horizontal jump on pin.
           scrub: true,
           end: () => `+=${getDist()}`,
           invalidateOnRefresh: true,
@@ -97,11 +96,11 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-9 md:py-0"
+      className="scroll-mt-24 overflow-hidden py-16"
     >
       <div
         ref={track}
-        className="flex flex-col gap-10 px-6 md:h-screen md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
+        className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
       >
         {/* Intro panel */}
         <div className="md:w-[38rem] md:shrink-0">
