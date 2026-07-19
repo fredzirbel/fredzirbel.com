@@ -95,8 +95,8 @@ export default function ExperiencePin() {
   );
 
   return (
-    <section ref={scope} id="experience" className="scroll-mt-24 py-16">
-      <div className="md:sticky md:top-1/2 md:-translate-y-1/2 md:overflow-hidden">
+    <section ref={scope} id="experience" className="scroll-mt-24 py-16 md:py-0">
+      <div className="md:sticky md:top-0 md:flex md:h-dvh md:items-center md:overflow-hidden">
         <div
           ref={track}
           className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
