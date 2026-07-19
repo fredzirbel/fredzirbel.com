@@ -15,9 +15,10 @@ const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
 
 /** All published posts, newest first. Build-time only (uses fs). */
 export function getPosts(): Post[] {
+  if (!fs.existsSync(BLOG_DIR)) return [];
   return fs
     .readdirSync(BLOG_DIR)
-    .filter((file) => file.endsWith('.md'))
+    .filter((file) => file.endsWith('.md') && file !== 'README.md')
     .map((file) => {
       const raw = fs.readFileSync(path.join(BLOG_DIR, file), 'utf8');
       const { data, content } = matter(raw);

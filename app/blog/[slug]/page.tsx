@@ -9,8 +9,16 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// Only the slugs from generateStaticParams exist; anything else 404s.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return getPosts().map((post) => ({ slug: post.slug }));
+  const posts = getPosts();
+  // Static export requires at least one param for a dynamic route. With zero
+  // posts, emit a placeholder slug that the page 404s (getPost returns
+  // undefined). Once a real post exists, only real slugs are generated.
+  if (posts.length === 0) return [{ slug: 'coming-soon' }];
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
