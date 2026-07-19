@@ -8,14 +8,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const links = [
+const baseLinks = [
   { href: '/#about', label: 'About' },
   { href: '/#work', label: 'Projects' },
-  { href: '/blog/', label: 'Blog' },
   { href: '/#contact', label: 'Contact' },
 ];
 
-export default function Nav() {
+export default function Nav({ hasPosts }: { hasPosts: boolean }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,7 +43,11 @@ export default function Nav() {
           FZ
         </Link>
         <ul className="flex items-center gap-5 sm:gap-6">
-          {links.map((link) => {
+          {[
+            ...baseLinks.slice(0, 2),
+            ...(hasPosts ? [{ href: '/blog/', label: 'Blog' }] : []),
+            ...baseLinks.slice(2),
+          ].map((link) => {
             const active = pathname.startsWith('/blog') && link.href === '/blog/';
             return (
               <li key={link.href}>

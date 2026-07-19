@@ -5,14 +5,21 @@
  * Shown once per session; skipped entirely under reduced motion.
  */
 import { useEffect, useRef, useState } from 'react';
-import { motionAllowed } from '@/lib/motion';
+import { useMotion } from '@/lib/motion';
 
 export default function Preloader() {
   const [state, setState] = useState<'idle' | 'counting' | 'done'>('idle');
   const counterRef = useRef<HTMLSpanElement>(null);
+  const attempted = useRef(false);
+  const { enabled, ready } = useMotion();
 
   useEffect(() => {
-    if (sessionStorage.getItem('preloaded') === '1' || !motionAllowed()) return;
+    if (!ready || attempted.current) return;
+    attempted.current = true;
+    if (sessionStorage.getItem('preloaded') === '1' || !enabled) {
+      sessionStorage.setItem('preloaded', '1');
+      return;
+    }
     sessionStorage.setItem('preloaded', '1');
     setState('counting');
 
@@ -30,7 +37,7 @@ export default function Preloader() {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [enabled, ready]);
 
   if (state === 'idle') return null;
 

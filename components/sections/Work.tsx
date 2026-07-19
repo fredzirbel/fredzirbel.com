@@ -6,7 +6,7 @@
  */
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { gsap, motionAllowed, registerGsap } from '@/lib/motion';
+import { gsap, registerGsap, useMotion } from '@/lib/motion';
 
 const projects = [
   {
@@ -37,10 +37,11 @@ const projects = [
 
 export default function Work() {
   const scope = useRef<HTMLElement>(null);
+  const { enabled } = useMotion();
 
   useGSAP(
     () => {
-      if (!motionAllowed()) return;
+      if (!enabled) return;
       registerGsap();
       gsap.utils.toArray<HTMLElement>('[data-row]').forEach((row) => {
         gsap.from(row, {
@@ -52,7 +53,7 @@ export default function Work() {
         });
       });
     },
-    { scope },
+    { scope, dependencies: [enabled], revertOnUpdate: true },
   );
 
   return (

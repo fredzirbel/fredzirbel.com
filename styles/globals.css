@@ -39,6 +39,7 @@ html {
   /* Always reserve scrollbar space so pinning the Experience section
      (which changes page height) can't shift content horizontally */
   scrollbar-gutter: stable;
+  overflow-x: clip;
 }
 
 body {
@@ -47,6 +48,53 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+}
+
+/* Always-present fallback beneath WebGL. */
+.css-background {
+  background:
+    radial-gradient(circle at 78% 14%, rgb(122 135 255 / 0.12), transparent 38%),
+    radial-gradient(circle at 20% 74%, rgb(198 255 74 / 0.045), transparent 36%),
+    var(--color-void);
+}
+
+.wave-fallback {
+  color: var(--color-trace);
+  opacity: 0.24;
+}
+.wave-fallback path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+.wave-fallback.motion-active path {
+  animation: wave-drift 6s ease-in-out infinite alternate;
+}
+@keyframes wave-drift {
+  from { transform: translate3d(-18px, -4px, 0); opacity: 0.45; }
+  to { transform: translate3d(18px, 5px, 0); opacity: 0.95; }
+}
+
+.terminal-fallback {
+  color: var(--color-signal);
+  opacity: 0.58;
+}
+.terminal-fallback .terminal-dots {
+  color: var(--color-trace);
+}
+.terminal-fallback.motion-active {
+  animation: terminal-float 4s ease-in-out infinite alternate;
+}
+.terminal-fallback.motion-active .terminal-cursor {
+  animation: terminal-blink 0.9s steps(1) infinite;
+}
+@keyframes terminal-float {
+  from { transform: translateY(-3px) rotate(-0.4deg); }
+  to { transform: translateY(4px) rotate(0.5deg); }
+}
+@keyframes terminal-blink {
+  50% { opacity: 0.08; }
 }
 
 ::selection {
@@ -114,11 +162,20 @@ html.has-cursor * {
   }
 }
 
-/* Reduced motion: kill everything unless the visitor opted back in */
+/* Explicit Reduced overrides the OS. Before hydration, the media query still
+   protects reduced-motion visitors from any first-paint animation. */
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
 @media (prefers-reduced-motion: reduce) {
-  html:not(.force-motion) *,
-  html:not(.force-motion) *::before,
-  html:not(.force-motion) *::after {
+  html:not([data-motion="on"]) *,
+  html:not([data-motion="on"]) *::before,
+  html:not([data-motion="on"]) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

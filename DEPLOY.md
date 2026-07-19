@@ -39,7 +39,8 @@ become one click).
 ## 4. Verify
 
 - https://fredzirbel.com loads with a valid certificate
-- https://fredzirbel.com/rss.xml and /sitemap-index.xml respond
+- https://fredzirbel.com/rss.xml and /sitemap.xml respond
+- Response headers include CSP, HSTS, nosniff, and the Permissions Policy
 - Push a trivial commit and confirm a new deploy runs
 
 ## Email: me@fredzirbel.com
@@ -53,7 +54,13 @@ address or use Proton's custom-domain support.)
 
 ## Notes
 
-- Security headers (CSP, HSTS, etc.) can be added later via a
-  `public/_headers` file, which Cloudflare Pages picks up natively
+- Security and cache headers live in public/_headers; Cloudflare Pages
+  copies this file into the static output and applies it to matching responses
+- Preview pages.dev hosts are marked noindex; the production custom domain
+  remains indexable
+- Next.js 16.2.10 currently brings PostCSS 8.4.31 through its supported
+  dependency tree. Its moderate advisory is monitored pending a compatible
+  upstream Next.js fix; do not use npm audit fix --force or override the
+  nested PostCSS version
 - Cloudflare Web Analytics (privacy-friendly, free) can be enabled from
   the dashboard without any code changes

@@ -7,17 +7,18 @@
  */
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import WaveField from '@/components/fx/WaveField';
-import { gsap, motionAllowed, registerGsap, SplitText } from '@/lib/motion';
+import WaveFieldLoader from '@/components/fx/WaveFieldLoader';
+import { gsap, registerGsap, SplitText, useMotion } from '@/lib/motion';
 
-export default function Hero() {
+export default function Hero({ hasPosts }: { hasPosts: boolean }) {
   const scope = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const foreground = useRef<HTMLDivElement>(null);
+  const { enabled } = useMotion();
 
   useGSAP(
     () => {
-      if (!motionAllowed()) return;
+      if (!enabled) return;
       registerGsap();
 
       const split = SplitText.create('[data-split]', {
@@ -72,12 +73,12 @@ export default function Hero() {
 
       return () => split.revert();
     },
-    { scope },
+    { scope, dependencies: [enabled], revertOnUpdate: true },
   );
 
   return (
     <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
-      <WaveField />
+      <WaveFieldLoader />
 
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
         <h1
@@ -112,12 +113,14 @@ export default function Hero() {
             >
               Selected work
             </a>
-            <a
-              href="/blog/"
-              className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
-            >
-              Read the blog
-            </a>
+            {hasPosts && (
+              <a
+                href="/blog/"
+                className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+              >
+                Read the blog
+              </a>
+            )}
           </div>
         </div>
       </div>

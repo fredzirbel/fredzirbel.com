@@ -14,13 +14,13 @@ export default function HomePage() {
   return (
     <>
       <Preloader />
-      <Hero />
-      <Manifesto />
+      <Hero hasPosts={posts.length > 0} />
+      <Manifesto hasPosts={posts.length > 0} />
       <Work />
       <ExperiencePin />
       <Bento />
       <Writing posts={posts} />
-      <Contact />
+      <Contact hasPosts={posts.length > 0} />
     </>
   );
 }

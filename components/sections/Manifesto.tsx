@@ -7,15 +7,16 @@
  */
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import TerminalObject from '@/components/fx/TerminalObject';
-import { gsap, motionAllowed, registerGsap, SplitText } from '@/lib/motion';
+import TerminalObjectLoader from '@/components/fx/TerminalObjectLoader';
+import { gsap, registerGsap, SplitText, useMotion } from '@/lib/motion';
 
-export default function Manifesto() {
+export default function Manifesto({ hasPosts }: { hasPosts: boolean }) {
   const scope = useRef<HTMLElement>(null);
+  const { enabled } = useMotion();
 
   useGSAP(
     () => {
-      if (!motionAllowed()) return;
+      if (!enabled) return;
       registerGsap();
 
       // Eyebrow eases up as the section arrives, connecting the hero handoff
@@ -51,7 +52,7 @@ export default function Manifesto() {
 
       return () => split.revert();
     },
-    { scope },
+    { scope, dependencies: [enabled], revertOnUpdate: true },
   );
 
   return (
@@ -79,7 +80,7 @@ export default function Manifesto() {
         data-bio-grid
         className="mt-16 grid items-center gap-10 text-muted md:grid-cols-3 md:gap-14"
       >
-        <TerminalObject />
+        <TerminalObjectLoader />
         <p data-bio>
           By day I&apos;m a Principal Security Analyst at{' '}
           <a
@@ -100,14 +101,11 @@ export default function Manifesto() {
           incident response, and security automation. I build projects like a
           detection-as-code pipeline, a URL detonation toolbox, and a homelab
           SOC to learn how the tooling actually works under the hood, and I
-          write up what I find on the{' '}
-          <a
-            href="/blog/"
-            className="text-ink underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-signal hover:decoration-signal"
-          >
-            blog
-          </a>
-          .
+          {hasPosts ? (
+            <>write up what I find on the{' '}<a href="/blog/" className="text-ink underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-signal hover:decoration-signal">blog</a>.</>
+          ) : (
+            <>document what I learn as I go.</>
+          )}
         </p>
       </div>
     </section>

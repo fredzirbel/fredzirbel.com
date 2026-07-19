@@ -13,19 +13,20 @@ interface Props {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  const posts = getPosts();
-  // Static export requires at least one param for a dynamic route. With zero
-  // posts, emit a placeholder slug that the page 404s (getPost returns
-  // undefined). Once a real post exists, only real slugs are generated.
-  if (posts.length === 0) return [{ slug: 'coming-soon' }];
-  return posts.map((post) => ({ slug: post.slug }));
+  return getPosts().map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
-  return { title: post.title, description: post.description };
+  const url = `/blog/${post.slug}/`;
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: url },
+    openGraph: { title: post.title, description: post.description, url, type: 'article', images: ['/opengraph-image'] },
+  };
 }
 
 export default async function PostPage({ params }: Props) {

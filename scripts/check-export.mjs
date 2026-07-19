@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { gzipSync } from 'node:zlib';
+
+const root = process.cwd();
+const out = path.join(root, 'out');
+const read = (relative) => fs.readFileSync(path.join(out, relative), 'utf8');
+const home = read('index.html');
+const sitemap = read('sitemap.xml');
+const headers = read('_headers');
+
+assert.match(home, /data-count="2500"[^>]*>2,500<\/span>/, 'static 2,500+ stat missing');
+assert.match(home, /data-count="9"[^>]*>9<\/span>/, 'static 9 stat missing');
+assert.match(home, /data-count="7"[^>]*>7<\/span>/, 'static 7 stat missing');
+const hasPosts = home.includes('href="/blog/');
+if (hasPosts) {
+  assert.ok(home.includes('href="/blog/"'), 'published blog must be linked from the homepage');
+  assert.ok(sitemap.includes('https://fredzirbel.com/blog/'), 'published blog index must be in sitemap');
+} else {
+  assert.ok(!home.includes('href="/blog/"'), 'empty blog must not be linked from the homepage');
+  assert.ok(!sitemap.includes('/blog/'), 'empty blog index must be omitted from sitemap');
+}
+assert.ok(!fs.existsSync(path.join(out, 'blog', 'coming-soon')), 'placeholder blog route was exported');
+assert.match(headers, /Content-Security-Policy:/);
+assert.match(headers, /Strict-Transport-Security: max-age=31536000/);
+assert.match(headers, /X-Robots-Tag: noindex/);
+assert.ok(fs.existsSync(path.join(out, 'opengraph-image')), 'Open Graph image was not generated');
+
+const scripts = [...home.matchAll(/<script[^>]+src="([^"]+)"/g)]
+  .map((match) => match[1])
+  .filter((source) => source.startsWith('/_next/static/'));
+const unique = [...new Set(scripts)];
+const bytes = unique.reduce((total, source) => {
+  const file = path.join(out, source.replace(/^\//, '').replaceAll('/', path.sep));
+  return total + gzipSync(fs.readFileSync(file)).byteLength;
+}, 0);
+const budget = 325 * 1024;
+assert.ok(bytes <= budget, `initial homepage JavaScript is ${(bytes / 1024).toFixed(1)} KiB gzip; budget is 325 KiB`);
+console.log(`Export checks passed; initial homepage JavaScript: ${(bytes / 1024).toFixed(1)} KiB gzip.`);

@@ -8,7 +8,7 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import BrandIcon from '@/components/sections/BrandIcon';
-import { gsap, motionAllowed, registerGsap, ScrollTrigger } from '@/lib/motion';
+import { gsap, registerGsap, ScrollTrigger, useMotion } from '@/lib/motion';
 
 const stats = [
   { value: 2500, suffix: '+', label: 'environments defended' },
@@ -67,24 +67,42 @@ const tools = [
 export default function Bento() {
   const scope = useRef<HTMLElement>(null);
   const marqueeTrack = useRef<HTMLUListElement>(null);
+  const { enabled } = useMotion();
 
   useGSAP(
     () => {
-      if (!motionAllowed()) return;
+      const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
+      if (!enabled) {
+        counters.forEach((el) => {
+          el.textContent = Number(el.dataset.count).toLocaleString('en-US');
+        });
+        return;
+      }
       registerGsap();
 
       // Count-up stats
-      gsap.utils.toArray<HTMLElement>('[data-count]').forEach((el) => {
+      counters.forEach((el) => {
         const target = Number(el.dataset.count);
-        const obj = { n: 0 };
-        gsap.to(obj, {
-          n: target,
-          duration: 1.2,
-          ease: 'power2.out',
-          snap: { n: 1 },
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          onUpdate: () => {
-            el.textContent = obj.n.toLocaleString('en-US');
+        const finalValue = target.toLocaleString('en-US');
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 88%',
+          once: true,
+          onEnter: () => {
+            const obj = { n: 0 };
+            el.textContent = '0';
+            gsap.to(obj, {
+              n: target,
+              duration: 1.2,
+              ease: 'power2.out',
+              snap: { n: 1 },
+              onUpdate: () => {
+                el.textContent = obj.n.toLocaleString('en-US');
+              },
+              onComplete: () => {
+                el.textContent = finalValue;
+              },
+            });
           },
         });
       });
@@ -131,8 +149,13 @@ export default function Bento() {
           },
         });
       }
+      return () => {
+        counters.forEach((el) => {
+          el.textContent = Number(el.dataset.count).toLocaleString('en-US');
+        });
+      };
     },
-    { scope },
+    { scope, dependencies: [enabled], revertOnUpdate: true },
   );
 
   return (
@@ -153,7 +176,7 @@ export default function Bento() {
             className="rounded-xl border border-line bg-panel/70 p-7 transition-colors duration-(--duration-base) hover:border-signal/40"
           >
             <p className="font-display text-5xl font-black tracking-tight text-signal">
-              <span data-count={stat.value}>0</span>
+              <span data-count={stat.value}>{stat.value.toLocaleString('en-US')}</span>
               {stat.suffix}
             </p>
             <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted">
@@ -223,7 +246,7 @@ export default function Bento() {
 
         <div
           data-tile
-          className="relative overflow-hidden rounded-xl border border-line bg-panel/70 py-6 md:col-span-4"
+          className="relative min-w-0 max-w-full overflow-hidden rounded-xl border border-line bg-panel/70 py-6 md:col-span-4"
           aria-label="Platforms and tools"
         >
           <div
@@ -253,4 +276,3 @@ export default function Bento() {
     </section>
   );
 }
-

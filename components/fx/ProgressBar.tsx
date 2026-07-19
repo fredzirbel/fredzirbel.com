@@ -8,15 +8,19 @@
  */
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { gsap, registerGsap, ScrollTrigger } from '@/lib/motion';
+import { registerGsap, ScrollTrigger, useMotion } from '@/lib/motion';
 
 export default function ProgressBar() {
   const bar = useRef<HTMLDivElement>(null);
+  const { enabled } = useMotion();
 
   useGSAP(() => {
-    registerGsap();
     const el = bar.current;
-    if (!el) return;
+    if (!el || !enabled) {
+      if (el) el.style.transform = 'scaleX(0)';
+      return;
+    }
+    registerGsap();
     const st = ScrollTrigger.create({
       start: 0,
       end: 'max',
@@ -24,8 +28,11 @@ export default function ProgressBar() {
         el.style.transform = `scaleX(${self.progress})`;
       },
     });
-    return () => st.kill();
-  });
+    return () => {
+      st.kill();
+      el.style.transform = 'scaleX(0)';
+    };
+  }, { dependencies: [enabled], revertOnUpdate: true });
 
   return (
     <div
