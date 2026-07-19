@@ -98,7 +98,7 @@ export default function ExperiencePin() {
     <section
       ref={scope}
       id="experience"
-      className="scroll-mt-24 overflow-hidden py-10 md:py-0"
+      className="scroll-mt-24 overflow-hidden py-20 md:py-0"
     >
       <div
         ref={track}

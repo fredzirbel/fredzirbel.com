@@ -114,8 +114,17 @@ export default function WaveField() {
 
   if (!ready) return null;
 
+  // Soft mask so the particle field dissolves gently into the void at the
+  // top and bottom edges (a fade-out, not a hard line into the About section)
+  const fade =
+    'linear-gradient(to bottom, transparent 0%, black 20%, black 52%, transparent 92%)';
+
   return (
-    <div aria-hidden="true" className="absolute inset-0">
+    <div
+      aria-hidden="true"
+      className="absolute inset-0"
+      style={{ maskImage: fade, WebkitMaskImage: fade }}
+    >
       <Canvas
         camera={{ position: [0, 2.2, 10], fov: 55 }}
         dpr={[1, 2]}

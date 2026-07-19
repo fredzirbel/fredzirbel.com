@@ -139,7 +139,7 @@ export default function Bento() {
     <section
       ref={scope}
       id="credentials"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 pb-8 pt-4 md:px-12 md:pb-10 md:pt-6"
+      className="mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center scroll-mt-24 px-6 py-20 md:px-12"
     >
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
         <span className="mr-4 text-signal">04</span>Numbers &amp; credentials

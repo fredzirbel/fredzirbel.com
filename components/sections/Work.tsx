@@ -56,7 +56,11 @@ export default function Work() {
   );
 
   return (
-    <section ref={scope} id="work" className="scroll-mt-24 pb-4 pt-8 md:pb-6 md:pt-10">
+    <section
+      ref={scope}
+      id="work"
+      className="flex min-h-dvh scroll-mt-24 flex-col justify-center py-20"
+    >
       <p className="mx-auto mb-12 max-w-[1440px] px-6 font-mono text-xl uppercase tracking-[0.2em] text-muted md:px-12">
         <span className="mr-4 text-signal">02</span>Projects
       </p>

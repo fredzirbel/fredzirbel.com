@@ -79,13 +79,6 @@ export default function Hero() {
     <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
       <WaveField />
 
-      {/* Dissolve the wave-field into the void near the bottom so the handoff
-          into About is a soft fade, not a hard cut */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-2/5 bg-linear-to-b from-transparent to-void"
-      />
-
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
         <h1
           ref={title}
