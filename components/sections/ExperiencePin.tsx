@@ -65,29 +65,29 @@ export default function ExperiencePin() {
       if (!motionAllowed() || !window.matchMedia('(min-width: 768px)').matches) return;
       registerGsap();
       const el = track.current;
-      if (!el) return;
+      const section = scope.current;
+      if (!el || !section) return;
 
-      const getDist = () => el.scrollWidth - window.innerWidth;
-      // Panels are centered (h-screen track); the moment the section pins
-      // (centered in the viewport), the next scroll drives the horizontal
-      // scrub - no hold.
+      const getDist = () => Math.max(0, el.scrollWidth - window.innerWidth);
+      // No GSAP pin. A native position:sticky child holds the panels while
+      // the tall section scrolls past - sticky has zero interaction with
+      // Lenis, so nothing drifts or shimmers. We only scrub the track's x.
+      const setHeight = () => {
+        section.style.height = `${window.innerHeight + getDist()}px`;
+      };
+      setHeight();
+
       gsap.to(el, {
         x: () => -getDist(),
         ease: 'none',
         force3D: true,
         scrollTrigger: {
-          trigger: scope.current,
-          // Pin when the panels reach the vertical center of the screen
-          start: 'center center',
-          pin: true,
-          // pinType 'transform' is required with Lenis: a fixed pin desyncs
-          // from Lenis's smooth scroll and the section drifts vertically.
-          // The vibration it used to cause is fixed by GPU-compositing the
-          // pinned section (will-change on the section, not just the track).
-          pinType: 'transform',
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
           scrub: true,
-          end: () => `+=${getDist()}`,
           invalidateOnRefresh: true,
+          onRefresh: setHeight,
         },
       });
     },
@@ -95,17 +95,14 @@ export default function ExperiencePin() {
   );
 
   return (
-    <section
-      ref={scope}
-      id="experience"
-      className="scroll-mt-24 overflow-hidden py-16 md:will-change-transform md:[backface-visibility:hidden]"
-    >
-      <div
-        ref={track}
-        className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
-      >
-        {/* Intro panel */}
-        <div className="md:w-[38rem] md:shrink-0">
+    <section ref={scope} id="experience" className="scroll-mt-24 py-16">
+      <div className="md:sticky md:top-1/2 md:-translate-y-1/2 md:overflow-hidden">
+        <div
+          ref={track}
+          className="flex flex-col gap-10 px-6 md:w-max md:flex-row md:items-center md:gap-14 md:px-12 md:will-change-transform"
+        >
+          {/* Intro panel */}
+          <div className="md:w-[38rem] md:shrink-0">
           <p className="mb-6 font-mono text-xl uppercase tracking-[0.2em] text-muted">
             <span className="mr-4 text-signal">03</span>Experience
           </p>
@@ -174,6 +171,7 @@ export default function ExperiencePin() {
               </li>
             ))}
           </ul>
+        </div>
         </div>
       </div>
     </section>
