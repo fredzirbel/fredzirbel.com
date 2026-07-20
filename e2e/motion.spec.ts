@@ -16,6 +16,52 @@ test('normal system preference enables motion and explicit Reduced stops it', as
   await expect(page.getByText('2,500+', { exact: true })).toBeVisible();
 });
 
+test('motion toggles preserve the shader context', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('preloaded', '1'));
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+
+  const shader = page.getByTestId('shader-background');
+  const supportsWebGL = await shader.evaluate((element) =>
+    Boolean((element as HTMLCanvasElement).getContext('webgl2')),
+  );
+  test.skip(!supportsWebGL, 'WebGL2 is unavailable in this browser');
+
+  await expect.poll(() => shader.evaluate((element) => {
+    const gl = (element as HTMLCanvasElement).getContext('webgl2');
+    return Boolean(gl?.getParameter(gl.CURRENT_PROGRAM));
+  })).toBe(true);
+  await expect(shader).toHaveClass(/opacity-100/);
+  await page.getByRole('button', { name: 'Reduced', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  await page.getByRole('button', { name: 'On', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
+  await expect(shader).toHaveClass(/opacity-100/);
+  await expect.poll(() => shader.evaluate((element) => {
+    const gl = (element as HTMLCanvasElement).getContext('webgl2');
+    return gl ? gl.isContextLost() : true;
+  })).toBe(false);
+});
+
+test('selecting reduced motion during the preloader never traps the page', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  await expect(page.getByTestId('preloader')).toBeVisible();
+
+  await page.evaluate(() => {
+    localStorage.setItem('motion-preference', 'reduced');
+    dispatchEvent(new StorageEvent('storage', {
+      key: 'motion-preference',
+      newValue: 'reduced',
+      storageArea: localStorage,
+    }));
+  });
+
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  await expect(page.getByTestId('preloader')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Fred Zirbel' })).toBeVisible();
+});
+
 test('reduced system preference exposes a persistent opt-in', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
