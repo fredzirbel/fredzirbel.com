@@ -8,6 +8,8 @@ const out = path.join(root, 'out');
 const read = (relative) => fs.readFileSync(path.join(out, relative), 'utf8');
 const home = read('index.html');
 const renderedHome = home.replaceAll('<!-- -->', '');
+const renderedBlog = read('blog/index.html').replaceAll('<!-- -->', '');
+const renderedNotFound = read('404.html').replaceAll('<!-- -->', '');
 const sitemap = read('sitemap.xml');
 const headers = read('_headers');
 
@@ -15,6 +17,9 @@ assert.match(home, /data-count="2500"[^>]*>2,500<\/span>/, 'static 2,500+ stat m
 assert.match(home, /data-count="9"[^>]*>9<\/span>/, 'static 9 stat missing');
 assert.match(home, /data-count="7"[^>]*>7<\/span>/, 'static 7 stat missing');
 assert.match(renderedHome, /and I (?:document|write)/, 'about copy is missing whitespace before its publication state');
+for (const [page, output] of [['home', renderedHome], ['blog', renderedBlog], ['404', renderedNotFound]]) {
+  assert.doesNotMatch(output, /[—–]/, `${page} output contains a long dash`);
+}
 const hasPosts = home.includes('href="/blog/');
 if (hasPosts) {
   assert.ok(home.includes('href="/blog/"'), 'published blog must be linked from the homepage');

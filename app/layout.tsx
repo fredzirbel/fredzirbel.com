@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s - Fred Zirbel',
   },
   description:
-    'Principal Security Analyst. Threat investigation, detection engineering, and security tooling—learning cybersecurity in the open.',
+    'Principal Security Analyst focused on threat investigation, detection engineering, and security tooling while learning cybersecurity in the open.',
   openGraph: {
     siteName: 'Fred Zirbel',
     type: 'website',
