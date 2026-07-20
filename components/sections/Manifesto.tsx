@@ -71,7 +71,7 @@ export default function Manifesto({ hasPosts }: { hasPosts: boolean }) {
         data-manifesto
         className="max-w-5xl font-display text-[clamp(1.8rem,4.6vw,4rem)] font-bold leading-[1.12] tracking-tight"
       >
-        I find <span className="text-signal">threats</span> for a living—and
+        I find <span className="text-signal">threats</span> for a living and
         build the <span className="text-signal">tools</span> to understand
         them.
       </p>
@@ -97,7 +97,7 @@ export default function Manifesto({ hasPosts }: { hasPosts: boolean }) {
           on live threats when it counts.
         </p>
         <p data-bio>
-          Outside of work I go deeper on the craft—detection engineering,
+          Outside of work I go deeper on the craft, including detection engineering,
           incident response, and security automation. I build projects like a
           detection-as-code pipeline, a URL detonation toolbox, and a homelab
           SOC to learn how the tooling actually works under the hood, and I{' '}
