@@ -102,7 +102,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
           <p data-hero-fade className="max-w-md text-base text-muted sm:text-lg">
-            A home for learning cybersecurity in the open - threat
+            A home for learning cybersecurity in the open—threat
             investigation by day, security tooling and write-ups the rest of
             the time.
           </p>

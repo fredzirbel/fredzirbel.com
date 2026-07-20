@@ -6,7 +6,7 @@ export function generateMetadata(): Metadata {
   const empty = getPosts().length === 0;
   return {
     title: 'Blog',
-    description: 'Notes on detection engineering, SOC operations, and security tooling - documenting what I learn as I build.',
+    description: 'Notes on detection engineering, SOC operations, and security tooling—documenting what I learn as I build.',
     alternates: { canonical: '/blog/' },
     robots: empty ? { index: false, follow: true } : undefined,
     openGraph: { url: '/blog/', images: ['/opengraph-image'] },
@@ -36,8 +36,8 @@ export default function BlogIndex() {
             Coming soon
           </p>
           <p className="mt-3 max-w-md text-muted">
-            I&apos;m hand-writing the first posts - detection engineering
-            walk-throughs, SOC notes, and project deep-dives. Check back soon.
+            I&apos;m writing the first posts—detection-engineering walkthroughs,
+            SOC notes, and project deep dives. Check back soon.
           </p>
         </div>
       ) : (
