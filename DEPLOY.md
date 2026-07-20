@@ -62,5 +62,6 @@ address or use Proton's custom-domain support.)
   dependency tree. Its moderate advisory is monitored pending a compatible
   upstream Next.js fix; do not use npm audit fix --force or override the
   nested PostCSS version
-- Cloudflare Web Analytics (privacy-friendly, free) can be enabled from
-  the dashboard without any code changes
+- Before enabling Cloudflare Web Analytics, update `public/_headers` to allow
+  its script host in `script-src` and beacon host in `connect-src`; the current
+  CSP intentionally allows only same-origin scripts and connections

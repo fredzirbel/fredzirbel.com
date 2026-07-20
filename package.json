@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "npm run test:unit",
     "test:unit": "node --experimental-strip-types --test tests/*.test.mjs",
-    "test:e2e": "playwright test",
+    "test:e2e": "npm run build && playwright test",
+    "test:e2e:built": "playwright test",
     "check:export": "node scripts/check-export.mjs"
   },
   "dependencies": {

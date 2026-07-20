@@ -3,6 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
+  // Each page can own several WebGL contexts. Capping parallel pages prevents
+  // Chromium from evicting healthy contexts under artificial test pressure.
+  workers: 4,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
