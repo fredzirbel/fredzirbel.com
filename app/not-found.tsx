@@ -13,7 +13,7 @@ export default function NotFound() {
         detected
       </h1>
       <p className="mb-10 mt-6 max-w-md text-muted">
-        This page doesn&apos;t exist. False positive, or the link has moved.
+        This page doesn&apos;t exist. False positive—or has the link moved?
       </p>
       <Link
         href="/"

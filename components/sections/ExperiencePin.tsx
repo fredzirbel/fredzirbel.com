@@ -12,29 +12,29 @@ import { gsap, registerGsap, useMotion } from '@/lib/motion';
 const roles = [
   {
     title: 'Principal Security Analyst',
-    period: 'Jul 2026 - Present',
+    period: 'Jul 2026–Present',
     bullets: [
       'Investigate and respond to phishing, malware, and identity-based intrusions across 2,500+ multi-tenant environments, triaging alerts from 30+ integrated security products',
       'Maintain a 16-minute average time to investigation (TTI) while working 300+ alerts monthly',
-      'Execute remediation on live incidents - host isolations, credential resets, session revocations, email deletions, file quarantines - under a dual-authorization workflow',
-      'Communicate directly with customer stakeholders during high-priority incidents on impact, remediation status, and response decisions',
+      'Execute remediation on live incidents—host isolations, credential resets, session revocations, email deletions, and file quarantines—under a dual-authorization workflow',
+      'Communicate directly with customer stakeholders during high-priority incidents about impact, remediation status, and response decisions',
       'Train and mentor L1 analysts on investigation workflows and escalation quality',
     ],
   },
   {
     title: 'Senior Security Analyst',
-    period: 'Jul 2025 - Jul 2026',
+    period: 'Jul 2025–Jul 2026',
     bullets: [
       'Performed log and endpoint-telemetry analysis with custom KQL, correlating URL clicks, downloads, identity activity, and process telemetry to reconstruct attacker actions',
-      'Seconded and verified remediation actions initiated by principal analysts - confirming scope, target accuracy, and justification before execution',
-      'Briefed customer stakeholders in 3-5 weekly high-priority incident calls with evidence-backed findings and attribution',
+      'Seconded and verified remediation actions initiated by principal analysts—confirming scope, target accuracy, and justification before execution',
+      'Briefed customer stakeholders during three to five high-priority incident calls per week, providing evidence-backed findings and attribution',
       'Detected and correlated cross-tenant phishing and malware campaigns from shared indicators for coordinated, multi-customer response',
-      'Engineered 500+ suppression filters (KVP logic + regex), eliminating thousands of recurring false positives; daily pre-deployment quality gate',
+      'Engineered 500+ suppression filters (KVP logic and regex), eliminating thousands of recurring false positives, and conducted daily pre-deployment quality reviews',
     ],
   },
   {
     title: 'Security Analyst',
-    period: 'Oct 2024 - Jul 2025',
+    period: 'Oct 2024–Jul 2025',
     bullets: [
       'Triaged and investigated identity threats, phishing, malware, and endpoint alerts across a large client base using Defender, Sentinel, CrowdStrike, and SentinelOne',
       'Developed custom KQL queries in Microsoft Sentinel and Defender to scope incidents across identity, endpoint, and email telemetry',
@@ -178,7 +178,7 @@ export default function ExperiencePin() {
             <div className="md:w-[38rem] md:shrink-0">
               <ExperienceHeading showHint />
               <p className="mt-6 max-w-sm text-muted">
-                24/7 Managed Detection and Response - Plano, TX. Nearly two years,
+                24/7 Managed Detection and Response—Plano, TX. Nearly two years,
                 three roles, thousands of investigations.
               </p>
             </div>

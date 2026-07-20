@@ -1,9 +1,9 @@
 # Blog posts
 
-Drop your hand-written posts here as `.md` files. Each filename becomes the
+Drop your handwritten posts here as `.md` files. Each filename becomes the
 URL slug (e.g. `my-first-post.md` -> `/blog/my-first-post/`).
 
-Frontmatter each post needs:
+Each post requires the following frontmatter:
 
 ```markdown
 ---
@@ -25,5 +25,5 @@ While this folder has no published posts, the site shows a "Coming soon"
 state on `/blog` and in the homepage Writing section automatically. Add your
 first `.md` file and it replaces that with the real list on the next build.
 
-(This README is ignored - only `.md` files with the frontmatter above are
+(This README is ignored—only `.md` files with the frontmatter above are
 treated as posts... and this one has no frontmatter, so it's skipped.)
