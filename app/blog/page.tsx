@@ -3,12 +3,10 @@ import Link from 'next/link';
 import { formatDate, getPosts } from '@/lib/posts';
 
 export function generateMetadata(): Metadata {
-  const empty = getPosts().length === 0;
   return {
     title: 'Blog',
     description: 'Notes on detection engineering, SOC operations, and security tooling as I document what I learn and build.',
     alternates: { canonical: '/blog/' },
-    robots: empty ? { index: false, follow: true } : undefined,
     openGraph: { url: '/blog/', images: ['/opengraph-image'] },
   };
 }
@@ -30,20 +28,10 @@ export default function BlogIndex() {
         tooling I&apos;m building. Learning in public.
       </p>
 
-      {posts.length === 0 ? (
-        <div className="mt-16 border-t border-line py-16">
-          <p className="font-mono text-sm uppercase tracking-[0.2em] text-signal">
-            Coming soon
-          </p>
-          <p className="mt-3 max-w-md text-muted">
-            I&apos;m writing the first posts: detection-engineering walkthroughs,
-            SOC notes, and project deep dives. Check back soon.
-          </p>
-        </div>
-      ) : (
-        <div className="mt-16 border-t border-line">
+      <div className="mt-16 border-t border-line">
           {posts.map((post) => (
             <Link
+              prefetch={false}
               key={post.slug}
               href={`/blog/${post.slug}/`}
               data-cursor="view"
@@ -78,8 +66,7 @@ export default function BlogIndex() {
               </time>
             </Link>
           ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 }
