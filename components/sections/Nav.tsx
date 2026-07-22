@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 const baseLinks = [
   { href: '/#about', label: 'About' },
   { href: '/#work', label: 'Projects' },
+  { href: '/fred-zirbel-resume.pdf', label: 'Resume' },
   { href: '/#contact', label: 'Contact' },
 ];
 
@@ -42,24 +43,29 @@ export default function Nav({ hasPosts }: { hasPosts: boolean }) {
         >
           FZ
         </Link>
-        <ul className="flex items-center gap-5 sm:gap-6">
+        <ul className="flex items-center gap-4 sm:gap-6">
           {[
             ...baseLinks.slice(0, 2),
             ...(hasPosts ? [{ href: '/blog/', label: 'Blog' }] : []),
             ...baseLinks.slice(2),
           ].map((link) => {
             const active = pathname.startsWith('/blog') && link.href === '/blog/';
+            const className = `text-sm transition-colors duration-(--duration-fast) hover:text-signal ${
+              active ? 'text-signal' : 'text-muted'
+            }`;
             return (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={`text-sm transition-colors duration-(--duration-fast) hover:text-signal ${
-                    active ? 'text-signal' : 'text-muted'
-                  }`}
-                >
-                  {link.label}
-                </Link>
+                {link.href.endsWith('.pdf') ? (
+                  <a href={link.href} className={className}>{link.label}</a>
+                ) : (
+                  <Link
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={className}
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             );
           })}

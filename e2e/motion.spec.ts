@@ -16,8 +16,12 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await expect(page.getByText(/Interviewing now/).first()).toBeInViewport();
   await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
   await expect(page.getByRole('link', { name: 'View case studies' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View résumé' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Resume', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View Resume' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Contact me' })).toBeVisible();
+  const download = page.getByRole('link', { name: 'Download Resume' });
+  await expect(download).toHaveAttribute('href', '/fred-zirbel-resume.pdf');
+  await expect(download).toHaveAttribute('download', '');
   const resume = await request.get('/fred-zirbel-resume.pdf');
   expect(resume.ok()).toBeTruthy();
   expect(resume.headers()['content-type']).toContain('application/pdf');

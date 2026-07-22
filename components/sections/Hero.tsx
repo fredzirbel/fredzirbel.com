@@ -119,7 +119,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
                 href="/fred-zirbel-resume.pdf"
                 className="rounded-full border border-line px-6 py-3 text-base font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
               >
-                View résumé
+                View Resume
               </a>
               <a
                 href="#contact"

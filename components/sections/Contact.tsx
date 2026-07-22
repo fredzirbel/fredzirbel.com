@@ -41,6 +41,14 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
           </a>
         </Magnetic>
 
+        <a
+          href="/fred-zirbel-resume.pdf"
+          download
+          className="mt-8 inline-flex rounded-full border border-ink px-7 py-3 text-base font-medium text-ink transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+        >
+          Download Resume
+        </a>
+
         <div className="mt-16 flex flex-col justify-between gap-8 border-t border-line pt-8 md:flex-row md:items-center">
           <ul className="flex flex-wrap items-center gap-x-8 gap-y-3">
             {links.map((link) => (
