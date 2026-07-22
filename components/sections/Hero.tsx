@@ -81,7 +81,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
       <WaveFieldLoader />
 
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
-        <p data-hero-fade className="mb-6 font-mono text-xs uppercase tracking-[0.24em] text-signal">
+        <p data-hero-fade className="mb-6 font-mono text-base uppercase tracking-[0.2em] text-signal">
           Security Analyst · Incident Response · Threat Detection
         </p>
         <h1
@@ -105,32 +105,32 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
           className="mt-8"
         >
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <p data-hero-fade className="max-w-2xl text-base text-muted sm:text-lg">
+            <p data-hero-fade className="max-w-2xl text-lg text-muted sm:text-xl">
               I investigate threats, improve detection quality, and build practical workflows that help analysts move from alert to defensible action.
             </p>
             <div data-hero-fade className="flex flex-wrap items-center gap-3 md:justify-end">
               <a
                 href="#work"
-                className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition-[background-color,transform] duration-(--duration-fast) hover:bg-signal active:scale-[0.97]"
+                className="rounded-full bg-ink px-6 py-3 text-base font-medium text-void transition-[background-color,transform] duration-(--duration-fast) hover:bg-signal active:scale-[0.97]"
               >
                 View case studies
               </a>
               <a
                 href="/fred-zirbel-resume.pdf"
-                className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+                className="rounded-full border border-line px-6 py-3 text-base font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
               >
                 View résumé
               </a>
               <a
                 href="#contact"
-                className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+                className="rounded-full border border-line px-6 py-3 text-base font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
               >
                 Contact me
               </a>
               {hasPosts && (
                 <a
                   href="/blog/"
-                  className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+                  className="rounded-full border border-line px-6 py-3 text-base font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
                 >
                   Read the blog
                 </a>
@@ -140,7 +140,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
           <ul
             data-hero-fade
             aria-label="Career details"
-            className="mt-6 grid gap-x-8 gap-y-2 border-y border-line py-4 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-6 grid gap-x-8 gap-y-3 border-y border-line py-5 font-mono text-[15px] uppercase tracking-[0.08em] text-muted sm:grid-cols-2 lg:grid-cols-3"
           >
             <li><span className="text-ink">Dallas, TX</span> · Remote, hybrid, or onsite</li>
             <li>Open to relocation within the U.S.</li>
@@ -149,7 +149,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
             <li>Eligible and willing to obtain a U.S. security clearance</li>
             <li><span className="text-signal">Interviewing now</span> · Start after two weeks&apos; notice</li>
           </ul>
-          <p data-hero-fade className="mt-5 max-w-4xl border-l-2 border-signal pl-4 text-sm text-muted sm:text-base">
+          <p data-hero-fade className="mt-5 max-w-5xl border-l-2 border-signal pl-5 text-lg text-muted sm:text-xl">
             Developed investigation playbooks for five alert types, reducing average triage time by approximately six minutes per alert while standardizing analyst workflows.
           </p>
         </div>

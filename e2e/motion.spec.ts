@@ -185,7 +185,8 @@ test.describe('without JavaScript', () => {
     await page.goto('/');
     await expect(page.getByText('2,500+', { exact: true })).toBeVisible();
     await expect(page.getByText('9', { exact: true })).toBeVisible();
-    await expect(page.getByText('7', { exact: true })).toBeVisible();
+    await expect(page.getByText('6', { exact: true })).toBeVisible();
+    await expect(page.getByText('In progress', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Fred Zirbel' })).toBeVisible();
   });
 });

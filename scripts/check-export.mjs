@@ -15,8 +15,9 @@ const headers = read('_headers');
 
 assert.match(home, /data-count="2500"[^>]*>2,500<\/span>/, 'static 2,500+ stat missing');
 assert.match(home, /data-count="9"[^>]*>9<\/span>/, 'static 9 stat missing');
-assert.match(home, /data-count="7"[^>]*>7<\/span>/, 'static 7 stat missing');
+assert.match(home, /data-count="6"[^>]*>6<\/span>/, 'static 6 earned-certification stat missing');
 assert.match(renderedHome, /and I (?:document|write)/, 'about copy is missing whitespace before its publication state');
+assert.ok(renderedHome.includes('ISACA CISM') && renderedHome.includes('In progress'), 'CISM in-progress state is missing');
 for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Interviewing now', 'approximately six minutes per alert', 'View case studies', 'View résumé', 'Contact me']) {
   assert.ok(renderedHome.includes(text), `homepage is missing ${text}`);
 }

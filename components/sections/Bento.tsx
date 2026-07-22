@@ -10,15 +10,22 @@ import { useRef } from 'react';
 import BrandIcon from '@/components/sections/BrandIcon';
 import { gsap, registerGsap, ScrollTrigger, useMotion } from '@/lib/motion';
 
+type Certification = {
+  name: string;
+  org: string;
+  href: string | null;
+  status?: 'In progress';
+};
+
 const stats = [
   { value: 2500, suffix: '+', label: 'environments defended' },
   { value: 9, suffix: '', label: 'SIEM & EDR/XDR platforms' },
-  { value: 7, suffix: '', label: 'industry certifications' },
+  { value: 6, suffix: '', label: 'earned certifications' },
 ];
 
-const certs = [
+const certs: Certification[] = [
   { name: 'CompTIA SecurityX (CASP+)', org: 'comptia', href: null },
-  { name: 'ISACA CISM', org: 'isaca', href: null },
+  { name: 'ISACA CISM', org: 'isaca', href: null, status: 'In progress' },
   {
     name: 'CompTIA CySA+',
     org: 'comptia',
@@ -213,17 +220,23 @@ export default function Bento() {
           </p>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {certs.map((cert) => {
+              const inProgress = cert.status === 'In progress';
               const inner = (
                 <>
                   <BrandIcon
                     name={cert.org}
-                    className="pointer-events-none absolute right-3 top-1/2 size-12 -translate-y-1/2 text-ink opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16]"
+                    className={`pointer-events-none absolute right-3 top-1/2 size-12 -translate-y-1/2 opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16] ${inProgress ? 'text-trace' : 'text-ink'}`}
                   />
                   <span className="relative block pr-14 font-mono text-xs">{cert.name}</span>
+                  {cert.status && (
+                    <span className="relative mt-2 inline-flex rounded-full border border-trace/50 bg-trace/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-trace">
+                      {cert.status}
+                    </span>
+                  )}
                 </>
               );
               const cls =
-                'group relative block overflow-hidden rounded-lg border border-line px-4 py-4 transition-colors duration-(--duration-fast)';
+                `group relative block h-full overflow-hidden rounded-lg border px-4 py-4 transition-colors duration-(--duration-fast) ${inProgress ? 'border-dashed border-trace/50 bg-trace/5 text-ink' : 'border-line'}`;
               return (
                 <li key={cert.name}>
                   {cert.href ? (
