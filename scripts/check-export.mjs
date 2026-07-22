@@ -17,6 +17,10 @@ assert.match(home, /data-count="2500"[^>]*>2,500<\/span>/, 'static 2,500+ stat m
 assert.match(home, /data-count="9"[^>]*>9<\/span>/, 'static 9 stat missing');
 assert.match(home, /data-count="7"[^>]*>7<\/span>/, 'static 7 stat missing');
 assert.match(renderedHome, /and I (?:document|write)/, 'about copy is missing whitespace before its publication state');
+for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Interviewing now', 'approximately six minutes per alert', 'View case studies', 'View résumé', 'Contact me']) {
+  assert.ok(renderedHome.includes(text), `homepage is missing ${text}`);
+}
+assert.ok(fs.existsSync(path.join(out, 'fred-zirbel-resume.pdf')), 'résumé PDF was not exported');
 for (const [page, output] of [['home', renderedHome], ['blog', renderedBlog], ['404', renderedNotFound]]) {
   assert.doesNotMatch(output, /[—–]/, `${page} output contains a long dash`);
 }

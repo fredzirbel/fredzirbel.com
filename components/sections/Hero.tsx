@@ -81,6 +81,9 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
       <WaveFieldLoader />
 
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
+        <p data-hero-fade className="mb-6 font-mono text-xs uppercase tracking-[0.24em] text-signal">
+          Security Analyst · Incident Response · Threat Detection
+        </p>
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"
@@ -99,29 +102,56 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
 
         <div
           data-hero-lift
-          className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
+          className="mt-8"
         >
-          <p data-hero-fade className="max-w-md text-base text-muted sm:text-lg">
-            A home for learning cybersecurity in the open: threat
-            investigation by day, security tooling and write-ups the rest of
-            the time.
-          </p>
-          <div data-hero-fade className="flex items-center gap-4">
-            <a
-              href="#work"
-              className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition-[background-color,transform] duration-(--duration-fast) hover:bg-signal active:scale-[0.97]"
-            >
-              Selected work
-            </a>
-            {hasPosts && (
+          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <p data-hero-fade className="max-w-2xl text-base text-muted sm:text-lg">
+              I investigate threats, improve detection quality, and build practical workflows that help analysts move from alert to defensible action.
+            </p>
+            <div data-hero-fade className="flex flex-wrap items-center gap-3 md:justify-end">
               <a
-                href="/blog/"
+                href="#work"
+                className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition-[background-color,transform] duration-(--duration-fast) hover:bg-signal active:scale-[0.97]"
+              >
+                View case studies
+              </a>
+              <a
+                href="/fred-zirbel-resume.pdf"
                 className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
               >
-                Read the blog
+                View résumé
               </a>
-            )}
+              <a
+                href="#contact"
+                className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+              >
+                Contact me
+              </a>
+              {hasPosts && (
+                <a
+                  href="/blog/"
+                  className="rounded-full border border-line px-6 py-3 text-sm font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
+                >
+                  Read the blog
+                </a>
+              )}
+            </div>
           </div>
+          <ul
+            data-hero-fade
+            aria-label="Career details"
+            className="mt-6 grid gap-x-8 gap-y-2 border-y border-line py-4 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:grid-cols-2 lg:grid-cols-3"
+          >
+            <li><span className="text-ink">Dallas, TX</span> · Remote, hybrid, or onsite</li>
+            <li>Open to relocation within the U.S.</li>
+            <li><span className="text-ink">U.S. work authorized</span> · No sponsorship required now or in the future</li>
+            <li><span className="text-ink">2 years</span> of professional cybersecurity experience</li>
+            <li>Eligible and willing to obtain a U.S. security clearance</li>
+            <li><span className="text-signal">Interviewing now</span> · Start after two weeks&apos; notice</li>
+          </ul>
+          <p data-hero-fade className="mt-5 max-w-4xl border-l-2 border-signal pl-4 text-sm text-muted sm:text-base">
+            Developed investigation playbooks for five alert types, reducing average triage time by approximately six minutes per alert while standardizing analyst workflows.
+          </p>
         </div>
       </div>
 

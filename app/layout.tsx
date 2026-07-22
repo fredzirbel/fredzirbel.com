@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s - Fred Zirbel',
   },
   description:
-    'Principal Security Analyst focused on threat investigation, detection engineering, and security tooling while learning cybersecurity in the open.',
+    'Security Analyst specializing in incident response and threat detection. Based in Dallas, Texas, and open to remote, hybrid, onsite, and relocation opportunities.',
   openGraph: {
     siteName: 'Fred Zirbel',
     type: 'website',

@@ -7,6 +7,22 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
+test('recruiter essentials are discoverable from the first viewport', async ({ page, request }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  await expect(page.getByText(/Security Analyst · Incident Response · Threat Detection/).first()).toBeVisible();
+  await expect(page.getByText(/Dallas, TX/).first()).toBeInViewport();
+  await expect(page.getByText(/No sponsorship required now or in the future/).first()).toBeInViewport();
+  await expect(page.getByText(/Interviewing now/).first()).toBeInViewport();
+  await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
+  await expect(page.getByRole('link', { name: 'View case studies' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View résumé' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Contact me' })).toBeVisible();
+  const resume = await request.get('/fred-zirbel-resume.pdf');
+  expect(resume.ok()).toBeTruthy();
+  expect(resume.headers()['content-type']).toContain('application/pdf');
+});
+
 test('normal system preference enables motion and explicit Reduced stops it', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
