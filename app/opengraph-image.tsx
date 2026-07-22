@@ -24,7 +24,7 @@ export default function OpenGraphImage() {
         <div style={{ display: 'flex', fontSize: 28, color: '#c6ff4a', letterSpacing: 5 }}>FZ / SIGNAL</div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', fontSize: 94, fontWeight: 800, lineHeight: 0.95, letterSpacing: -4 }}>FRED ZIRBEL</div>
-          <div style={{ display: 'flex', marginTop: 30, fontSize: 29, color: '#a9a9b5' }}>Principal Security Analyst · Detection Engineering · Security Tooling</div>
+          <div style={{ display: 'flex', marginTop: 30, fontSize: 29, color: '#a9a9b5' }}>Principal Security Analyst · Detection Engineering · Incident Response</div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, fontSize: 22, color: '#7a87ff' }}>
           <div style={{ width: 80, height: 3, background: '#c6ff4a' }} />

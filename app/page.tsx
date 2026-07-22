@@ -1,9 +1,8 @@
-import Preloader from '@/components/fx/Preloader';
 import Bento from '@/components/sections/Bento';
 import Contact from '@/components/sections/Contact';
 import ExperiencePin from '@/components/sections/ExperiencePin';
 import Hero from '@/components/sections/Hero';
-import Manifesto from '@/components/sections/Manifesto';
+import ImpactHighlights from '@/components/sections/ImpactHighlights';
 import Work from '@/components/sections/Work';
 import Writing from '@/components/sections/Writing';
 import { getPosts } from '@/lib/posts';
@@ -13,14 +12,13 @@ export default function HomePage() {
 
   return (
     <>
-      <Preloader />
-      <Hero hasPosts={posts.length > 0} />
-      <Manifesto hasPosts={posts.length > 0} />
+      <Hero />
+      <ImpactHighlights />
       <Work />
       <ExperiencePin />
-      <Bento />
       <Writing posts={posts} />
-      <Contact hasPosts={posts.length > 0} />
+      <Bento />
+      <Contact />
     </>
   );
 }

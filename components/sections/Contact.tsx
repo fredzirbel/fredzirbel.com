@@ -4,17 +4,15 @@ import { MotionSelector } from '@/components/fx/MotionControls';
 
 const year = new Date().getFullYear();
 
-const baseLinks = [
+const baseLinks: { href: string; label: string; icon: string; download?: boolean }[] = [
   { href: 'mailto:me@fredzirbel.com', label: 'me@fredzirbel.com', icon: 'mail' },
   { href: 'https://github.com/fredzirbel', label: 'GitHub', icon: 'github' },
   { href: 'https://linkedin.com/in/fredzirbel', label: 'LinkedIn', icon: 'linkedin' },
+  { href: '/fred-zirbel-resume.pdf', label: 'Download résumé', icon: 'file', download: true },
 ];
 
-export default function Contact({ hasPosts }: { hasPosts: boolean }) {
-  const links = [
-    ...baseLinks,
-    ...(hasPosts ? [{ href: '/rss.xml', label: 'RSS', icon: 'rss' }] : []),
-  ];
+export default function Contact() {
+  const links = [...baseLinks, { href: '/rss.xml', label: 'RSS', icon: 'rss' }];
   return (
     <footer id="contact" className="relative overflow-hidden">
       <div
@@ -28,7 +26,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
       />
       <div className="relative mx-auto max-w-[1440px] px-6 py-16 md:px-12">
         <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
-          <span className="mr-4 text-signal">06</span>Contact
+          <span className="mr-4 text-signal">07</span>Contact
         </p>
 
         <Magnetic className="inline-block" strength={0.2}>
@@ -49,6 +47,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  download={link.download}
                   className="group inline-flex items-center gap-2.5 text-sm text-muted transition-colors duration-(--duration-fast) hover:text-signal"
                 >
                   <BrandIcon
