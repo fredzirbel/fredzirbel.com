@@ -17,10 +17,12 @@ assert.match(home, /data-count="2500"[^>]*>2,500<\/span>/, 'static 2,500+ stat m
 assert.match(home, /data-count="9"[^>]*>9<\/span>/, 'static 9 stat missing');
 assert.match(home, /data-count="6"[^>]*>6<\/span>/, 'static 6 earned-certification stat missing');
 assert.match(renderedHome, /and I (?:document|write)/, 'about copy is missing whitespace before its publication state');
-assert.ok(renderedHome.includes('ISACA CISM') && renderedHome.includes('In progress'), 'CISM in-progress state is missing');
-for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Interviewing now', 'approximately six minutes per alert', 'View case studies', 'View Resume', 'Download Resume', 'Contact me']) {
+assert.ok(renderedHome.includes('ISACA CISM') && renderedHome.includes('IN PROGRESS'), 'CISM in-progress state is missing');
+assert.ok(renderedHome.indexOf('ISACA CISM') < renderedHome.indexOf('CompTIA SecurityX'), 'CISM must be the first certification');
+for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Interviewing now', 'approximately six minutes per alert', 'View resume', 'Download resume', 'Contact me']) {
   assert.ok(renderedHome.includes(text), `homepage is missing ${text}`);
 }
+assert.ok(!renderedHome.includes('View case studies'), 'obsolete case-studies action is still present');
 assert.ok(fs.existsSync(path.join(out, 'fred-zirbel-resume.pdf')), 'Resume PDF was not exported');
 for (const [page, output] of [['home', renderedHome], ['blog', renderedBlog], ['404', renderedNotFound]]) {
   assert.doesNotMatch(output, /[—–]/, `${page} output contains a long dash`);

@@ -14,7 +14,7 @@ type Certification = {
   name: string;
   org: string;
   href: string | null;
-  status?: 'In progress';
+  status?: 'IN PROGRESS';
 };
 
 const stats = [
@@ -24,8 +24,8 @@ const stats = [
 ];
 
 const certs: Certification[] = [
+  { name: 'ISACA CISM', org: 'isaca', href: null, status: 'IN PROGRESS' },
   { name: 'CompTIA SecurityX (CASP+)', org: 'comptia', href: null },
-  { name: 'ISACA CISM', org: 'isaca', href: null, status: 'In progress' },
   {
     name: 'CompTIA CySA+',
     org: 'comptia',
@@ -218,25 +218,27 @@ export default function Bento() {
           <p className="mb-5 font-mono text-[11px] uppercase tracking-widest text-muted">
             Certifications
           </p>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul aria-label="Certifications" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {certs.map((cert) => {
-              const inProgress = cert.status === 'In progress';
+              const inProgress = cert.status === 'IN PROGRESS';
               const inner = (
                 <>
                   <BrandIcon
                     name={cert.org}
-                    className={`pointer-events-none absolute right-3 top-1/2 size-12 -translate-y-1/2 opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16] ${inProgress ? 'text-trace' : 'text-ink'}`}
+                    className={`pointer-events-none absolute right-3 top-1/2 size-12 -translate-y-1/2 opacity-[0.08] transition-opacity duration-(--duration-base) group-hover:opacity-[0.16] ${inProgress ? 'text-signal' : 'text-ink'}`}
                   />
-                  <span className="relative block pr-14 font-mono text-xs">{cert.name}</span>
-                  {cert.status && (
-                    <span className="relative mt-2 inline-flex rounded-full border border-trace/50 bg-trace/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-trace">
-                      {cert.status}
-                    </span>
-                  )}
+                  <span className="relative flex items-center gap-2 pr-14 font-mono text-xs">
+                    {cert.name}
+                    {cert.status && (
+                      <span className="shrink-0 whitespace-nowrap rounded-full border border-signal/60 bg-signal/10 px-2 py-0.5 text-[9px] tracking-wider text-signal">
+                        {cert.status}
+                      </span>
+                    )}
+                  </span>
                 </>
               );
               const cls =
-                `group relative block h-full overflow-hidden rounded-lg border px-4 py-4 transition-colors duration-(--duration-fast) ${inProgress ? 'border-dashed border-trace/50 bg-trace/5 text-ink' : 'border-line'}`;
+                `group relative block h-full overflow-hidden rounded-lg border px-4 py-4 transition-colors duration-(--duration-fast) ${inProgress ? 'border-dashed border-signal/60 bg-signal/5 text-ink' : 'border-line'}`;
               return (
                 <li key={cert.name}>
                   {cert.href ? (

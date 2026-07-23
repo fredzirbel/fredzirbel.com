@@ -56,7 +56,14 @@ export default function Nav({ hasPosts }: { hasPosts: boolean }) {
             return (
               <li key={link.href}>
                 {link.href.endsWith('.pdf') ? (
-                  <a href={link.href} className={className}>{link.label}</a>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={className}
+                  >
+                    {link.label}
+                  </a>
                 ) : (
                   <Link
                     href={link.href}

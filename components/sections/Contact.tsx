@@ -46,7 +46,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
           download
           className="mt-8 inline-flex rounded-full border border-ink px-7 py-3 text-base font-medium text-ink transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
         >
-          Download Resume
+          Download resume
         </a>
 
         <div className="mt-16 flex flex-col justify-between gap-8 border-t border-line pt-8 md:flex-row md:items-center">

@@ -15,16 +15,31 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await expect(page.getByText(/No sponsorship required now or in the future/).first()).toBeInViewport();
   await expect(page.getByText(/Interviewing now/).first()).toBeInViewport();
   await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
-  await expect(page.getByRole('link', { name: 'View case studies' })).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Resume', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View Resume' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View case studies' })).toHaveCount(0);
+  const navResume = page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Resume', exact: true });
+  await expect(navResume).toHaveAttribute('target', '_blank');
+  const viewResume = page.getByRole('link', { name: 'View resume' });
+  await expect(viewResume).toBeVisible();
+  await expect(viewResume).toHaveAttribute('target', '_blank');
   await expect(page.getByRole('link', { name: 'Contact me' })).toBeVisible();
-  const download = page.getByRole('link', { name: 'Download Resume' });
+  const download = page.getByRole('link', { name: 'Download resume' });
   await expect(download).toHaveAttribute('href', '/fred-zirbel-resume.pdf');
   await expect(download).toHaveAttribute('download', '');
   const resume = await request.get('/fred-zirbel-resume.pdf');
   expect(resume.ok()).toBeTruthy();
   expect(resume.headers()['content-type']).toContain('application/pdf');
+});
+
+test('CISM is the first certification and keeps the shared card height', async ({ page }) => {
+  await page.goto('/');
+  const certifications = page.getByRole('list', { name: 'Certifications' });
+  await certifications.scrollIntoViewIfNeeded();
+  const cards = certifications.locator('li');
+  await expect(cards.first()).toContainText('ISACA CISM');
+  await expect(cards.first()).toContainText('IN PROGRESS');
+  await expect(cards.first().locator('div')).toHaveClass(/border-signal/);
+  const heights = await cards.evaluateAll((items) => items.slice(0, 2).map((item) => item.getBoundingClientRect().height));
+  expect(Math.abs(heights[0] - heights[1])).toBeLessThanOrEqual(1);
 });
 
 test('normal system preference enables motion and explicit Reduced stops it', async ({ page }) => {
@@ -190,7 +205,7 @@ test.describe('without JavaScript', () => {
     await expect(page.getByText('2,500+', { exact: true })).toBeVisible();
     await expect(page.getByText('9', { exact: true })).toBeVisible();
     await expect(page.getByText('6', { exact: true })).toBeVisible();
-    await expect(page.getByText('In progress', { exact: true })).toBeVisible();
+    await expect(page.getByText('IN PROGRESS', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Fred Zirbel' })).toBeVisible();
   });
 });

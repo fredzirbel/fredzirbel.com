@@ -110,16 +110,12 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
             </p>
             <div data-hero-fade className="flex flex-wrap items-center gap-3 md:justify-end">
               <a
-                href="#work"
+                href="/fred-zirbel-resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-full bg-ink px-6 py-3 text-base font-medium text-void transition-[background-color,transform] duration-(--duration-fast) hover:bg-signal active:scale-[0.97]"
               >
-                View case studies
-              </a>
-              <a
-                href="/fred-zirbel-resume.pdf"
-                className="rounded-full border border-line px-6 py-3 text-base font-medium transition-[border-color,color,transform] duration-(--duration-fast) hover:border-signal hover:text-signal active:scale-[0.97]"
-              >
-                View Resume
+                View resume
               </a>
               <a
                 href="#contact"
