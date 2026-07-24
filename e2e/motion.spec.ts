@@ -48,6 +48,10 @@ test('normal system preference enables motion and explicit Reduced stops it', as
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
   await page.getByRole('button', { name: 'Reduced' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  const wave = page.getByTestId('wave-fallback');
+  await expect(wave.locator('canvas')).toHaveCount(0);
+  await expect(wave.locator('svg')).toBeVisible();
+  await expect(wave.locator('svg')).not.toHaveClass(/motion-active/);
   await expect(page.getByText('2,500+', { exact: true })).toBeVisible();
 });
 

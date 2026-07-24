@@ -24,7 +24,7 @@ export default function WaveFieldLoader() {
 
   useEffect(() => {
     const element = host.current;
-    if (!desktop || !element) {
+    if (!enabled || !desktop || !element) {
       setActive(false);
       return;
     }
@@ -56,10 +56,10 @@ export default function WaveFieldLoader() {
       observer.disconnect();
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [desktop, failed, implementation]);
+  }, [desktop, enabled, failed, implementation]);
 
   const Implementation = implementation;
-  const showingWebGL = desktop && Implementation && !failed;
+  const showingWebGL = enabled && desktop && Implementation && !failed;
   const fade = 'linear-gradient(to bottom, transparent 0%, black 20%, black 52%, transparent 92%)';
   return (
     <div
