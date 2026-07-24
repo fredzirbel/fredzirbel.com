@@ -121,8 +121,27 @@ test('mobile retains fallbacks without section WebGL canvases', async ({ page })
   await page.goto('/');
   await expect(page.getByTestId('wave-fallback')).toBeVisible();
   await expect(page.getByTestId('terminal-fallback')).toBeVisible();
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  const kicker = page.getByText(/Security Analyst · Incident Response · Threat Detection/).first();
+  const [navBox, kickerBox] = await Promise.all([nav.boundingBox(), kicker.boundingBox()]);
+  expect(navBox).not.toBeNull();
+  expect(kickerBox).not.toBeNull();
+  expect(kickerBox!.y).toBeGreaterThanOrEqual(navBox!.y + navBox!.height);
   await expect(page.locator('[data-testid="wave-fallback"] canvas')).toHaveCount(0);
   await expect(page.locator('[data-testid="terminal-fallback"] canvas')).toHaveCount(0);
+});
+
+test('hero kicker fades with the foreground scroll transition', async ({ page }) => {
+  await page.addInitScript(() => {
+    sessionStorage.setItem('preloaded', '1');
+    localStorage.setItem('motion-preference', 'on');
+  });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  const kicker = page.getByTestId('hero-kicker-transition');
+  await expect(kicker).toHaveCSS('opacity', '1');
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(kicker).toHaveCSS('opacity', '0');
 });
 
 test('simulated WebGL failure never leaves decorative regions blank', async ({ page }) => {

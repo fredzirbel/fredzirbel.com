@@ -83,13 +83,15 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
   );
 
   return (
-    <section ref={scope} className="relative flex min-h-dvh flex-col justify-end overflow-hidden">
+    <section ref={scope} className="relative flex min-h-dvh flex-col overflow-hidden">
       <WaveFieldLoader />
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
-        <p data-hero-kicker className="mb-6 font-mono text-base uppercase tracking-[0.2em] text-signal">
-          Security Analyst · Incident Response · Threat Detection
-        </p>
+      <div className="relative z-[2] mx-auto mt-auto w-full max-w-[1440px] px-6 pb-16 pt-32 md:px-12 md:pb-14">
+        <div data-hero-lift data-testid="hero-kicker-transition" className="mb-6">
+          <p data-hero-kicker className="font-mono text-base uppercase tracking-[0.2em] text-signal">
+            Security Analyst · Incident Response · Threat Detection
+          </p>
+        </div>
         <h1
           ref={title}
           className="font-display font-black uppercase leading-[0.82] tracking-[-0.03em]"
