@@ -33,6 +33,12 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
         stagger: 0.028,
         delay: 0.15,
       });
+      gsap.from('[data-hero-kicker]', {
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        delay: 0.45,
+      });
       gsap.from('[data-hero-fade]', {
         opacity: 0,
         y: 20,
@@ -81,7 +87,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
       <WaveFieldLoader />
 
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-14">
-        <p data-hero-fade className="mb-6 font-mono text-base uppercase tracking-[0.2em] text-signal">
+        <p data-hero-kicker className="mb-6 font-mono text-base uppercase tracking-[0.2em] text-signal">
           Security Analyst · Incident Response · Threat Detection
         </p>
         <h1
@@ -143,7 +149,7 @@ export default function Hero({ hasPosts }: { hasPosts: boolean }) {
             <li><span className="text-ink">U.S. work authorized</span> · No sponsorship required now or in the future</li>
             <li><span className="text-ink">2 years</span> of professional cybersecurity experience</li>
             <li>Eligible and willing to obtain a U.S. security clearance</li>
-            <li><span className="text-signal">Interviewing now</span> · Start after two weeks&apos; notice</li>
+            <li><span className="text-signal">Available to interview</span> · Two weeks&apos; notice to start</li>
           </ul>
           <p data-hero-fade className="mt-5 max-w-5xl border-l-2 border-signal pl-5 text-lg text-muted sm:text-xl">
             Developed investigation playbooks for five alert types, reducing average triage time by approximately six minutes per alert while standardizing analyst workflows.

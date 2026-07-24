@@ -19,7 +19,7 @@ assert.match(home, /data-count="6"[^>]*>6<\/span>/, 'static 6 earned-certificati
 assert.match(renderedHome, /and I (?:document|write)/, 'about copy is missing whitespace before its publication state');
 assert.ok(renderedHome.includes('ISACA CISM') && renderedHome.includes('IN PROGRESS'), 'CISM in-progress state is missing');
 assert.ok(renderedHome.indexOf('ISACA CISM') < renderedHome.indexOf('CompTIA SecurityX'), 'CISM must be the first certification');
-for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Interviewing now', 'approximately six minutes per alert', 'View resume', 'Download resume', 'Contact me']) {
+for (const text of ['Security Analyst', 'Dallas, TX', 'No sponsorship required now or in the future', 'Available to interview', 'approximately six minutes per alert', 'View resume', 'Download resume', 'Contact me']) {
   assert.ok(renderedHome.includes(text), `homepage is missing ${text}`);
 }
 assert.ok(!renderedHome.includes('View case studies'), 'obsolete case-studies action is still present');

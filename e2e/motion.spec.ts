@@ -13,7 +13,7 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await expect(page.getByText(/Security Analyst · Incident Response · Threat Detection/).first()).toBeVisible();
   await expect(page.getByText(/Dallas, TX/).first()).toBeInViewport();
   await expect(page.getByText(/No sponsorship required now or in the future/).first()).toBeInViewport();
-  await expect(page.getByText(/Interviewing now/).first()).toBeInViewport();
+  await expect(page.getByText(/Available to interview/).first()).toBeInViewport();
   await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
   await expect(page.getByRole('link', { name: 'View case studies' })).toHaveCount(0);
   const navResume = page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Resume', exact: true });
