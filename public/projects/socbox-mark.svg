@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title description">
+  <title id="title">SOC Box independent project identity</title>
+  <description id="description">A shield and telemetry lines in the SOC Box teal and violet palette.</description>
+  <defs>
+    <linearGradient id="bg" x1="40" y1="20" x2="600" y2="340"><stop stop-color="#0a111d"/><stop offset="1" stop-color="#1d1740"/></linearGradient>
+    <linearGradient id="g" x1="190" y1="70" x2="450" y2="290"><stop stop-color="#2dd4bf"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#bg)"/>
+  <path d="M235 76 405 142v70c0 71-51 116-85 133-34-17-85-62-85-133v-70l85-33Z" fill="#0f172a" stroke="url(#g)" stroke-width="9"/>
+  <path d="M277 180h86M277 212h57M277 244h72" stroke="url(#g)" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="366" cy="244" r="11" fill="#2dd4bf"/>
+  <text x="320" y="52" text-anchor="middle" fill="#e6edf5" font-family="system-ui,sans-serif" font-size="24" font-weight="700" letter-spacing="4">SOC BOX</text>
+</svg>

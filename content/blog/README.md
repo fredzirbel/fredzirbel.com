@@ -21,9 +21,8 @@ Your markdown content here...
 - `tags` is optional; it renders as chips on the blog index.
 - Set `draft: true` to keep a post in the repo but hide it from the site.
 
-While this folder has no published posts, the site shows a "Coming soon"
-state on `/blog` and in the homepage Writing section automatically. Add your
-first `.md` file and it replaces that with the real list on the next build.
+Published posts are statically exported, linked from the homepage, included in
+the sitemap, and added to the RSS feed.
 
 (This README is ignored; only `.md` files with the frontmatter above are
 treated as posts... and this one has no frontmatter, so it's skipped.)

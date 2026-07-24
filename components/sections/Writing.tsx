@@ -15,21 +15,11 @@ export default function Writing({ posts }: { posts: Post[] }) {
         <span className="mr-4 text-signal">05</span>Writing
       </p>
 
-      {posts.length === 0 ? (
-        <div className="border-t border-line py-10">
-          <p className="font-mono text-sm uppercase tracking-[0.2em] text-signal">
-            Coming soon
-          </p>
-          <p className="mt-3 max-w-md text-muted">
-            Hand-written write-ups on detection engineering and SOC work are on
-            the way.
-          </p>
-        </div>
-      ) : (
-        <>
+      <>
           <div className="border-t border-line">
             {posts.slice(0, 3).map((post) => (
               <Link
+                prefetch={false}
                 key={post.slug}
                 href={`/blog/${post.slug}/`}
                 data-cursor="view"
@@ -55,13 +45,13 @@ export default function Writing({ posts }: { posts: Post[] }) {
           </div>
 
           <Link
+            prefetch={false}
             href="/blog/"
             className="mt-8 inline-block text-sm text-signal underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-signal"
           >
             All posts
           </Link>
-        </>
-      )}
+      </>
     </section>
   );
 }

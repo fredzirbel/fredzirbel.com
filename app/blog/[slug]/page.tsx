@@ -34,10 +34,21 @@ export default async function PostPage({ params }: Props) {
   const post = getPost(slug);
   if (!post) notFound();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date.toISOString(),
+    author: { '@type': 'Person', name: 'Fred Zirbel', url: 'https://fredzirbel.com' },
+    mainEntityOfPage: `https://fredzirbel.com/blog/${post.slug}/`,
+  };
   return (
     <article className="mx-auto max-w-[1440px] px-6 pb-24 pt-36 md:px-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replaceAll('<', '\\u003c') }} />
       <header className="mb-14">
         <Link
+          prefetch={false}
           href="/blog/"
           className="font-mono text-xs text-muted transition-colors duration-(--duration-fast) hover:text-signal"
         >

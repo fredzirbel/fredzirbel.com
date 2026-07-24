@@ -7,7 +7,6 @@ import SmoothScroll from '@/components/fx/SmoothScroll';
 import { EnableMotionPill } from '@/components/fx/MotionControls';
 import Nav from '@/components/sections/Nav';
 import { MotionProvider } from '@/lib/motion';
-import { getPosts } from '@/lib/posts';
 import '@/styles/globals.css';
 
 const archivo = Archivo({
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const hasPosts = getPosts().length > 0;
   return (
     <html
       lang="en"
@@ -63,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <EnableMotionPill />
           <SmoothScroll>
             <div className="relative z-10">
-              <Nav hasPosts={hasPosts} />
+              <Nav />
               <main id="main">{children}</main>
             </div>
           </SmoothScroll>
