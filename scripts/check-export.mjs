@@ -11,7 +11,7 @@ const blog = read('blog/index.html').replaceAll('<!-- -->', '');
 const sitemap = read('sitemap.xml');
 const headers = read('_headers');
 
-for (const text of ['16 min', '300+', '500+', 'Principal Security Analyst', 'View case studies', 'View résumé']) assert.ok(home.includes(text), `homepage is missing ${text}`);
+for (const text of ['16 min', '300+', '500+', 'Security Analyst', 'Available to interview', 'No sponsorship required', 'View case studies', 'View résumé', 'Contact me']) assert.ok(home.includes(text), `homepage is missing ${text}`);
 assert.match(home, /data-cert-count="6"/);
 assert.ok(home.includes('ISACA CISM') && home.includes('In Progress'));
 assert.ok(home.includes('/fred-zirbel-resume.pdf'));

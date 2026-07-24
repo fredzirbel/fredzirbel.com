@@ -10,9 +10,14 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: /Fred Zirbel/ })).toBeVisible();
-  await expect(page.getByText(/Principal Security Analyst/).first()).toBeVisible();
+  await expect(page.getByText(/Security Analyst · Incident Response · Threat Detection/).first()).toBeVisible();
+  await expect(page.getByText(/Dallas, TX/).first()).toBeInViewport();
+  await expect(page.getByText(/No sponsorship required/).first()).toBeInViewport();
+  await expect(page.getByText(/Available to interview/).first()).toBeInViewport();
+  await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
   await expect(page.getByRole('link', { name: 'View case studies' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'View résumé' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Contact me' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Writing' })).toBeVisible();
 });
 
