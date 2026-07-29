@@ -12,6 +12,7 @@ const blog = read('blog/index.html').replaceAll('<!-- -->', '');
 const sitemap = read('sitemap.xml');
 const headers = read('_headers');
 
+assert.ok(home.includes('<title>Fred Zirbel | Security Operations &amp; Incident Response</title>'), 'homepage title should identify Fred Zirbel and his security focus');
 for (const text of ['16 min', '300+', '500+', 'Security Operations', 'Detection Engineering', 'Available to interview', 'No sponsorship required', 'View projects', 'View resume', 'Contact me']) assert.ok(home.includes(text), `homepage is missing ${text}`);
 assert.ok(home.indexOf('View resume') < home.indexOf('View projects'), 'resume call to action should precede projects');
 assert.ok(home.indexOf('id="experience"') < home.indexOf('id="work"'), 'experience should precede projects');
@@ -22,7 +23,7 @@ assert.ok(home.includes('/fred-zirbel-resume.pdf'));
 for (const repository of ['https://github.com/fredzirbel/SOCBox', 'https://github.com/fredzirbel/SIGIL', 'https://github.com/fredzirbel/homesoc-platform']) assert.ok(home.includes(repository), `homepage is missing project repository: ${repository}`);
 assert.doesNotMatch(home, /case stud|résumé/i);
 assert.doesNotMatch(home, /Turn alerts into action|>VIEW</i);
-assert.ok(home.includes('Engineering skills reflect active learning and hands-on project work, not claimed expert proficiency.'));
+assert.ok(home.includes('Engineering capabilities developed through active hands-on projects and continued technical development.'));
 assert.ok(home.includes('>04</span>Credentials') && home.includes('>05</span>Contact'), 'visible section numbering should remain sequential without posts');
 assert.equal([...home.matchAll(/>Download resume</g)].length, 0, 'contact should not contain a download resume action');
 for (const contact of ['me@fredzirbel.com', 'https://github.com/fredzirbel', 'https://linkedin.com/in/fredzirbel']) assert.ok(home.includes(contact), `contact section is missing ${contact}`);

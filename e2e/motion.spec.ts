@@ -9,6 +9,7 @@ test.beforeEach(async ({ page }) => {
 test('recruiter essentials are discoverable from the first viewport', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
+  await expect(page).toHaveTitle('Fred Zirbel | Security Operations & Incident Response');
   await expect(page.getByRole('heading', { name: /Fred Zirbel/ })).toBeVisible();
   await expect(page.getByText('Turn alerts into action', { exact: true })).toHaveCount(0);
   await expect(page.getByText(/Security Operations · Incident Response · Detection Engineering/).first()).toBeVisible();
@@ -43,7 +44,7 @@ test('motion preference remains user-controlled and graphics degrade safely', as
 
 test('mobile uses accessible fallbacks without horizontal overflow', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('motion-preference', 'on'));
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 320, height: 844 });
   await page.goto('/');
   await expect(page.getByTestId('wave-fallback')).toBeVisible();
   await expect(page.locator('[data-testid="wave-fallback"] canvas')).toHaveCount(0);
@@ -56,10 +57,13 @@ test('mobile uses accessible fallbacks without horizontal overflow', async ({ pa
   await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
   await page.evaluate(() => window.scrollTo(0, 120));
   await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
-  await page.evaluate(() => window.scrollTo(0, 400));
+  await page.evaluate(() => window.scrollTo(0, Math.min(document.documentElement.scrollHeight - window.innerHeight, window.innerHeight * 0.75)));
   await expect.poll(async () => Number(await page.getByTestId('hero-content').evaluate((element) => getComputedStyle(element).opacity))).toBeLessThan(0.5);
   const metrics = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth }));
   expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.width);
+  await expect(nav.getByRole('link', { name: 'Experience' })).toBeVisible();
+  await expect(nav.getByRole('link', { name: 'Projects' })).toBeHidden();
+  await expect(nav.getByRole('link', { name: 'Contact' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Resume' }).first()).toBeVisible();
 });
 

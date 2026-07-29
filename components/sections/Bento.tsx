@@ -32,7 +32,7 @@ export default function Bento({ sectionNumber }: { sectionNumber: '04' | '05' })
       <div className="mt-4 overflow-hidden rounded-xl border border-line bg-panel/70">
         <div className="border-b border-line px-7 py-5">
           <h2 className="font-display text-2xl font-bold">Capability matrix</h2>
-          <p className="mt-2 text-sm text-muted lg:whitespace-nowrap">Engineering skills reflect active learning and hands-on project work, not claimed expert proficiency.</p>
+          <p className="mt-2 text-sm text-muted lg:whitespace-nowrap">Engineering capabilities developed through active hands-on projects and continued technical development.</p>
         </div>
         <div className="grid md:grid-cols-3">
           {capabilityGroups.map((group) => (

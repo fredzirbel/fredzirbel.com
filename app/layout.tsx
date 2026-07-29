@@ -27,7 +27,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://fredzirbel.com'),
   title: {
-    default: 'Fred Zirbel',
+    default: 'Fred Zirbel | Security Operations & Incident Response',
     template: '%s - Fred Zirbel',
   },
   description:
