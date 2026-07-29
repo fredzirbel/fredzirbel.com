@@ -15,6 +15,7 @@ const headers = read('_headers');
 for (const text of ['16 min', '300+', '500+', 'Security Operations', 'Detection Engineering', 'Available to interview', 'No sponsorship required', 'View projects', 'View resume', 'Contact me']) assert.ok(home.includes(text), `homepage is missing ${text}`);
 assert.ok(home.indexOf('View resume') < home.indexOf('View projects'), 'resume call to action should precede projects');
 assert.ok(home.indexOf('id="experience"') < home.indexOf('id="work"'), 'experience should precede projects');
+assert.ok(home.includes('href="https://www.criticalstart.com/"') && home.includes('Promoted from Security Analyst to Principal Security Analyst'), 'experience employer and promotion context are missing');
 assert.match(home, /data-cert-count="6"/);
 assert.ok(home.includes('ISACA CISM') && home.includes('In Progress'));
 assert.ok(home.includes('/fred-zirbel-resume.pdf'));

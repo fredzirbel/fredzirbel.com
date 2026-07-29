@@ -80,6 +80,9 @@ test('projects open GitHub and the resume remains reachable', async ({ page, req
 
 test('experience precedes projects and contact links are promoted', async ({ page }) => {
   await page.goto('/');
+  const employer = page.getByRole('link', { name: 'Critical Start' });
+  await expect(employer).toHaveAttribute('href', 'https://www.criticalstart.com/');
+  await expect(employer).toHaveAttribute('target', '_blank');
   const order = await page.evaluate(() => {
     const experience = document.querySelector('#experience');
     const projects = document.querySelector('#work');
