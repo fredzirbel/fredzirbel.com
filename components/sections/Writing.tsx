@@ -12,7 +12,7 @@ export default function Writing({ posts }: { posts: Post[] }) {
       className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12"
     >
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
-        <span className="mr-4 text-signal">05</span>Writing
+        <span className="mr-4 text-signal">04</span>Writing
       </p>
 
       <>
@@ -22,7 +22,6 @@ export default function Writing({ posts }: { posts: Post[] }) {
                 prefetch={false}
                 key={post.slug}
                 href={`/blog/${post.slug}/`}
-                data-cursor="view"
                 className="group flex flex-col gap-2 border-b border-line py-8 transition-colors duration-(--duration-base) hover:bg-panel/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
               >
                 <div className="min-w-0">

@@ -14,7 +14,6 @@ const FRAG = /* glsl */ `#version 300 es
 precision highp float;
 uniform vec2 u_res;
 uniform float u_time;
-uniform vec2 u_mouse;
 uniform float u_dim;
 out vec4 outColor;
 
@@ -49,11 +48,6 @@ void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
   vec2 p = uv * vec2(u_res.x / u_res.y, 1.0) * 1.6;
   float time = u_time * 0.03;
-
-  // The pointer gently warps the field locally.
-  vec2 mouse = u_mouse * vec2(u_res.x / u_res.y, 1.0) * 1.6;
-  float mouseDistance = length(p - mouse);
-  p += 0.18 * normalize(p - mouse + 1e-4) * exp(-mouseDistance * 2.2);
 
   // Domain-warped fractional Brownian motion creates the flowing nebula.
   vec2 q = vec2(fbm(p + time), fbm(p + vec2(5.2, 1.3) - time));
@@ -172,22 +166,14 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
 
       const uRes = gl.getUniformLocation(program, 'u_res');
       const uTime = gl.getUniformLocation(program, 'u_time');
-      const uMouse = gl.getUniformLocation(program, 'u_mouse');
       const uDim = gl.getUniformLocation(program, 'u_dim');
-      let mouseX = 0.5;
-      let mouseY = 0.5;
-      let currentX = 0.5;
-      let currentY = 0.5;
       const started = performance.now();
       const dpr = Math.min(window.devicePixelRatio, 1.5);
 
       const draw = () => {
         if (disposed || gl.isContextLost()) return;
-        currentX += (mouseX - currentX) * 0.05;
-        currentY += (mouseY - currentY) * 0.05;
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform1f(uTime, (performance.now() - started) / 1000);
-        gl.uniform2f(uMouse, currentX, currentY);
         gl.uniform1f(uDim, dim);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
       };
@@ -225,11 +211,6 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
         draw();
       };
 
-      const move = (event: PointerEvent) => {
-        mouseX = event.clientX / innerWidth;
-        mouseY = 1 - event.clientY / innerHeight;
-      };
-
       const visibility = () => {
         if (document.hidden) stop(false);
         else applyMotionPreference();
@@ -248,7 +229,6 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
       controllerRef.current = { applyMotionPreference };
       resize();
       addEventListener('resize', resize);
-      addEventListener('pointermove', move, { passive: true });
       document.addEventListener('visibilitychange', visibility);
       canvas.addEventListener('webglcontextlost', contextLost);
       canvas.addEventListener('webglcontextrestored', contextRestored);
@@ -258,7 +238,6 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
         stop(false);
         controllerRef.current = null;
         removeEventListener('resize', resize);
-        removeEventListener('pointermove', move);
         document.removeEventListener('visibilitychange', visibility);
         canvas.removeEventListener('webglcontextlost', contextLost);
         canvas.removeEventListener('webglcontextrestored', contextRestored);

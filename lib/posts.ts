@@ -48,20 +48,34 @@ export function parsePostFile(file: string, raw: string): ParsedPost {
   };
 }
 
-/** All published posts, newest first. Build-time only (uses fs). */
-export function getPosts(): Post[] {
+function readPosts(): ParsedPost[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
   return fs
     .readdirSync(BLOG_DIR)
     .filter((file) => file.toLowerCase().endsWith('.md') && file !== 'README.md')
     .map((file) => parsePostFile(file, fs.readFileSync(path.join(BLOG_DIR, file), 'utf8')))
-    .filter((post) => !post.draft)
-    .map(({ draft: _draft, ...post }) => post)
     .sort((a, b) => b.date.valueOf() - a.date.valueOf());
 }
 
+function withoutDraftFlag({ draft: _draft, ...post }: ParsedPost): Post {
+  return post;
+}
+
+/** All published posts, newest first. Build-time only (uses fs). */
+export function getPosts(): Post[] {
+  return readPosts().filter((post) => !post.draft).map(withoutDraftFlag);
+}
+
 export function getPost(slug: string): Post | undefined {
-  return getPosts().find((post) => post.slug === slug);
+  const post = readPosts().find((candidate) => candidate.slug === slug);
+  if (!post || (post.draft && process.env.NODE_ENV === 'production')) return undefined;
+  return withoutDraftFlag(post);
+}
+
+export function getPostSlugs(includeDrafts = false): string[] {
+  return readPosts()
+    .filter((post) => includeDrafts || !post.draft)
+    .map((post) => post.slug);
 }
 
 export function formatDate(date: Date, style: 'short' | 'long' = 'short'): string {

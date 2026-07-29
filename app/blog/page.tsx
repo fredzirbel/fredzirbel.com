@@ -34,7 +34,6 @@ export default function BlogIndex() {
               prefetch={false}
               key={post.slug}
               href={`/blog/${post.slug}/`}
-              data-cursor="view"
               className="group flex flex-col gap-2 border-b border-line py-8 transition-colors duration-(--duration-base) hover:bg-panel/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
             >
               <div className="min-w-0">

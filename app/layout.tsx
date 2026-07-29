@@ -7,6 +7,7 @@ import SmoothScroll from '@/components/fx/SmoothScroll';
 import { EnableMotionPill } from '@/components/fx/MotionControls';
 import Nav from '@/components/sections/Nav';
 import { MotionProvider } from '@/lib/motion';
+import { getPosts } from '@/lib/posts';
 import '@/styles/globals.css';
 
 const archivo = Archivo({
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s - Fred Zirbel',
   },
   description:
-    'Security Analyst specializing in incident response and threat detection. Based in Dallas, Texas, and open to remote, hybrid, onsite, and relocation opportunities.',
+    'Security operations professional specializing in incident response and detection engineering. Based in Dallas, Texas, and open to remote, hybrid, onsite, and relocation opportunities.',
   openGraph: {
     siteName: 'Fred Zirbel',
     type: 'website',
@@ -41,6 +42,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const hasPosts = getPosts().length > 0;
+
   return (
     <html
       lang="en"
@@ -61,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <EnableMotionPill />
           <SmoothScroll>
             <div className="relative z-10">
-              <Nav />
+              <Nav hasPosts={hasPosts} />
               <main id="main">{children}</main>
             </div>
           </SmoothScroll>

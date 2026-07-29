@@ -5,10 +5,10 @@ export default function ExperiencePin() {
     <section id="experience" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12">
       <div className="grid gap-8 border-b border-line pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
         <div>
-          <p className="font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-signal">03</span>Experience</p>
+          <p className="font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-signal">02</span>Experience</p>
           <h2 className="mt-5 font-display text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tight">MDR progression</h2>
         </div>
-        <p className="max-w-2xl text-muted">Three roles of increasing scope across identity, endpoint, email, and cloud investigations in a 24/7 managed detection and response environment.</p>
+        <p className="max-w-2xl text-muted">Three roles of increasing scope across deep dive investigations, customer response, detection tuning, remediation, and AI assisted analyst workflows in a managed detection and response environment.</p>
       </div>
       <div data-testid="experience-static" className="relative mt-8 border-l border-line pl-7 md:pl-10">
         {roles.map((role) => (

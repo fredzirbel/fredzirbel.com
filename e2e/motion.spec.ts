@@ -10,15 +10,15 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: /Fred Zirbel/ })).toBeVisible();
-  await expect(page.getByText(/Security Analyst · Incident Response · Threat Detection/).first()).toBeVisible();
+  await expect(page.getByText('Turn alerts into action', { exact: true })).toHaveCount(0);
+  await expect(page.getByText(/Security Operations · Incident Response · Detection Engineering/).first()).toBeVisible();
   await expect(page.getByText(/Dallas, TX/).first()).toBeInViewport();
   await expect(page.getByText(/No sponsorship required/).first()).toBeInViewport();
   await expect(page.getByText(/Available to interview/).first()).toBeInViewport();
-  await expect(page.getByText(/approximately six minutes per alert/).first()).toBeInViewport();
-  await expect(page.getByRole('link', { name: 'View case studies' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'View résumé' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View projects' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View resume' })).toHaveAttribute('target', '_blank');
   await expect(page.getByRole('link', { name: 'Contact me' })).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Writing' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Writing' })).toHaveCount(0);
 });
 
 test('motion preference remains user-controlled and shader survives toggles', async ({ page }) => {
@@ -30,28 +30,67 @@ test('motion preference remains user-controlled and shader survives toggles', as
   await page.getByRole('button', { name: 'On', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
   await expect(page.getByTestId('shader-background')).toBeAttached();
+  await expect(page.getByTestId('cursor-glow')).toBeAttached();
+  await page.mouse.move(120, 140);
+  await page.mouse.move(280, 220, { steps: 4 });
+  await expect.poll(async () => page.getByTestId('cursor-trail').locator('span').count()).toBeGreaterThan(0);
+  await expect.poll(async () => page.getByTestId('cursor-glow').evaluate((element) => element.getAttribute('style'))).toContain('280px, 220px');
 });
 
 test('mobile uses accessible fallbacks without horizontal overflow', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('motion-preference', 'on'));
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await expect(page.getByTestId('wave-fallback')).toBeVisible();
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  const kicker = page.getByText(/Security Operations · Incident Response · Detection Engineering/).first();
+  const [navBox, kickerBox] = await Promise.all([nav.boundingBox(), kicker.boundingBox()]);
+  expect(navBox).not.toBeNull();
+  expect(kickerBox).not.toBeNull();
+  expect(kickerBox!.y).toBeGreaterThanOrEqual(navBox!.y + navBox!.height);
+  await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
+  await page.evaluate(() => window.scrollTo(0, 120));
+  await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
+  await page.evaluate(() => window.scrollTo(0, 400));
+  await expect.poll(async () => Number(await page.getByTestId('hero-content').evaluate((element) => getComputedStyle(element).opacity))).toBeLessThan(0.5);
   const metrics = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth }));
   expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.width);
-  await expect(page.getByRole('link', { name: 'Résumé' }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Resume' }).first()).toBeVisible();
 });
 
-test('case studies, synthetic article, and resume are reachable', async ({ page, request }) => {
-  for (const slug of ['soc-box', 'sigil', 'homesoc']) {
-    await page.goto(`/projects/${slug}/`);
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Security controls' })).toBeVisible();
+test('projects open GitHub and the resume remains reachable', async ({ page, request }) => {
+  await page.goto('/');
+  for (const project of ['SOC Box', 'SIGIL', 'HomeSOC']) {
+    const link = page.getByRole('link', { name: `Open ${project} on GitHub in a new tab` });
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('href', /^https:\/\/github\.com\/fredzirbel\//);
   }
-  await page.goto('/blog/reconstructing-a-synthetic-phishing-intrusion/');
-  await expect(page.getByText(/Synthetic exercise/)).toBeVisible();
+  await page.getByRole('link', { name: 'Open SOC Box on GitHub in a new tab' }).hover();
+  await expect(page.getByText('VIEW', { exact: true })).toHaveCount(0);
+  await expect(page.locator('a[href^="/projects/"]')).toHaveCount(0);
   const resume = await request.get('/fred-zirbel-resume.pdf');
   expect(resume.ok()).toBeTruthy();
   expect(resume.headers()['content-type']).toContain('application/pdf');
+});
+
+test('experience precedes projects and contact links are promoted', async ({ page }) => {
+  await page.goto('/');
+  const order = await page.evaluate(() => {
+    const experience = document.querySelector('#experience');
+    const projects = document.querySelector('#work');
+    return experience && projects
+      ? Boolean(experience.compareDocumentPosition(projects) & Node.DOCUMENT_POSITION_FOLLOWING)
+      : false;
+  });
+  expect(order).toBeTruthy();
+  const contact = page.locator('#contact');
+  for (const label of ['me@fredzirbel.com', 'GitHub', 'LinkedIn']) {
+    await expect(contact.getByRole('link', { name: label })).toBeVisible();
+  }
+  expect(await page.getByTestId('contact-links').getByRole('link').allTextContents()).toEqual(['me@fredzirbel.com', 'LinkedIn', 'GitHub']);
+  await expect(contact.getByRole('link', { name: 'Download resume' })).toHaveCount(0);
+  const navLabels = await page.getByRole('navigation', { name: 'Main' }).getByRole('link').allTextContents();
+  expect(navLabels).toEqual(['FZ', 'Experience', 'Projects', 'Contact', 'Resume']);
 });
 
 test('keyboard navigation exposes a visible skip link', async ({ page }) => {

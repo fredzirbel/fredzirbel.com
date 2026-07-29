@@ -4,8 +4,6 @@ export const impactMetrics = [
   { value: '500+', label: 'suppression filters engineered', detail: 'KVP and regex logic reducing recurring noise' },
 ] as const;
 
-export const organizationScope = 'MDR operations supporting 2,500+ customer environments';
-
 export const projects = [
   {
     slug: 'soc-box',
@@ -31,8 +29,8 @@ export const projects = [
     subtitle: 'Live homelab detection engineering',
     repository: 'https://github.com/fredzirbel/homesoc-platform',
     description:
-      'A Proxmox-hosted telemetry and detection platform that turns OPNsense and Proxmox logs into OpenSearch events and analyst-ready alerts.',
-    tags: ['OpenSearch', 'Proxmox', 'OPNsense', 'Detection'],
+      'A Proxmox-hosted ELK detection platform that routes OPNsense and Proxmox telemetry through Logstash into Elasticsearch, Kibana, and analyst-ready alerts.',
+    tags: ['ELK Stack', 'Proxmox', 'OPNsense', 'Detection'],
   },
 ] as const;
 
@@ -41,24 +39,27 @@ export const roles = [
     title: 'Principal Security Analyst',
     period: 'Jul 2026 - Present',
     bullets: [
-      'Own investigations and coordinated remediation for phishing, malware, and identity intrusions while sustaining a 16-minute average TTI across 300+ monthly investigations.',
-      'Guide customer-facing incident decisions and mentor analysts on evidence quality, scope, and escalation readiness.',
+      'Lead complex, customer requested deep dive investigations into phishing, malware, and identity intrusions across an MDR operation protecting 2,500+ customer environments. Correlate evidence from 30+ security products to determine scope, root cause, and required containment.',
+      'Maintain a 16 minute average time to investigation while handling 300+ alerts monthly, enabling timely customer escalation and containment.',
+      'Execute live containment and remediation through a dual authorization workflow that removes attacker access and malicious artifacts, then translate scope, impact, and recovery status into decisions for customer stakeholders during high priority incidents.',
+      'Train and mentor L1 analysts to use the in-house AI platform effectively, improving investigation efficiency, correlation quality, and client ready writeups.',
     ],
   },
   {
     title: 'Senior Security Analyst',
     period: 'Jul 2025 - Jul 2026',
     bullets: [
-      'Correlated email, identity, network, and endpoint telemetry with custom KQL to reconstruct attacker actions and scope multi-tenant campaigns.',
-      'Engineered and quality-reviewed 500+ KVP and regex suppression filters to eliminate recurring false positives.',
+      'Reconstructed attacker activity with custom KQL across email, identity, and endpoint evidence while correlating indicators across customer environments to identify shared campaigns, establish root cause, and enable coordinated response.',
+      'Briefed customer stakeholders during three to five weekly high priority incident calls, delivering findings, attribution, and remediation guidance that informed response decisions.',
+      'Engineered 500+ KVP and regex suppression filters while validating five or more daily orchestration changes, eliminating thousands of recurring false positives and preventing faulty logic from reaching production.',
     ],
   },
   {
     title: 'Security Analyst',
     period: 'Oct 2024 - Jul 2025',
     bullets: [
-      'Triaged identity, phishing, malware, and endpoint alerts across Microsoft Defender, Sentinel, CrowdStrike, and SentinelOne.',
-      'Produced client-ready escalations with defensible attribution, scoping queries, and remediation guidance.',
+      'Triaged identity, phishing, malware, and endpoint alerts across four EDR and SIEM platforms while developing custom KQL to accelerate incident scoping in Microsoft Sentinel and Defender.',
+      'Produced client ready escalations with attribution, investigation context, and remediation guidance, giving senior responders an actionable basis for customer communication.',
     ],
   },
 ] as const;
@@ -75,5 +76,5 @@ export const earnedCertifications = [
 export const capabilityGroups = [
   { heading: 'Detection', items: ['KQL', 'Sigma', 'Microsoft Sentinel', 'Splunk ES', 'MITRE ATT&CK'] },
   { heading: 'Investigation', items: ['Defender XDR', 'CrowdStrike Falcon', 'Cortex XDR', 'SentinelOne', 'Sumo Logic'] },
-  { heading: 'Engineering', items: ['Python', 'FastAPI', 'Docker', 'GitHub Actions', 'OpenSearch'] },
+  { heading: 'Engineering', items: ['Python', 'FastAPI', 'Docker', 'GitHub Actions', 'ELK Stack'] },
 ] as const;

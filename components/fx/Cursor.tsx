@@ -1,67 +1,67 @@
 'use client';
 
 /**
- * Custom cursor: a signal dot with a trailing ring in difference blend.
- * Expands over interactive elements; shows a label over elements with
- * data-cursor="view". Only active for fine pointers with motion allowed;
- * the native cursor is suppressed via html.has-cursor.
+ * Custom cursor: a signal dot with a soft glow. Only active for fine
+ * pointers with motion allowed; the native cursor is suppressed via
+ * html.has-cursor.
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useIsFinePointer, useMotionAllowed } from '@/lib/motion';
 
 export default function Cursor() {
   const allowed = useMotionAllowed();
   const fine = useIsFinePointer();
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const [label, setLabel] = useState('');
+  const trailRef = useRef<HTMLDivElement>(null);
   const active = allowed && fine;
 
   useEffect(() => {
     if (!active) return;
     const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const trail = trailRef.current;
+    if (!dot || !trail) return;
 
     document.documentElement.classList.add('has-cursor');
 
-    let x = innerWidth / 2;
-    let y = innerHeight / 2;
-    let rx = x;
-    let ry = y;
-    let hovering = false;
-    let raf = 0;
+    let lastTrailAt = 0;
+    const particles = new Set<HTMLSpanElement>();
 
     const onMove = (e: PointerEvent) => {
-      x = e.clientX;
-      y = e.clientY;
-    };
+      dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
 
-    const onOver = (e: PointerEvent) => {
-      const target = (e.target as Element).closest(
-        'a, button, [role="button"], [data-cursor]',
+      const now = performance.now();
+      if (now - lastTrailAt < 28) return;
+      lastTrailAt = now;
+
+      const particle = document.createElement('span');
+      particle.className = 'absolute size-1.5 rounded-full bg-signal/45 blur-[1px]';
+      particle.style.left = `${e.clientX}px`;
+      particle.style.top = `${e.clientY}px`;
+      trail.appendChild(particle);
+      particles.add(particle);
+
+      const animation = particle.animate(
+        [
+          { opacity: 0.5, transform: 'translate(-50%, -50%) scale(1)' },
+          { opacity: 0, transform: 'translate(-50%, -50%) scale(2.8)' },
+        ],
+        { duration: 520, easing: 'ease-out' },
       );
-      hovering = !!target;
-      setLabel(target?.getAttribute('data-cursor') === 'view' ? 'VIEW' : '');
+      animation.onfinish = () => {
+        particles.delete(particle);
+        particle.remove();
+      };
     };
-
-    const loop = () => {
-      rx += (x - rx) * 0.16;
-      ry += (y - ry) * 0.16;
-      dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-      const scale = hovering ? 2.6 : 1;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%) scale(${scale})`;
-      raf = requestAnimationFrame(loop);
-    };
-    loop();
 
     window.addEventListener('pointermove', onMove, { passive: true });
-    window.addEventListener('pointerover', onOver, { passive: true });
     return () => {
       document.documentElement.classList.remove('has-cursor');
-      cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerover', onOver);
+      particles.forEach((particle) => {
+        particle.getAnimations().forEach((animation) => animation.cancel());
+        particle.remove();
+      });
+      particles.clear();
     };
   }, [active]);
 
@@ -69,17 +69,13 @@ export default function Cursor() {
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-50">
+      <div ref={trailRef} data-testid="cursor-trail" className="absolute inset-0" />
       <div
         ref={dotRef}
-        className="absolute left-0 top-0 size-1.5 rounded-full bg-signal"
-      />
-      <div
-        ref={ringRef}
-        className="absolute left-0 top-0 flex size-9 items-center justify-center rounded-full border border-ink/60 mix-blend-difference transition-[width,height] duration-(--duration-fast)"
+        data-testid="cursor-glow"
+        className="absolute left-0 top-0 size-2 rounded-full bg-signal shadow-[0_0_8px_rgba(198,255,74,0.95),0_0_20px_rgba(198,255,74,0.55),0_0_40px_rgba(198,255,74,0.25)]"
       >
-        {label && (
-          <span className="font-mono text-[8px] tracking-widest text-ink">{label}</span>
-        )}
+        <span className="absolute -inset-3 rounded-full bg-signal/20 blur-md" />
       </div>
     </div>
   );

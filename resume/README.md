@@ -1,11 +1,5 @@
 # Resume source
 
-`fred-zirbel-resume.tex` is the maintainable source for the public one-page résumé.
+`public/fred-zirbel-resume.pdf` is the authoritative resume served by the site. Replace it with the latest exported PDF whenever the resume changes.
 
-Build from the repository root:
-
-```powershell
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory=public resume/fred-zirbel-resume.tex
-```
-
-The generated `public/fred-zirbel-resume.pdf` is intentionally committed so the statically exported site can link it without requiring LaTeX in CI.
+`fred-zirbel-resume.tex` is retained as a legacy source and may not match the current public PDF.

@@ -14,11 +14,11 @@ export default function HomePage() {
     <>
       <Hero />
       <ImpactHighlights />
-      <Work />
       <ExperiencePin />
-      <Writing posts={posts} />
-      <Bento />
-      <Contact />
+      <Work />
+      {posts.length > 0 && <Writing posts={posts} />}
+      <Bento sectionNumber={posts.length > 0 ? '05' : '04'} />
+      <Contact hasPosts={posts.length > 0} />
     </>
   );
 }

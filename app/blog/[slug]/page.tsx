@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { formatDate, getPost, getPosts } from '@/lib/posts';
+import { formatDate, getPost, getPostSlugs } from '@/lib/posts';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -13,7 +13,7 @@ interface Props {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getPosts().map((post) => ({ slug: post.slug }));
+  return getPostSlugs(process.env.NODE_ENV === 'development').map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
