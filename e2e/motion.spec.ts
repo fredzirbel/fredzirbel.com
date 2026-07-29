@@ -21,12 +21,16 @@ test('recruiter essentials are discoverable from the first viewport', async ({ p
   await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Writing' })).toHaveCount(0);
 });
 
-test('motion preference remains user-controlled and shader survives toggles', async ({ page }) => {
+test('motion preference remains user-controlled and graphics degrade safely', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
   await page.getByRole('button', { name: 'Reduced', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  const wave = page.getByTestId('wave-fallback');
+  await expect(wave.locator('canvas')).toHaveCount(0);
+  await expect(wave.locator('svg')).toBeVisible();
+  await expect(wave.locator('svg')).not.toHaveClass(/motion-active/);
   await page.getByRole('button', { name: 'On', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
   await expect(page.getByTestId('shader-background')).toBeAttached();
@@ -42,6 +46,7 @@ test('mobile uses accessible fallbacks without horizontal overflow', async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await expect(page.getByTestId('wave-fallback')).toBeVisible();
+  await expect(page.locator('[data-testid="wave-fallback"] canvas')).toHaveCount(0);
   const nav = page.getByRole('navigation', { name: 'Main' });
   const kicker = page.getByText(/Security Operations · Incident Response · Detection Engineering/).first();
   const [navBox, kickerBox] = await Promise.all([nav.boundingBox(), kicker.boundingBox()]);
@@ -91,6 +96,15 @@ test('experience precedes projects and contact links are promoted', async ({ pag
   await expect(contact.getByRole('link', { name: 'Download resume' })).toHaveCount(0);
   const navLabels = await page.getByRole('navigation', { name: 'Main' }).getByRole('link').allTextContents();
   expect(navLabels).toEqual(['FZ', 'Experience', 'Projects', 'Contact', 'Resume']);
+});
+
+test('simulated WebGL failure preserves decorative fallbacks', async ({ page }) => {
+  await page.addInitScript(() => {
+    HTMLCanvasElement.prototype.getContext = () => null;
+  });
+  await page.goto('/');
+  await expect(page.getByTestId('wave-fallback')).toBeVisible();
+  await expect(page.getByTestId('shader-background')).toHaveClass(/opacity-0/);
 });
 
 test('keyboard navigation exposes a visible skip link', async ({ page }) => {

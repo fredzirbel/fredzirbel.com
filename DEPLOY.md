@@ -58,10 +58,12 @@ address or use Proton's custom-domain support.)
   copies this file into the static output and applies it to matching responses
 - Preview pages.dev hosts are marked noindex; the production custom domain
   remains indexable
-- Next.js 16.2.10 currently brings PostCSS 8.4.31 through its supported
-  dependency tree. Its moderate advisory is monitored pending a compatible
-  upstream Next.js fix; do not use npm audit fix --force or override the
-  nested PostCSS version
+- `npm run audit:ci` fails CI for every new high or critical advisory. It
+  narrowly accepts the documented PostCSS and Sharp advisories inherited
+  through Next.js because those packages process only trusted repository
+  inputs during this static build and are absent from the exported site.
+  Remove each acceptance when Next.js updates its supported dependency tree;
+  do not use `npm audit fix --force` or override the nested versions
 - Before enabling Cloudflare Web Analytics, update `public/_headers` to allow
   its script host in `script-src` and beacon host in `connect-src`; the current
   CSP intentionally allows only same-origin scripts and connections

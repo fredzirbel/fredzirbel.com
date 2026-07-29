@@ -6,7 +6,8 @@ import { gzipSync } from 'node:zlib';
 const root = process.cwd();
 const out = path.join(root, 'out');
 const read = (relative) => fs.readFileSync(path.join(out, relative), 'utf8');
-const home = read('index.html').replaceAll('<!-- -->', '');
+const rawHome = read('index.html');
+const home = rawHome.replaceAll('<!-- -->', '');
 const blog = read('blog/index.html').replaceAll('<!-- -->', '');
 const sitemap = read('sitemap.xml');
 const headers = read('_headers');
@@ -24,21 +25,29 @@ assert.ok(home.includes('Engineering skills reflect active learning and hands-on
 assert.ok(home.includes('>04</span>Credentials') && home.includes('>05</span>Contact'), 'visible section numbering should remain sequential without posts');
 assert.equal([...home.matchAll(/>Download resume</g)].length, 0, 'contact should not contain a download resume action');
 for (const contact of ['me@fredzirbel.com', 'https://github.com/fredzirbel', 'https://linkedin.com/in/fredzirbel']) assert.ok(home.includes(contact), `contact section is missing ${contact}`);
-assert.doesNotMatch(home, /reconstructing a synthetic phishing intrusion|href="\/blog\//i);
+assert.doesNotMatch(home, /reconstructing a synthetic phishing intrusion/i);
 assert.doesNotMatch(home, /Coming soon|learning cybersecurity/i);
 assert.doesNotMatch(blog, /Coming soon/i);
 assert.ok(!fs.existsSync(path.join(out, 'projects', 'index.html')), 'internal projects route should not be exported');
 assert.doesNotMatch(sitemap, /\/projects\//);
 assert.ok(!fs.existsSync(path.join(out, 'blog', 'reconstructing-a-synthetic-phishing-intrusion', 'index.html')), 'example blog post should not be exported');
-assert.doesNotMatch(sitemap, /\/blog\//);
+const hasPosts = rawHome.includes('href="/blog/');
+if (hasPosts) {
+  assert.ok(home.includes('href="/blog/"'), 'published blog must be linked from the homepage');
+  assert.ok(sitemap.includes('https://fredzirbel.com/blog/'), 'published blog index must be in sitemap');
+} else {
+  assert.ok(!home.includes('href="/blog/"'), 'empty blog must not be linked from the homepage');
+  assert.ok(!sitemap.includes('/blog/'), 'empty blog index must be omitted from sitemap');
+}
 assert.ok(fs.existsSync(path.join(out, 'fred-zirbel-resume.pdf')));
 assert.ok(fs.readFileSync(path.join(out, 'fred-zirbel-resume.pdf')).includes(Buffer.from('Fred Zirbel - Resume')), 'resume PDF title metadata is incorrect');
 assert.ok(home.indexOf('ISACA CISM') < home.indexOf('CompTIA SecurityX'), 'in-progress certification should precede earned certifications');
 assert.match(headers, /Content-Security-Policy:/);
 assert.match(headers, /Strict-Transport-Security: max-age=31536000/);
+assert.match(headers, /X-Robots-Tag: noindex/);
 assert.ok(fs.existsSync(path.join(out, 'opengraph-image')));
 
-const scripts = [...home.matchAll(/<script[^>]+src="([^"]+)"/g)].map((match) => match[1]).filter((source) => source.startsWith('/_next/static/'));
+const scripts = [...rawHome.matchAll(/<script[^>]+src="([^"]+)"/g)].map((match) => match[1]).filter((source) => source.startsWith('/_next/static/'));
 const bytes = [...new Set(scripts)].reduce((total, source) => total + gzipSync(fs.readFileSync(path.join(out, source.replace(/^\//, '').replaceAll('/', path.sep)))).byteLength, 0);
 const budget = 325 * 1024;
 assert.ok(bytes <= budget, `initial homepage JavaScript is ${(bytes / 1024).toFixed(1)} KiB gzip; budget is 325 KiB`);
