@@ -44,8 +44,8 @@ varying float vElev;
 void main() {
   vec2 c = gl_PointCoord - 0.5;
   if (dot(c, c) > 0.25) discard;
-  vec3 trace = vec3(0.478, 0.529, 1.0);
-  vec3 signal = vec3(0.776, 1.0, 0.290);
+  vec3 trace = vec3(0.255, 0.353, 0.467);
+  vec3 signal = vec3(0.467, 0.553, 0.663);
   vec3 col = mix(trace * 0.55, signal, smoothstep(0.9, 1.7, vElev));
   float alpha = 0.28 + 0.5 * smoothstep(0.7, 1.7, vElev);
   gl_FragColor = vec4(col, alpha);

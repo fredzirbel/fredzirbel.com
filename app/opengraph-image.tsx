@@ -15,19 +15,19 @@ export default function OpenGraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: 'radial-gradient(circle at 85% 20%, #20253f 0%, #08080d 42%, #050507 75%)',
-          color: '#f2f2ef',
+          background: 'radial-gradient(circle at 85% 20%, #415a77 0%, #1b263b 45%, #0d1b2a 78%)',
+          color: '#e0e1dd',
           padding: '70px 78px',
           fontFamily: 'Arial, sans-serif',
         }}
       >
-        <div style={{ display: 'flex', fontSize: 28, color: '#c6ff4a', letterSpacing: 5 }}>FZ / SIGNAL</div>
+        <div style={{ display: 'flex', fontSize: 28, color: '#778da9', letterSpacing: 5 }}>FZ / SIGNAL</div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', fontSize: 94, fontWeight: 800, lineHeight: 0.95, letterSpacing: -4 }}>FRED ZIRBEL</div>
-          <div style={{ display: 'flex', marginTop: 30, fontSize: 29, color: '#a9a9b5' }}>Security Operations · Incident Response · Detection Engineering</div>
+          <div style={{ display: 'flex', marginTop: 30, fontSize: 29, color: '#9aa7bb' }}>Security Operations · Incident Response · Detection Engineering</div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 18, fontSize: 22, color: '#7a87ff' }}>
-          <div style={{ width: 80, height: 3, background: '#c6ff4a' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18, fontSize: 22, color: '#778da9' }}>
+          <div style={{ width: 80, height: 3, background: '#778da9' }} />
           fredzirbel.com
         </div>
       </div>

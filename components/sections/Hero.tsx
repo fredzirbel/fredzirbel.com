@@ -14,16 +14,18 @@ export default function Hero() {
     registerGsap();
     const split = SplitText.create('[data-split]', { type: 'lines,chars', linesClass: 'split-line', mask: 'lines' });
     gsap.from(split.chars, { yPercent: 110, duration: 0.85, ease: 'expo.out', stagger: 0.02, delay: 0.1 });
-    gsap.from('[data-hero-kicker]', { opacity: 0, duration: 0.7, ease: 'power3.out', delay: 0.45 });
-    gsap.from('[data-hero-fade]', { opacity: 0, y: 18, duration: 0.55, ease: 'power3.out', stagger: 0.08, delay: 0.55 });
+    // Transform-only reveals (no opacity) so the text can never get stuck
+    // invisible if the intro is paused or interrupted - it only slides in.
+    gsap.from('[data-hero-kicker]', { y: 12, duration: 0.6, ease: 'power3.out', delay: 0.3 });
+    gsap.from('[data-hero-fade]', { y: 20, duration: 0.6, ease: 'power3.out', stagger: 0.08, delay: 0.4 });
     gsap.to('[data-hero-scroll]', {
       opacity: 0,
       yPercent: -6,
       ease: 'none',
       scrollTrigger: {
         trigger: scope.current,
-        start: () => Math.min(180, window.innerHeight * 0.22),
-        end: 'bottom 55%',
+        start: () => window.innerHeight * 0.5,
+        end: 'bottom 15%',
         scrub: true,
         invalidateOnRefresh: true,
       },
@@ -34,9 +36,9 @@ export default function Hero() {
   return (
     <section ref={scope} className="relative flex min-h-dvh flex-col overflow-hidden">
       <WaveFieldLoader />
-      <div data-hero-scroll data-testid="hero-content" className="relative z-[2] mx-auto mt-auto w-full max-w-[1440px] px-6 pb-14 pt-32 md:px-12">
+      <div data-hero-scroll data-testid="hero-content" className="relative z-[2] mx-auto mt-auto w-full max-w-[1440px] px-6 pb-14 pt-14 md:px-12">
         <div data-testid="hero-kicker" className="mb-6">
-          <p data-hero-kicker className="font-mono text-xs uppercase tracking-[0.24em] text-signal">
+          <p data-hero-kicker className="font-mono text-xs uppercase tracking-[0.24em] text-trace">
             Security Operations · Incident Response · Detection Engineering
           </p>
         </div>
@@ -49,9 +51,9 @@ export default function Hero() {
             I investigate threats, improve detection quality, and build practical workflows that help analysts move from alert to defensible action.
           </p>
           <div data-hero-fade className="flex flex-wrap gap-3 lg:justify-end">
-            <a href="/fred-zirbel-resume.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition hover:bg-signal">View resume</a>
-            <a href="#work" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-signal hover:text-signal">View projects</a>
-            <a href="#contact" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-signal hover:text-signal">Contact me</a>
+            <a href="/fred-zirbel-resume.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition hover:bg-signal hover:text-ink">View resume</a>
+            <a href="#work" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-trace hover:text-trace">View projects</a>
+            <a href="#contact" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-trace hover:text-trace">Contact me</a>
           </div>
         </div>
         <ul
@@ -64,7 +66,7 @@ export default function Hero() {
           <li><span className="text-ink">U.S. work authorized</span> · No sponsorship required now or in the future</li>
           <li><span className="text-ink">2 years</span> of professional cybersecurity experience</li>
           <li>Eligible and willing to obtain a U.S. security clearance</li>
-          <li><span className="text-signal">Available to interview</span> · Two weeks&apos; notice to start</li>
+          <li><span className="text-ink">Available to interview</span> · Two weeks&apos; notice to start</li>
         </ul>
       </div>
     </section>

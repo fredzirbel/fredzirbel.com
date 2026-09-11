@@ -24,7 +24,7 @@ for (const repository of ['https://github.com/fredzirbel/SOCBox', 'https://githu
 assert.doesNotMatch(home, /case stud|résumé/i);
 assert.doesNotMatch(home, /Turn alerts into action|>VIEW</i);
 assert.ok(home.includes('Engineering capabilities developed through active hands-on projects and continued technical development.'));
-assert.ok(home.includes('>04</span>Credentials') && home.includes('>05</span>Contact'), 'visible section numbering should remain sequential without posts');
+assert.ok(home.includes('>03</span>Credentials') && home.includes('>04</span>Contact'), 'visible section numbering should remain sequential without posts');
 assert.equal([...home.matchAll(/>Download resume</g)].length, 0, 'contact should not contain a download resume action');
 for (const contact of ['me@fredzirbel.com', 'https://github.com/fredzirbel', 'https://linkedin.com/in/fredzirbel']) assert.ok(home.includes(contact), `contact section is missing ${contact}`);
 assert.doesNotMatch(home, /reconstructing a synthetic phishing intrusion/i);
@@ -42,7 +42,9 @@ if (hasPosts) {
   assert.ok(!sitemap.includes('/blog/'), 'empty blog index must be omitted from sitemap');
 }
 assert.ok(fs.existsSync(path.join(out, 'fred-zirbel-resume.pdf')));
-assert.ok(fs.readFileSync(path.join(out, 'fred-zirbel-resume.pdf')).includes(Buffer.from('Fred Zirbel - Resume')), 'resume PDF title metadata is incorrect');
+const resumePdf = fs.readFileSync(path.join(out, 'fred-zirbel-resume.pdf'));
+assert.equal(resumePdf.subarray(0, 5).toString('latin1'), '%PDF-', 'resume must be a valid PDF file');
+assert.ok(resumePdf.byteLength > 10 * 1024, 'resume PDF looks too small to be the real document');
 assert.ok(home.indexOf('ISACA CISM') < home.indexOf('CompTIA SecurityX'), 'in-progress certification should precede earned certifications');
 assert.match(headers, /Content-Security-Policy:/);
 assert.match(headers, /Strict-Transport-Security: max-age=31536000/);

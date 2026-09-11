@@ -23,13 +23,13 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
       />
       <div className="relative mx-auto max-w-[1440px] px-6 py-16 md:px-12">
         <p className="mb-10 font-mono text-xl uppercase tracking-[0.2em] text-muted">
-          <span className="mr-4 text-signal">{hasPosts ? '06' : '05'}</span>Contact
+          <span className="mr-4 text-ink">{hasPosts ? '05' : '04'}</span>Contact
         </p>
 
         <div className="inline-block">
           <a
             href="mailto:me@fredzirbel.com"
-            className="text-outline group block font-display text-[clamp(3rem,12vw,11rem)] font-black uppercase leading-[0.9] tracking-tight transition-colors duration-(--duration-base) hover:text-signal hover:[-webkit-text-stroke-width:0px]"
+            className="text-outline group block font-display text-[clamp(3rem,12vw,11rem)] font-black uppercase leading-[0.9] tracking-tight transition-colors duration-(--duration-base) hover:text-ink hover:[-webkit-text-stroke-width:0px]"
             style={{ fontStretch: '120%' }}
           >
             Let&apos;s talk
@@ -43,7 +43,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`group flex items-center gap-4 py-6 text-lg text-ink transition-colors duration-(--duration-fast) hover:text-signal sm:text-xl ${index === 0 ? 'sm:pr-6' : 'sm:px-6'}`}
+                className={`group flex items-center gap-4 py-6 text-lg text-ink transition-colors duration-(--duration-fast) hover:text-trace sm:text-xl ${index === 0 ? 'sm:pr-6' : 'sm:px-6'}`}
               >
                 <BrandIcon
                   name={link.icon}
@@ -57,7 +57,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
 
         <div className="mt-16 flex flex-col justify-between gap-8 border-t border-line pt-8 md:flex-row md:items-center">
           {hasPosts ? (
-            <a href="/rss.xml" className="inline-flex items-center gap-2.5 text-sm text-muted transition-colors duration-(--duration-fast) hover:text-signal">
+            <a href="/rss.xml" className="inline-flex items-center gap-2.5 text-sm text-muted transition-colors duration-(--duration-fast) hover:text-ink">
               <BrandIcon name="rss" className="size-4 opacity-60" />
               RSS
             </a>

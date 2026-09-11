@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* SIGNAL palette - void black, warm ink, acid signal, violet trace */
-  --color-void: #050507;
-  --color-panel: #0c0c12;
-  --color-ink: #f2f2ef;
-  --color-muted: #8b8b99;
-  --color-line: rgb(242 242 239 / 0.09);
-  --color-signal: #c6ff4a;
-  --color-trace: #7a87ff;
+  /* Palette - deep ink-blue ground, alabaster text, dusk-blue accent
+     (structural: fills, dots, bars, glows) and lavender-grey trace
+     (soft accent text + hovers). No bright pop by design. */
+  --color-void: #0d1b2a;
+  --color-panel: #1b263b;
+  --color-ink: #e0e1dd;
+  --color-muted: #778da9;
+  --color-line: rgb(224 225 221 / 0.11);
+  --color-signal: #415a77;
+  --color-trace: #778da9;
 
   /* Motion tokens - snappy rhythm */
   --duration-fast: 150ms;
@@ -16,10 +18,16 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   --animate-marquee: marquee 32s linear infinite;
+  --animate-nav-enter: nav-enter 0.7s var(--ease-out-expo) both;
 
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+
+  @keyframes nav-enter {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: none; }
   }
 }
 
@@ -53,8 +61,8 @@ body {
 /* Always-present fallback beneath WebGL. */
 .css-background {
   background:
-    radial-gradient(circle at 78% 14%, rgb(122 135 255 / 0.12), transparent 38%),
-    radial-gradient(circle at 20% 74%, rgb(198 255 74 / 0.045), transparent 36%),
+    radial-gradient(circle at 78% 14%, rgb(119 141 169 / 0.07), transparent 40%),
+    radial-gradient(circle at 20% 74%, rgb(65 90 119 / 0.09), transparent 42%),
     var(--color-void);
 }
 
@@ -74,6 +82,12 @@ body {
 @keyframes wave-drift {
   from { transform: translate3d(-18px, -4px, 0); opacity: 0.45; }
   to { transform: translate3d(18px, 5px, 0); opacity: 0.95; }
+}
+
+/* Fade the WebGL wave field in once it loads (avoids a hard pop). */
+@keyframes wave-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .terminal-fallback {

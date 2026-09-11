@@ -13,9 +13,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useMotion } from '@/lib/motion';
 
-const SIGNAL = 0xc6ff4a;
-const TRACE = 0x7a87ff;
-const INK = 0xf2f2ef;
+const SIGNAL = 0x415a77;
+const TRACE = 0x778da9;
+const INK = 0xe0e1dd;
 
 // Dot-matrix layout, centered inside the screen with margin so the text
 // and cursor never reach the bezel edge (points sit at group offset y=0.72).

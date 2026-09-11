@@ -38,7 +38,7 @@ export default function BlogIndex() {
             >
               <div className="min-w-0">
                 <h2
-                  className="font-display text-2xl font-bold tracking-tight transition-colors duration-(--duration-fast) group-hover:text-signal sm:text-3xl"
+                  className="font-display text-2xl font-bold tracking-tight transition-colors duration-(--duration-fast) group-hover:text-trace sm:text-3xl"
                   style={{ viewTransitionName: `post-${post.slug}` }}
                 >
                   {post.title}

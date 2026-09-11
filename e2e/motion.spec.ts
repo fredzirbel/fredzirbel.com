@@ -57,7 +57,14 @@ test('mobile uses accessible fallbacks without horizontal overflow', async ({ pa
   await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
   await page.evaluate(() => window.scrollTo(0, 120));
   await expect(page.getByTestId('hero-content')).toHaveCSS('opacity', '1');
-  await page.evaluate(() => window.scrollTo(0, Math.min(document.documentElement.scrollHeight - window.innerHeight, window.innerHeight * 0.75)));
+  // Hero text now holds most of the way through the hero before fading.
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 0.4));
+  await expect.poll(async () => Number(await page.getByTestId('hero-content').evaluate((element) => getComputedStyle(element).opacity))).toBeGreaterThan(0.5);
+  await page.evaluate(() => {
+    const experience = document.querySelector('#experience');
+    const y = experience ? experience.getBoundingClientRect().top + window.scrollY : window.innerHeight * 2;
+    window.scrollTo(0, y);
+  });
   await expect.poll(async () => Number(await page.getByTestId('hero-content').evaluate((element) => getComputedStyle(element).opacity))).toBeLessThan(0.5);
   const metrics = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth }));
   expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.width);
@@ -122,12 +129,11 @@ test('keyboard navigation exposes a visible skip link', async ({ page }) => {
 
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
-  test('serves final content and metrics', async ({ page }) => {
+  test('serves final content and experience', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('16 min', { exact: true })).toBeVisible();
-    await expect(page.getByText('300+', { exact: true })).toBeVisible();
-    await expect(page.getByText('500+', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: /Fred Zirbel/ })).toBeVisible();
     await expect(page.getByTestId('experience-static')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Critical Start' })).toBeVisible();
+    await expect(page.getByText(/200\+ customer environments/)).toBeVisible();
   });
 });
