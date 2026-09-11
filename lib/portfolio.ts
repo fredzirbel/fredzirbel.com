@@ -1,9 +1,3 @@
-export const impactMetrics = [
-  { value: '16 min', label: 'average time to investigation', detail: 'Fast, evidence-led alert ownership' },
-  { value: '300+', label: 'investigations each month', detail: 'Across identity, email, endpoint, and cloud' },
-  { value: '500+', label: 'suppression filters engineered', detail: 'KVP and regex logic reducing recurring noise' },
-] as const;
-
 export const projects = [
   {
     slug: 'soc-box',
@@ -39,27 +33,30 @@ export const roles = [
     title: 'Principal Security Analyst',
     period: 'Jul 2026 - Present',
     bullets: [
-      'Lead complex, customer requested deep dive investigations into phishing, malware, and identity intrusions across an MDR operation protecting 2,500+ customer environments. Correlate evidence from 30+ security products to determine scope, root cause, and required containment.',
-      'Maintain a 16 minute average time to investigation while handling 300+ alerts monthly, enabling timely customer escalation and containment.',
-      'Execute live containment and remediation through a dual authorization workflow that removes attacker access and malicious artifacts, then translate scope, impact, and recovery status into decisions for customer stakeholders during high priority incidents.',
-      'Train and mentor L1 analysts to use the in-house AI platform effectively, improving investigation efficiency, correlation quality, and client ready writeups.',
+      'Triage, investigate, and respond to security incidents from detection through resolution across an MDR operation covering 200+ customer environments, correlating evidence from 30+ integrated EDR, SIEM, identity, and network security products to determine scope, root cause, and required containment.',
+      'Analyze endpoint, network, and log data directly within Cortex XDR, CrowdStrike Falcon, Microsoft Defender XDR, and SentinelOne to identify malicious activity and confirm attack techniques across customer environments.',
+      'Execute live containment and remediation actions, including host isolation, credential resets, session revocation, email deletion, and file quarantine, through a dual authorization workflow that removes attacker access and malicious artifacts.',
+      'Communicate investigation findings, response status, and remediation recommendations to customer stakeholders, documenting response actions and incident outcomes during high priority incidents across a 24x7 MDR operation with rotating overnight and weekend shift coverage.',
+      'Maintain a 16 minute average time to investigation while handling 300+ alerts monthly, applying an in-house AI platform across triage, investigation, correlation, and incident documentation while validating all findings against source telemetry.',
+      'Train and mentor L1 analysts on investigation workflow, AI platform usage, and client ready incident documentation.',
     ],
   },
   {
     title: 'Senior Security Analyst',
     period: 'Jul 2025 - Jul 2026',
     bullets: [
-      'Reconstructed attacker activity with custom KQL across email, identity, and endpoint evidence while correlating indicators across customer environments to identify shared campaigns, establish root cause, and enable coordinated response.',
-      'Briefed customer stakeholders during three to five weekly high priority incident calls, delivering findings, attribution, and remediation guidance that informed response decisions.',
-      'Engineered 500+ KVP and regex suppression filters while validating five or more daily orchestration changes, eliminating thousands of recurring false positives and preventing faulty logic from reaching production.',
+      'Reconstructed attacker activity with custom KQL across endpoint, identity, and email evidence sources, including URL clicks, file downloads, and process telemetry, to establish incident scope and root cause.',
+      'Briefed customer stakeholders during three to five weekly high priority incident calls, communicating findings, attribution, and remediation guidance that informed response decisions.',
+      'Correlated indicators of compromise across customer environments to identify shared phishing and malware campaigns, enabling coordinated response beyond individual alerts.',
+      'Engineered 500+ suppression filters using KVP logic and regex within the MDR detection and orchestration platform, eliminating thousands of recurring false positive alerts and improving analyst signal quality.',
     ],
   },
   {
     title: 'Security Analyst',
     period: 'Oct 2024 - Jul 2025',
     bullets: [
-      'Triaged identity, phishing, malware, and endpoint alerts across four EDR and SIEM platforms while developing custom KQL to accelerate incident scoping in Microsoft Sentinel and Defender.',
-      'Produced client ready escalations with attribution, investigation context, and remediation guidance, giving senior responders an actionable basis for customer communication.',
+      'Triaged identity, phishing, malware, and endpoint security alerts across four EDR and SIEM platforms, producing scoped escalations for senior incident responders.',
+      'Developed custom KQL queries across identity, endpoint, and email telemetry in Microsoft Sentinel and Defender to accelerate incident scoping and detection.',
     ],
   },
 ] as const;

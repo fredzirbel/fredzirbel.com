@@ -21,11 +21,11 @@ export default function Nav({ hasPosts }: { hasPosts: boolean }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
   return (
-    <header className={`fixed inset-x-0 top-0 z-40 transition-colors ${scrolled ? 'border-b border-line bg-void/80 backdrop-blur-md' : 'border-b border-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-40 animate-nav-enter transition-colors ${scrolled ? 'border-b border-line bg-void/80 backdrop-blur-md' : 'border-b border-transparent'}`}>
       <nav aria-label="Main" className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 md:px-12">
-        <Link href="/" aria-label="Fred Zirbel - home" className="font-display text-lg font-black tracking-tight hover:text-signal">FZ</Link>
+        <Link href="/" aria-label="Fred Zirbel - home" className="font-display text-lg font-black tracking-tight hover:text-trace">FZ</Link>
         <ul className="flex items-center gap-4 sm:gap-6">
-          {links.map((link) => <li key={link.href} className={link.label === 'Projects' ? 'hidden md:block' : ''}><Link prefetch={false} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined} aria-current={pathname.startsWith(link.active) ? 'page' : undefined} className={`text-xs transition-colors hover:text-signal sm:text-sm ${pathname.startsWith(link.active) ? 'text-signal' : 'text-muted'}`}>{link.label}</Link></li>)}
+          {links.map((link) => <li key={link.href} className={link.label === 'Projects' ? 'hidden md:block' : ''}><Link prefetch={false} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined} aria-current={pathname.startsWith(link.active) ? 'page' : undefined} className={`text-xs transition-colors hover:text-ink sm:text-sm ${pathname.startsWith(link.active) ? 'text-ink' : 'text-muted'}`}>{link.label}</Link></li>)}
         </ul>
       </nav>
     </header>

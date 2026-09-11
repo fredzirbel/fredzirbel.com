@@ -7,7 +7,7 @@ import { supportsWebGL2 } from '@/lib/webgl';
 type WaveImplementation = ComponentType<{ active: boolean; onFailure: () => void }>;
 
 export default function WaveFieldLoader() {
-  const { enabled } = useMotion();
+  const { enabled, ready } = useMotion();
   const host = useRef<HTMLDivElement>(null);
   const [implementation, setImplementation] = useState<WaveImplementation | null>(null);
   const [desktop, setDesktop] = useState(false);
@@ -59,8 +59,15 @@ export default function WaveFieldLoader() {
   }, [desktop, enabled, failed, implementation]);
 
   const Implementation = implementation;
-  const showingWebGL = enabled && desktop && Implementation && !failed;
-  const fade = 'linear-gradient(to bottom, transparent 0%, black 20%, black 52%, transparent 92%)';
+  // WebGL will carry the hero once it loads. During that brief load window show
+  // nothing (the shader background shows through) rather than flashing the
+  // static SVG lines, then fade the WebGL in. The SVG is only for cases where
+  // WebGL is never used: reduced motion, small screens, or a failure.
+  const willUseWebGL = enabled && desktop && !failed;
+  // Only commit to the static SVG once motion state is resolved, so it never
+  // flashes on the first paint before we know WebGL will take over.
+  const showFallback = ready && !willUseWebGL;
+  const fade = 'linear-gradient(to bottom, black 0%, black 58%, transparent 92%)';
   return (
     <div
       ref={host}
@@ -69,7 +76,7 @@ export default function WaveFieldLoader() {
       style={{ maskImage: fade, WebkitMaskImage: fade }}
       data-testid="wave-fallback"
     >
-      {!showingWebGL && (
+      {showFallback && (
         <svg className={`wave-fallback h-full w-full overflow-hidden ${enabled ? 'motion-active' : ''}`} viewBox="0 0 1200 700" preserveAspectRatio="none">
           {Array.from({ length: 15 }, (_, index) => (
             <path
@@ -80,8 +87,10 @@ export default function WaveFieldLoader() {
           ))}
         </svg>
       )}
-      {showingWebGL && (
-        <Implementation active={active} onFailure={() => setFailed(true)} />
+      {willUseWebGL && Implementation && (
+        <div className="h-full w-full" style={{ animation: 'wave-reveal 0.7s ease both' }}>
+          <Implementation active={active} onFailure={() => setFailed(true)} />
+        </div>
       )}
     </div>
   );

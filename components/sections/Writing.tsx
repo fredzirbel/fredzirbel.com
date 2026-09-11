@@ -12,7 +12,7 @@ export default function Writing({ posts }: { posts: Post[] }) {
       className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12"
     >
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted">
-        <span className="mr-4 text-signal">04</span>Writing
+        <span className="mr-4 text-ink">03</span>Writing
       </p>
 
       <>
@@ -26,7 +26,7 @@ export default function Writing({ posts }: { posts: Post[] }) {
               >
                 <div className="min-w-0">
                   <h3
-                    className="font-display text-2xl font-bold tracking-tight transition-colors duration-(--duration-fast) group-hover:text-signal sm:text-3xl"
+                    className="font-display text-2xl font-bold tracking-tight transition-colors duration-(--duration-fast) group-hover:text-trace sm:text-3xl"
                     style={{ viewTransitionName: `post-${post.slug}` }}
                   >
                     {post.title}
@@ -46,7 +46,7 @@ export default function Writing({ posts }: { posts: Post[] }) {
           <Link
             prefetch={false}
             href="/blog/"
-            className="mt-8 inline-block text-sm text-signal underline decoration-signal/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-signal"
+            className="mt-8 inline-block text-sm text-trace underline decoration-trace/40 underline-offset-4 transition-colors duration-(--duration-fast) hover:text-ink hover:decoration-trace"
           >
             All posts
           </Link>

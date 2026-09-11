@@ -57,10 +57,10 @@ void main() {
   );
   float field = fbm(p + 2.4 * r);
 
-  // Palette: void -> trace violet -> a whisper of signal lime.
-  vec3 voidColor = vec3(0.020, 0.020, 0.028);
-  vec3 trace = vec3(0.478, 0.529, 1.000);
-  vec3 signal = vec3(0.776, 1.000, 0.290);
+  // Palette: ink-blue void -> dusk-blue mid -> a whisper of lavender.
+  vec3 voidColor = vec3(0.051, 0.106, 0.165);
+  vec3 trace = vec3(0.255, 0.353, 0.467);
+  vec3 signal = vec3(0.467, 0.553, 0.663);
   vec3 color = voidColor;
   color = mix(color, trace * 0.16, smoothstep(0.35, 0.85, field));
   color = mix(color, trace * 0.30, smoothstep(0.55, 0.95, length(q) * field));
@@ -98,6 +98,8 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const controllerRef = useRef<ShaderController | null>(null);
   const [failed, setFailed] = useState(false);
+  const [painted, setPainted] = useState(false);
+  const paintedRef = useRef(false);
   const [contextGeneration, setContextGeneration] = useState(0);
   const { enabled, ready } = useMotion();
   const enabledRef = useRef(enabled);
@@ -119,6 +121,8 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
     let raf = 0;
     let cleanup = () => {};
     setFailed(false);
+    setPainted(false);
+    paintedRef.current = false;
 
     const timer = window.setTimeout(() => {
       if (disposed) return;
@@ -176,6 +180,12 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
         gl.uniform1f(uTime, (performance.now() - started) / 1000);
         gl.uniform1f(uDim, dim);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
+        // Reveal the canvas only once a real frame is on screen, so the CSS
+        // gradient shows through instead of a black flash during init.
+        if (!paintedRef.current) {
+          paintedRef.current = true;
+          setPainted(true);
+        }
       };
 
       const loop = () => {
@@ -261,7 +271,7 @@ export default function ShaderBackground({ dim = 1 }: { dim?: number }) {
       ref={canvasRef}
       aria-hidden="true"
       data-testid="shader-background"
-      className={`fixed inset-0 z-0 h-full w-full transition-opacity ${failed ? 'opacity-0' : 'opacity-100'}`}
+      className={`fixed inset-0 z-0 h-full w-full transition-opacity duration-700 ${failed || !painted ? 'opacity-0' : 'opacity-100'}`}
     />
   );
 }

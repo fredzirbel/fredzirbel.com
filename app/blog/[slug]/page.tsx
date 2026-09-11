@@ -50,7 +50,7 @@ export default async function PostPage({ params }: Props) {
         <Link
           prefetch={false}
           href="/blog/"
-          className="font-mono text-xs text-muted transition-colors duration-(--duration-fast) hover:text-signal"
+          className="font-mono text-xs text-muted transition-colors duration-(--duration-fast) hover:text-ink"
         >
           &larr; All posts
         </Link>

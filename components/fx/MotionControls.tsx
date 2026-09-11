@@ -15,7 +15,7 @@ export function EnableMotionPill() {
     <button
       type="button"
       onClick={() => setMode('on')}
-      className="fixed bottom-5 right-5 z-50 rounded-full border border-signal/50 bg-void/90 px-4 py-2 font-mono text-xs uppercase tracking-wider text-signal shadow-lg backdrop-blur"
+      className="fixed bottom-5 right-5 z-50 rounded-full border border-trace/50 bg-void/90 px-4 py-2 font-mono text-xs uppercase tracking-wider text-trace shadow-lg backdrop-blur"
     >
       Enable motion
     </button>
@@ -38,8 +38,8 @@ export function MotionSelector() {
           onClick={() => setMode(option.value)}
           className={`rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-wider transition-colors ${
             mode === option.value
-              ? 'border-signal text-signal'
-              : 'border-line text-muted hover:border-signal/50 hover:text-ink'
+              ? 'border-trace text-ink'
+              : 'border-line text-muted hover:border-trace/50 hover:text-ink'
           }`}
         >
           {option.label}

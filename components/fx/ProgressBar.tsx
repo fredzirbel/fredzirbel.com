@@ -39,7 +39,7 @@ export default function ProgressBar() {
       ref={bar}
       aria-hidden="true"
       style={{ transform: 'scaleX(0)' }}
-      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-signal shadow-[0_0_10px_1px_rgb(198_255_74/0.6)] will-change-transform"
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-signal shadow-[0_0_10px_1px_rgb(65_90_119/0.7)] will-change-transform"
     />
   );
 }
