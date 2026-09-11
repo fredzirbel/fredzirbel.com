@@ -4,6 +4,8 @@ const acceptedAdvisories = new Map([
   ['GHSA-6G55-P6WH-862Q', 'PostCSS is nested under Next.js and only processes trusted repository CSS during the static build.'],
   ['GHSA-R28C-9Q8G-F849', 'PostCSS is nested under Next.js and only processes trusted repository CSS during the static build.'],
   ['GHSA-F88M-G3JW-G9CJ', 'Sharp is an optional Next.js build dependency and is not present in the exported static site.'],
+  ['GHSA-5P4M-2WFM-XMQJ', 'js-yaml is nested under gray-matter and only parses this repository\'s own blog frontmatter during the static build; no untrusted YAML is parsed and there is no server runtime, so the CPU-consumption advisory is not reachable.'],
+  ['GHSA-2883-XCG3-V3HH', 'js-yaml is nested under gray-matter and only parses this repository\'s own blog frontmatter during the static build; no untrusted YAML is parsed and there is no server runtime, so the CPU-consumption advisory is not reachable.'],
 ]);
 
 const npmExecutable = process.env.npm_execpath ? process.execPath : process.platform === 'win32' ? 'npm.cmd' : 'npm';
