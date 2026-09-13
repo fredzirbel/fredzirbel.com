@@ -29,17 +29,20 @@ test('motion preference remains user-controlled and graphics degrade safely', as
   await page.getByRole('button', { name: 'Reduced', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
   const wave = page.getByTestId('wave-fallback');
+  // Reduced motion drops the hero wave field entirely (no WebGL, no static SVG).
   await expect(wave.locator('canvas')).toHaveCount(0);
-  await expect(wave.locator('svg')).toBeVisible();
-  await expect(wave.locator('svg')).not.toHaveClass(/motion-active/);
+  await expect(wave.locator('svg')).toHaveCount(0);
   await page.getByRole('button', { name: 'On', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
   await expect(page.getByTestId('shader-background')).toBeAttached();
-  await expect(page.getByTestId('cursor-glow')).toBeAttached();
+  const cursor = page.getByTestId('cursor-glow');
+  await expect(cursor).toBeAttached();
   await page.mouse.move(120, 140);
   await page.mouse.move(280, 220, { steps: 4 });
-  await expect.poll(async () => page.getByTestId('cursor-trail').locator('span').count()).toBeGreaterThan(0);
-  await expect.poll(async () => page.getByTestId('cursor-glow').evaluate((element) => element.getAttribute('style'))).toContain('280px, 220px');
+  await expect.poll(async () => cursor.evaluate((element) => element.getAttribute('style'))).toContain('280px, 220px');
+  // Hovering a clickable adds the glow indicator (data-hovering).
+  await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Experience' }).hover();
+  await expect(cursor).toHaveAttribute('data-hovering', 'true');
 });
 
 test('mobile uses accessible fallbacks without horizontal overflow', async ({ page }) => {

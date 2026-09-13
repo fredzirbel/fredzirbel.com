@@ -71,7 +71,7 @@ export const earnedCertifications = [
 ] as const;
 
 export const capabilityGroups = [
-  { heading: 'Detection', items: ['KQL', 'Sigma', 'Microsoft Sentinel', 'Splunk ES', 'MITRE ATT&CK'] },
   { heading: 'Investigation', items: ['Defender XDR', 'CrowdStrike Falcon', 'Cortex XDR', 'SentinelOne', 'Sumo Logic'] },
+  { heading: 'Detection', items: ['KQL', 'Sigma', 'Microsoft Sentinel', 'Splunk ES', 'MITRE ATT&CK'] },
   { heading: 'Engineering', items: ['Python', 'FastAPI', 'Docker', 'GitHub Actions', 'ELK Stack'] },
 ] as const;

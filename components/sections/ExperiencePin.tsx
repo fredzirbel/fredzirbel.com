@@ -2,7 +2,7 @@ import { roles } from '@/lib/portfolio';
 
 export default function ExperiencePin() {
   return (
-    <section id="experience" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12">
+    <section id="experience" className="mx-auto max-w-[1440px] scroll-mt-10 px-6 py-16 md:px-12">
       <div className="grid gap-8 border-b border-line pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
         <div>
           <p className="font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-ink">01</span>Experience</p>

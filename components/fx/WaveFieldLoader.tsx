@@ -64,9 +64,11 @@ export default function WaveFieldLoader() {
   // static SVG lines, then fade the WebGL in. The SVG is only for cases where
   // WebGL is never used: reduced motion, small screens, or a failure.
   const willUseWebGL = enabled && desktop && !failed;
-  // Only commit to the static SVG once motion state is resolved, so it never
-  // flashes on the first paint before we know WebGL will take over.
-  const showFallback = ready && !willUseWebGL;
+  // Show the static SVG only once motion state is resolved (so it never flashes
+  // before WebGL takes over) and only when motion is enabled: under reduced
+  // motion the hero has no wave field at all, just the quiet backdrop. The SVG
+  // still covers motion-on cases without WebGL - small screens and failures.
+  const showFallback = ready && enabled && !willUseWebGL;
   const fade = 'linear-gradient(to bottom, black 0%, black 58%, transparent 92%)';
   return (
     <div
