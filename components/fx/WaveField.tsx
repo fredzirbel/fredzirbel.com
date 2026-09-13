@@ -77,13 +77,8 @@ function Field({ animate }: { animate: boolean }) {
     if (!animate) invalidate();
   }, [animate, invalidate]);
 
-  useFrame(({ clock, pointer }) => {
+  useFrame(({ clock }) => {
     if (material.current) material.current.uniforms.uTime.value = clock.elapsedTime;
-    if (group.current) {
-      group.current.rotation.y += (pointer.x * 0.08 - group.current.rotation.y) * 0.04;
-      group.current.rotation.x +=
-        (-1.05 + pointer.y * 0.05 - group.current.rotation.x) * 0.04;
-    }
   });
 
   return (

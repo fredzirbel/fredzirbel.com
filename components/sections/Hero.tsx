@@ -30,13 +30,24 @@ export default function Hero() {
         invalidateOnRefresh: true,
       },
     });
+    // The scroll cue is only useful at the very top; fade it out quickly.
+    gsap.to('[data-scroll-hint]', {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        start: 0,
+        end: () => window.innerHeight * 0.3,
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
     return () => split.revert();
   }, { scope, dependencies: [enabled], revertOnUpdate: true });
 
   return (
-    <section ref={scope} className="relative flex min-h-dvh flex-col overflow-hidden">
+    <section ref={scope} className="relative flex min-h-dvh flex-col justify-center overflow-hidden">
       <WaveFieldLoader />
-      <div data-hero-scroll data-testid="hero-content" className="relative z-[2] mx-auto mt-auto w-full max-w-[1440px] px-6 pb-14 pt-14 md:px-12">
+      <div data-hero-scroll data-testid="hero-content" className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 py-14 md:px-12">
         <div data-testid="hero-kicker" className="mb-6">
           <p data-hero-kicker className="font-mono text-xs uppercase tracking-[0.24em] text-trace">
             Security Operations · Incident Response · Detection Engineering
@@ -69,6 +80,27 @@ export default function Hero() {
           <li><span className="text-ink">Available to interview</span> · Two weeks&apos; notice to start</li>
         </ul>
       </div>
+      <a
+        href="/#experience"
+        data-scroll-hint
+        aria-label="Scroll to experience"
+        className="group absolute inset-x-0 bottom-6 z-[2] mx-auto hidden w-fit flex-col items-center gap-4 text-muted transition-colors duration-(--duration-fast) hover:text-trace [@media(min-width:768px)_and_(min-height:780px)]:flex"
+      >
+        <span className="font-mono text-[20px] uppercase tracking-[0.3em]">Scroll</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.75}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className="scroll-hint-arrow size-8"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </a>
     </section>
   );
 }

@@ -3,17 +3,14 @@ import { capabilityGroups, earnedCertifications } from '@/lib/portfolio';
 
 export default function Bento({ sectionNumber }: { sectionNumber: '03' | '04' }) {
   return (
-    <section id="credentials" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12">
+    <section id="credentials" className="mx-auto max-w-[1440px] scroll-mt-10 px-6 py-16 md:px-12">
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-ink">{sectionNumber}</span>Credentials</p>
       <div className="grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="rounded-xl border border-line bg-panel/70 p-7">
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="font-display text-2xl font-bold">Earned certifications</h2>
-            <span data-cert-count="6" className="font-mono text-xs text-trace">6 earned</span>
-          </div>
+          <h2 className="font-display text-2xl font-bold">Earned certifications</h2>
           <div className="mt-6 rounded-lg border border-signal/30 bg-signal/5 px-4 py-3">
             <p className="font-mono text-xs uppercase tracking-wider text-trace">In progress</p>
-            <p className="mt-1 text-sm">ISACA CISM — In Progress</p>
+            <p className="mt-1 text-sm">ISACA CISM - In Progress</p>
           </div>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {earnedCertifications.map((cert) => {

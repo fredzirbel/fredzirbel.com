@@ -24,7 +24,7 @@ export default function Work() {
   }, { scope, dependencies: [enabled], revertOnUpdate: true });
 
   return (
-    <section ref={scope} id="work" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12">
+    <section ref={scope} id="work" className="mx-auto max-w-[1440px] scroll-mt-10 px-6 py-16 md:px-12">
       <p className="mb-12 font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-ink">02</span>Projects</p>
       <div className="grid gap-4 md:grid-cols-2">
         {projects.map((project, index) => (

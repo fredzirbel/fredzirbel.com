@@ -90,6 +90,15 @@ body {
   to { opacity: 1; }
 }
 
+/* Hero scroll cue: a gentle downward nudge. Reduced motion holds it still. */
+.scroll-hint-arrow {
+  animation: scroll-hint 1.8s ease-in-out infinite;
+}
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(10px); opacity: 1; }
+}
+
 .terminal-fallback {
   color: var(--color-signal);
   opacity: 0.58;
