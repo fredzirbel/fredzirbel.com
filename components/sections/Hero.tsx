@@ -74,10 +74,10 @@ export default function Hero() {
           className="mt-7 grid gap-x-8 gap-y-3 border-y border-line py-5 font-mono text-sm uppercase leading-relaxed tracking-[0.08em] text-muted sm:grid-cols-2 lg:grid-cols-3"
         >
           <li><span className="text-ink">Dallas, TX</span> · Remote, hybrid, or onsite</li>
-          <li>Open to relocation within the U.S.</li>
+          <li><span className="text-ink">Open to relocation</span> within the U.S.</li>
           <li><span className="text-ink">U.S. work authorized</span> · No sponsorship required now or in the future</li>
           <li><span className="text-ink">2 years</span> of professional cybersecurity experience</li>
-          <li>Eligible and willing to obtain a U.S. security clearance</li>
+          <li><span className="text-ink">Eligible and willing</span> to obtain a U.S. security clearance</li>
           <li><span className="text-ink">Available to interview</span> · Two weeks&apos; notice to start</li>
         </ul>
       </div>

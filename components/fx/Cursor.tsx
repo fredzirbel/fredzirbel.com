@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Custom cursor: a blue pointer arrow that follows the pointer (the SVG origin
+ * Custom cursor: a white pointer arrow that follows the pointer (the SVG origin
  * is the tip, so the tip is the hotspot). Over clickable elements it gains a
  * soft glow to signal interactivity. Only active for fine pointers with motion
  * allowed; the native cursor is suppressed via html.has-cursor.
@@ -57,20 +57,20 @@ export default function Cursor() {
       >
         {/* Glow indicator, shown only over clickable elements. */}
         <span
-          className={`absolute left-[7px] top-[13px] size-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-trace blur-md transition-opacity duration-(--duration-fast) ${hovering ? 'opacity-70' : 'opacity-0'}`}
+          className={`absolute left-[5px] top-[9px] size-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-trace blur-md transition-opacity duration-(--duration-fast) ${hovering ? 'opacity-70' : 'opacity-0'}`}
         />
         <svg
-          width="19"
-          height="30"
+          width="13"
+          height="20"
           viewBox="0 0 12 19"
           aria-hidden="true"
           className={`relative transition-[filter] duration-(--duration-fast) ${hovering ? 'drop-shadow-[0_0_5px_rgba(119,141,169,0.95)]' : 'drop-shadow-[0_1px_2px_rgba(13,27,42,0.85)]'}`}
         >
           <path
             d="M0 0 L0 16 L4 12.5 L6.4 18.4 L8.8 17.4 L6.4 11.5 L11.5 11.5 Z"
-            fill="var(--color-trace)"
+            fill="var(--color-ink)"
             stroke="var(--color-void)"
-            strokeWidth="0.9"
+            strokeWidth="1"
             strokeLinejoin="round"
           />
         </svg>
