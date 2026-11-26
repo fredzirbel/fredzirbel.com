@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fredzirbel-com",
+  "name": "fredzirbel",
   "compatibility_date": "2026-11-26",
   // Production is served only on the custom domain. Preview URLs stay
   // available and Cloudflare marks them noindex automatically.

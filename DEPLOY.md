@@ -17,7 +17,7 @@ git push -u origin main
 2. Workers & Pages -> Create -> Import a repository
 3. Authorize GitHub and select `fredzirbel/fredzirbel.com`
 4. Build settings:
-   - Project name: `fredzirbel-com` (must match `name` in
+   - Project name: `fredzirbel` (must match `name` in
      `wrangler.jsonc`, or builds fail)
    - Build command: `npm run build`
    - Deploy command: `npx wrangler deploy`
@@ -40,7 +40,7 @@ domain's nameservers.
 2. Cloudflare shows two nameservers. At your registrar (wherever you
    bought fredzirbel.com), replace the existing nameservers with those two.
 3. Wait for propagation (minutes to a few hours)
-4. Back in Workers & Pages -> `fredzirbel-com` -> Settings -> Domains & Routes -> Add -> Custom domain ->
+4. Back in Workers & Pages -> `fredzirbel` -> Settings -> Domains & Routes -> Add -> Custom domain ->
    `fredzirbel.com` (and `www.fredzirbel.com` if you want the redirect).
    Cloudflare creates the DNS records and provisions HTTPS automatically.
 
