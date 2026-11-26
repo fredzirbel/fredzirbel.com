@@ -9,5 +9,5 @@
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
 
-https://fredzirbel-com.:subdomain.workers.dev/*
+https://fredzirbel.:subdomain.workers.dev/*
   X-Robots-Tag: noindex, nofollow
