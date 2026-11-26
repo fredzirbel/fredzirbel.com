@@ -47,7 +47,7 @@ export default function Work() {
             <p className="mt-2 font-mono text-xs uppercase tracking-widest text-muted">{project.subtitle}</p>
             <p className="mt-4 flex-1 text-sm text-muted">{project.description}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {project.tags.map((tag) => <li key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-muted">{tag}</li>)}
+              {project.tags.map((tag) => <li key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">{tag}</li>)}
             </ul>
           </a>
         ))}
