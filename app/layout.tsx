@@ -6,6 +6,7 @@ import ShaderBackground from '@/components/fx/ShaderBackground';
 import SmoothScroll from '@/components/fx/SmoothScroll';
 import { EnableMotionPill } from '@/components/fx/MotionControls';
 import Nav from '@/components/sections/Nav';
+import { ANALYTICS_HOSTS, UMAMI_SCRIPT, UMAMI_WEBSITE_ID } from '@/lib/analytics';
 import { MotionProvider } from '@/lib/motion';
 import { getPosts } from '@/lib/posts';
 import '@/styles/globals.css';
@@ -69,6 +70,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </SmoothScroll>
         </MotionProvider>
+        <script
+          defer
+          src={UMAMI_SCRIPT}
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains={ANALYTICS_HOSTS.join(',')}
+        />
       </body>
     </html>
   );

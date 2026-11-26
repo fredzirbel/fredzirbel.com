@@ -1,4 +1,5 @@
 import BrandIcon from '@/components/sections/BrandIcon';
+import { trackClick } from '@/lib/analytics';
 import { capabilityGroups, earnedCertifications } from '@/lib/portfolio';
 
 export default function Bento({ sectionNumber }: { sectionNumber: '03' | '04' }) {
@@ -16,7 +17,7 @@ export default function Bento({ sectionNumber }: { sectionNumber: '03' | '04' })
             {earnedCertifications.map((cert) => {
               const content = <><BrandIcon name={cert.org} className="size-5 shrink-0 opacity-70" /><span>{cert.name}</span></>;
               const cls = 'flex items-center gap-3 rounded-lg border border-line px-4 py-3 font-mono text-xs';
-              return <li key={cert.name}>{cert.href ? <a href={cert.href} target="_blank" rel="noopener noreferrer" className={`${cls} hover:border-trace/50 hover:text-trace`}>{content}</a> : <div className={cls}>{content}</div>}</li>;
+              return <li key={cert.name}>{cert.href ? <a href={cert.href} target="_blank" rel="noopener noreferrer" {...trackClick(`cert-${cert.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`, `Credly: ${cert.name}`)} className={`${cls} hover:border-trace/50 hover:text-trace`}>{content}</a> : <div className={cls}>{content}</div>}</li>;
             })}
           </ul>
         </div>

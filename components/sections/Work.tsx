@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { gsap, registerGsap, useMotion } from '@/lib/motion';
+import { trackClick } from '@/lib/analytics';
 import { projects } from '@/lib/portfolio';
 
 export default function Work() {
@@ -35,6 +36,7 @@ export default function Work() {
             rel="noopener noreferrer"
             aria-label={`Open ${project.name} on GitHub in a new tab`}
             data-project
+            {...trackClick(`project-${project.slug}`, `GitHub: ${project.name}`)}
             className="group flex flex-col rounded-xl border border-line bg-panel/70 p-7 transition-colors hover:border-trace/50"
           >
             <div className="flex items-baseline justify-between gap-4">
