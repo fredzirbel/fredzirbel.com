@@ -1,13 +1,14 @@
 import BrandIcon from '@/components/sections/BrandIcon';
 import CopyButton from '@/components/sections/CopyButton';
 import { MotionSelector } from '@/components/fx/MotionControls';
+import { trackClick } from '@/lib/analytics';
 
 const year = new Date().getFullYear();
 
 const contactLinks = [
-  { href: 'mailto:me@fredzirbel.com', label: 'me@fredzirbel.com', icon: 'mail' },
-  { href: 'https://linkedin.com/in/fredzirbel', label: 'LinkedIn', icon: 'linkedin' },
-  { href: 'https://github.com/fredzirbel', label: 'GitHub', icon: 'github' },
+  { href: 'mailto:me@fredzirbel.com', label: 'me@fredzirbel.com', icon: 'mail', event: 'contact-email' },
+  { href: 'https://linkedin.com/in/fredzirbel', label: 'LinkedIn', icon: 'linkedin', event: 'contact-linkedin' },
+  { href: 'https://github.com/fredzirbel', label: 'GitHub', icon: 'github', event: 'contact-github' },
 ] as const;
 
 export default function Contact({ hasPosts }: { hasPosts: boolean }) {
@@ -30,6 +31,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
         <div className="inline-block">
           <a
             href="mailto:me@fredzirbel.com"
+            {...trackClick('contact-email-headline', 'Email (Let\'s talk)')}
             className="text-outline group block font-display text-[clamp(3rem,12vw,11rem)] font-black uppercase leading-[0.9] tracking-tight transition-colors duration-(--duration-base) hover:text-ink hover:[-webkit-text-stroke-width:0px]"
             style={{ fontStretch: '120%' }}
           >
@@ -47,6 +49,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  {...trackClick(link.event, link.label)}
                   className="group flex items-center gap-4 py-6 text-lg text-ink transition-colors duration-(--duration-fast) hover:text-trace sm:text-xl"
                 >
                   <BrandIcon

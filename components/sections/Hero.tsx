@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import WaveFieldLoader from '@/components/fx/WaveFieldLoader';
+import { trackClick } from '@/lib/analytics';
 import { gsap, registerGsap, SplitText, useMotion } from '@/lib/motion';
 
 export default function Hero() {
@@ -62,7 +63,7 @@ export default function Hero() {
             I investigate threats, improve detection quality, and build practical workflows that help analysts move from alert to defensible action.
           </p>
           <div data-hero-fade className="flex flex-wrap gap-3 lg:justify-end">
-            <a href="/fred-zirbel-resume.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition hover:bg-signal hover:text-ink">View resume</a>
+            <a href="/fred-zirbel-resume.pdf" target="_blank" rel="noopener noreferrer" {...trackClick('resume-hero', 'Resume (hero)')} className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-void transition hover:bg-signal hover:text-ink">View resume</a>
             <a href="#work" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-trace hover:text-trace">View projects</a>
             <a href="#contact" className="rounded-full border border-line px-6 py-3 text-sm font-medium transition hover:border-trace hover:text-trace">Contact me</a>
           </div>
