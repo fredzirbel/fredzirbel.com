@@ -40,7 +40,7 @@ export default function Bento({ sectionNumber }: { sectionNumber: '03' | '04' })
       </div>
       <div className="mt-4 overflow-hidden rounded-xl border border-line bg-panel/70">
         <div className="border-b border-line px-7 py-5">
-          <h2 className="font-display text-2xl font-bold">Capability matrix</h2>
+          <h2 className="font-display text-2xl font-bold uppercase tracking-[0.08em] text-ink">Toolkit</h2>
           <p className="mt-2 text-sm text-muted lg:whitespace-nowrap">Engineering capabilities developed through active hands-on projects and continued technical development.</p>
         </div>
         <div className="grid md:grid-cols-3">
