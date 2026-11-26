@@ -49,6 +49,8 @@ assert.match(headers, /Content-Security-Policy:/);
 assert.match(headers, /Strict-Transport-Security: max-age=31536000/);
 assert.match(headers, /X-Robots-Tag: noindex/);
 assert.ok(fs.existsSync(path.join(out, 'opengraph-image')));
+for (const event of ['resume-hero', 'resume-nav', 'project-soc-box', 'project-sigil', 'project-homesoc', 'contact-linkedin', 'contact-github', 'contact-email', 'employer-criticalstart']) assert.ok(home.includes(`data-goatcounter-click="${event}"`), `homepage is missing click event ${event}`);
+assert.match(rawHome, /<script[^>]+src="https:\/\/gc\.zgo\.at\/count\.v5\.js"[^>]+integrity="sha384-/, 'GoatCounter script must be pinned with SRI');
 
 const scripts = [...rawHome.matchAll(/<script[^>]+src="([^"]+)"/g)].map((match) => match[1]).filter((source) => source.startsWith('/_next/static/'));
 const bytes = [...new Set(scripts)].reduce((total, source) => total + gzipSync(fs.readFileSync(path.join(out, source.replace(/^\//, '').replaceAll('/', path.sep)))).byteLength, 0);

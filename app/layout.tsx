@@ -6,6 +6,7 @@ import ShaderBackground from '@/components/fx/ShaderBackground';
 import SmoothScroll from '@/components/fx/SmoothScroll';
 import { EnableMotionPill } from '@/components/fx/MotionControls';
 import Nav from '@/components/sections/Nav';
+import { ANALYTICS_HOSTS, GOATCOUNTER_ENDPOINT, GOATCOUNTER_INTEGRITY, GOATCOUNTER_SCRIPT } from '@/lib/analytics';
 import { MotionProvider } from '@/lib/motion';
 import { getPosts } from '@/lib/posts';
 import '@/styles/globals.css';
@@ -69,6 +70,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </SmoothScroll>
         </MotionProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.goatcounter={no_onload:!${JSON.stringify(ANALYTICS_HOSTS)}.includes(location.hostname)};`,
+          }}
+        />
+        <script
+          async
+          data-goatcounter={GOATCOUNTER_ENDPOINT}
+          src={GOATCOUNTER_SCRIPT}
+          integrity={GOATCOUNTER_INTEGRITY}
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );

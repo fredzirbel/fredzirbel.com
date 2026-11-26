@@ -1,3 +1,4 @@
+import { trackClick } from '@/lib/analytics';
 import { roles } from '@/lib/portfolio';
 
 export default function ExperiencePin() {
@@ -7,7 +8,7 @@ export default function ExperiencePin() {
         <div>
           <p className="font-mono text-xl uppercase tracking-[0.2em] text-muted"><span className="mr-4 text-ink">01</span>Experience</p>
           <h2 className="mt-5 font-display text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tight">
-            <a href="https://www.criticalstart.com/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-trace">
+            <a href="https://www.criticalstart.com/" target="_blank" rel="noopener noreferrer" {...trackClick('employer-criticalstart', 'Critical Start')} className="transition-colors hover:text-trace">
               Critical Start
             </a>
           </h2>
