@@ -12,8 +12,13 @@ interface Props {
 // Only the slugs from generateStaticParams exist; anything else 404s.
 export const dynamicParams = false;
 
+// output: 'export' rejects an empty list, so with no posts yet a placeholder
+// slug is emitted; getPost() returns undefined for it and the page 404s.
+const PLACEHOLDER = '_';
+
 export function generateStaticParams() {
-  return getPostSlugs(process.env.NODE_ENV === 'development').map((slug) => ({ slug }));
+  const slugs = getPostSlugs(process.env.NODE_ENV === 'development');
+  return (slugs.length > 0 ? slugs : [PLACEHOLDER]).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

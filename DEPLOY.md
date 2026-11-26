@@ -1,4 +1,4 @@
-# Deploying fredzirbel.com to Cloudflare Pages
+# Deploying fredzirbel.com to Cloudflare Workers (static assets)
 
 One-time setup, then every push to `main` deploys automatically.
 
@@ -11,28 +11,36 @@ git remote add origin https://github.com/fredzirbel/fredzirbel.com.git
 git push -u origin main
 ```
 
-## 2. Create the Cloudflare Pages project
+## 2. Create the Worker (Workers Builds)
 
 1. Sign up / log in at https://dash.cloudflare.com (free plan is fine)
-2. Workers & Pages -> Create -> Pages -> Connect to Git
+2. Workers & Pages -> Create -> Import a repository
 3. Authorize GitHub and select `fredzirbel/fredzirbel.com`
 4. Build settings:
-   - Framework preset: **Next.js (Static HTML Export)**
+   - Project name: `fredzirbel-com` (must match `name` in
+     `wrangler.jsonc`, or builds fail)
    - Build command: `npm run build`
-   - Build output directory: `out`
-5. Save and Deploy. First build takes 1-2 minutes; you get a
-   `*.pages.dev` preview URL immediately.
+   - Deploy command: `npx wrangler deploy`
+5. Save and Deploy. First build takes 1-2 minutes.
+
+`wrangler.jsonc` serves `out/` as static assets, uses `out/404.html` for
+unknown paths, and disables the production `workers.dev` host
+(`workers_dev: false`), so the site is reachable only on the custom domain.
+Manual deploy from a local machine: `npx wrangler login`, then `npm run deploy`.
+
+Docs: https://developers.cloudflare.com/workers/static-assets/ and
+https://developers.cloudflare.com/workers/ci-cd/builds/
 
 ## 3. Point fredzirbel.com at Cloudflare
 
-Recommended: move DNS to Cloudflare (free, and Pages custom domains
-become one click).
+Required: Workers custom domains only work when Cloudflare runs the
+domain's nameservers.
 
 1. In the Cloudflare dashboard: Add a domain -> `fredzirbel.com` (Free plan)
 2. Cloudflare shows two nameservers. At your registrar (wherever you
    bought fredzirbel.com), replace the existing nameservers with those two.
 3. Wait for propagation (minutes to a few hours)
-4. Back in Workers & Pages -> your project -> Custom domains -> add
+4. Back in Workers & Pages -> `fredzirbel-com` -> Settings -> Domains & Routes -> Add -> Custom domain ->
    `fredzirbel.com` (and `www.fredzirbel.com` if you want the redirect).
    Cloudflare creates the DNS records and provisions HTTPS automatically.
 
@@ -54,10 +62,12 @@ address or use Proton's custom-domain support.)
 
 ## Notes
 
-- Security and cache headers live in public/_headers; Cloudflare Pages
-  copies this file into the static output and applies it to matching responses
-- Preview pages.dev hosts are marked noindex; the production custom domain
-  remains indexable
+- Security and cache headers live in public/_headers; Next copies it into
+  `out/` and Workers static assets applies it to matching responses
+  (https://developers.cloudflare.com/workers/static-assets/headers/)
+- Preview URLs get `X-Robots-Tag: noindex` from Cloudflare automatically;
+  `_headers` also marks the production workers.dev host noindex in case
+  `workers_dev` is ever re-enabled. The custom domain remains indexable
 - `npm run audit:ci` fails CI for every new high or critical advisory. It
   narrowly accepts the documented PostCSS and Sharp advisories inherited
   through Next.js because those packages process only trusted repository

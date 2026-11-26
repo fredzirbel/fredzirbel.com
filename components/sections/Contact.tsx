@@ -71,7 +71,7 @@ export default function Contact({ hasPosts }: { hasPosts: boolean }) {
           <div className="flex flex-col items-start gap-4 md:items-end">
             <MotionSelector />
             <p className="font-mono text-xs text-muted">
-              {`© ${year} Fred Zirbel · Next.js on Cloudflare Pages`}
+              {`© ${year} Fred Zirbel · Next.js on Cloudflare`}
             </p>
           </div>
         </div>
